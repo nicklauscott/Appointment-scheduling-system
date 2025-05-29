@@ -31,18 +31,18 @@ extra["springGrpcVersion"] = "0.8.0"
 
 dependencies {
 	implementation("org.springframework.kafka:spring-kafka:3.3.0")
-	//implementation("org.flywaydb:flyway-core:9.22.0")
+	implementation("org.flywaydb:flyway-core:9.22.0")
 
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.hibernate.orm:hibernate-core:6.3.1.Final")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("io.grpc:grpc-services")
-	// implementation("org.flywaydb:flyway-core")
+	//implementation("org.flywaydb:flyway-core")
 	// implementation("org.flywaydb:flyway-database-postgresql")
 	implementation("org.springframework.grpc:spring-grpc-spring-boot-starter")
 	compileOnly("org.projectlombok:lombok")
-	runtimeOnly("com.h2database:h2")
+	//runtimeOnly("com.h2database:h2")
 	runtimeOnly("org.postgresql:postgresql")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")

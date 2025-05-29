@@ -9,7 +9,7 @@ spring:
     name: appointment-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5432/test_db  # Replace with your DB name
+    url: jdbc:postgresql://localhost:5432/test_db
     username: postgres
     password:
     driver-class-name: org.postgresql.Driver
@@ -17,11 +17,11 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: create-drop  # use 'update' for dev, 'validate' or 'none' for production
+      ddl-auto: update  # use 'update' for dev, 'validate' or 'none' for production
 
   #flyway:
     #enabled: true
-    #baseline-on-migration: true
+    #baseline-on-migration: false
     # Remove `schemas` if you want to dynamically pass it via Java config
     # Or set a default shared schema if you're using a default
     # schemas: public

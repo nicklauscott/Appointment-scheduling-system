@@ -1,7 +1,8 @@
 package com.ams.appointment_service.controller;
 
 import com.ams.appointment_service.dto.*;
-import com.ams.appointment_service.multitenancy.sevice.TenantSchemaService;
+import com.ams.appointment_service.multitenancy.database.database_resolver.TenantContext;
+import com.ams.appointment_service.multitenancy.schema.sevice.TenantSchemaService;
 import com.ams.appointment_service.service.CustomerAppointmentService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -15,13 +16,6 @@ import org.springframework.web.bind.annotation.*;
 public class CustomerAppointmentController {
 
     private final CustomerAppointmentService service;
-    private final TenantSchemaService schemaService;
-
-    @GetMapping("/{tenant}")
-    public String createTenant(@PathVariable("tenant") String tenantId) {
-        schemaService.createTenantSchema(tenantId);
-        return tenantId;
-    }
 
     @PostMapping
     public ResponseEntity<AppointmentResponseDTO> book(@Valid @RequestBody AppointmentRequestDTO request) {
