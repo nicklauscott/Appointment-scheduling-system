@@ -1,23 +1,33 @@
 server:
   port: 4000
 
+
+
+
 spring:
   application:
-    name:appointment-service
+    name: appointment-service
 
   datasource:
-    url: jdbc:h2:mem:appointment_db
-    username: sa
+    url: jdbc:postgresql://localhost:5432/test_db  # Replace with your DB name
+    username: postgres
     password:
-    driver-class-name: org.h2.Driver
-
-  h2:
-    console:
-      enabled: true
-      path: /h2-console
+    driver-class-name: org.postgresql.Driver
 
   jpa:
-    database-platform: org.hibernate.dialect.H2Dialect
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: update
+      ddl-auto: create-drop  # use 'update' for dev, 'validate' or 'none' for production
 
+  #flyway:
+    #enabled: true
+    #baseline-on-migration: true
+    # Remove `schemas` if you want to dynamically pass it via Java config
+    # Or set a default shared schema if you're using a default
+    # schemas: public
+
+  kafka:
+    bootstrap-servers: localhost:9094  # replace with kafka:port in docker
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer

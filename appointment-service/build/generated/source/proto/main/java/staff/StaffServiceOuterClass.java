@@ -80,48 +80,51 @@ public final class StaffServiceOuterClass {
   static {
     java.lang.String[] descriptorData = {
       "\n\023staff_service.proto\032\033google/protobuf/e" +
-      "mpty.proto\032\026google/type/date.proto\"X\n\031Co" +
+      "mpty.proto\032\026google/type/date.proto\"i\n\031Co" +
       "nfirmAppointmentRequest\022\021\n\ttenant_id\030\001 \001" +
-      "(\t\022\026\n\016appointment_id\030\002 \001(\t\022\020\n\010staff_id\030\003" +
-      " \001(\t\"W\n\030DeleteAppointmentRequest\022\021\n\ttena" +
-      "nt_id\030\001 \001(\t\022\026\n\016appointment_id\030\002 \001(\t\022\020\n\010s" +
-      "taff_id\030\003 \001(\t\"=\n\026GetAppointmentsRequest\022" +
-      "\021\n\ttenant_id\030\001 \001(\t\022\020\n\010staff_id\030\002 \001(\t\"\270\001\n" +
-      "\031EditAppointmentRequestDto\022\021\n\ttenant_id\030" +
-      "\001 \001(\t\022\n\n\002id\030\002 \001(\t\022\023\n\013client_name\030\003 \001(\t\022\024" +
-      "\n\014client_email\030\004 \001(\t\022\r\n\005notes\030\005 \001(\t\022\016\n\006s" +
-      "tatus\030\006 \001(\t\022\014\n\004date\030\007 \001(\t\022\022\n\nstart_time\030" +
-      "\010 \001(\t\022\020\n\010end_time\030\t \001(\t\"\242\001\n\026AppointmentR" +
-      "esponseDto\022\n\n\002id\030\002 \001(\t\022\023\n\013client_name\030\003 " +
-      "\001(\t\022\024\n\014client_email\030\004 \001(\t\022\r\n\005notes\030\005 \001(\t" +
-      "\022\016\n\006status\030\006 \001(\t\022\014\n\004date\030\007 \001(\t\022\022\n\nstart_" +
-      "time\030\010 \001(\t\022\020\n\010end_time\030\t \001(\t\"H\n\027GetAppoi" +
-      "ntmentsResponse\022-\n\014appointments\030\001 \003(\0132\027." +
-      "AppointmentResponseDto\"\250\001\n\025StaffSchedule" +
-      "Snapshot\022\021\n\ttenant_id\030\001 \001(\t\022\n\n\002id\030\002 \001(\t\022" +
-      "\r\n\005email\030\003 \001(\t\022\014\n\004name\030\004 \001(\t\022(\n\017weekly_s" +
-      "chedule\030\005 \003(\0132\017.WeeklySchedule\022)\n\020custom" +
-      "_schedules\030\006 \003(\0132\017.CustomSchedule\"{\n\016Wee" +
-      "klySchedule\022\n\n\002id\030\001 \001(\005\022\037\n\013day_of_week\030\002" +
-      " \001(\0162\n.DayOfWeek\022\022\n\nstart_time\030\003 \001(\t\022\020\n\010" +
-      "end_time\030\004 \001(\t\022\026\n\016is_working_day\030\005 \001(\010\"\213" +
-      "\001\n\016CustomSchedule\022\n\n\002id\030\001 \001(\005\022\037\n\004date\030\002 " +
-      "\001(\0132\021.google.type.Date\022\022\n\nstart_time\030\003 \001" +
-      "(\t\022\020\n\010end_time\030\004 \001(\t\022\024\n\014is_available\030\005 \001" +
-      "(\010\022\020\n\010staff_id\030\006 \001(\t*g\n\tDayOfWeek\022\n\n\006MON" +
-      "DAY\020\000\022\013\n\007TUESDAY\020\001\022\r\n\tWEDNESDAY\020\002\022\014\n\010THU" +
-      "RSDAY\020\003\022\n\n\006FRIDAY\020\004\022\014\n\010SATURDAY\020\005\022\n\n\006SUN" +
-      "DAY\020\0062\200\003\n\014StaffService\022H\n\022ConfirmAppoint" +
-      "ment\022\032.ConfirmAppointmentRequest\032\026.googl" +
-      "e.protobuf.Empty\022F\n\021DeleteAppointment\022\031." +
-      "DeleteAppointmentRequest\032\026.google.protob" +
-      "uf.Empty\022O\n\032GetAllAppointmentsForStaff\022\027" +
-      ".GetAppointmentsRequest\032\030.GetAppointment" +
-      "sResponse\022F\n\017EditAppointment\022\032.EditAppoi" +
-      "ntmentRequestDto\032\027.AppointmentResponseDt" +
-      "o\022E\n\023UpdateStaffSchedule\022\026.StaffSchedule" +
-      "Snapshot\032\026.google.protobuf.EmptyB\t\n\005staf" +
-      "fP\001b\006proto3"
+      "(\t\022\026\n\016appointment_id\030\002 \001(\t\022\017\n\007confirm\030\003 " +
+      "\001(\010\022\020\n\010staff_id\030\004 \001(\t\"W\n\030DeleteAppointme" +
+      "ntRequest\022\021\n\ttenant_id\030\001 \001(\t\022\026\n\016appointm" +
+      "ent_id\030\002 \001(\t\022\020\n\010staff_id\030\003 \001(\t\"=\n\026GetApp" +
+      "ointmentsRequest\022\021\n\ttenant_id\030\001 \001(\t\022\020\n\010s" +
+      "taff_id\030\002 \001(\t\"\270\001\n\031EditAppointmentRequest" +
+      "Dto\022\021\n\ttenant_id\030\001 \001(\t\022\n\n\002id\030\002 \001(\t\022\023\n\013cl" +
+      "ient_name\030\003 \001(\t\022\024\n\014client_email\030\004 \001(\t\022\r\n" +
+      "\005notes\030\005 \001(\t\022\016\n\006status\030\006 \001(\t\022\014\n\004date\030\007 \001" +
+      "(\t\022\022\n\nstart_time\030\010 \001(\t\022\020\n\010end_time\030\t \001(\t" +
+      "\"\301\001\n\026AppointmentResponseDto\022\n\n\002id\030\002 \001(\t\022" +
+      "\023\n\013client_name\030\003 \001(\t\022\024\n\014client_email\030\004 \001" +
+      "(\t\022\r\n\005notes\030\005 \001(\t\022\027\n\017customer_status\030\006 \001" +
+      "(\t\022\024\n\014staff_status\030\007 \001(\t\022\014\n\004date\030\010 \001(\t\022\022" +
+      "\n\nstart_time\030\t \001(\t\022\020\n\010end_time\030\n \001(\t\"H\n\027" +
+      "GetAppointmentsResponse\022-\n\014appointments\030" +
+      "\001 \003(\0132\027.AppointmentResponseDto\"\250\001\n\025Staff" +
+      "ScheduleSnapshot\022\021\n\ttenant_id\030\001 \001(\t\022\n\n\002i" +
+      "d\030\002 \001(\t\022\r\n\005email\030\003 \001(\t\022\014\n\004name\030\004 \001(\t\022(\n\017" +
+      "weekly_schedule\030\005 \003(\0132\017.WeeklySchedule\022)" +
+      "\n\020custom_schedules\030\006 \003(\0132\017.CustomSchedul" +
+      "e\"{\n\016WeeklySchedule\022\n\n\002id\030\001 \001(\005\022\037\n\013day_o" +
+      "f_week\030\002 \001(\0162\n.DayOfWeek\022\022\n\nstart_time\030\003" +
+      " \001(\t\022\020\n\010end_time\030\004 \001(\t\022\026\n\016is_working_day" +
+      "\030\005 \001(\010\"\213\001\n\016CustomSchedule\022\n\n\002id\030\001 \001(\005\022\037\n" +
+      "\004date\030\002 \001(\0132\021.google.type.Date\022\022\n\nstart_" +
+      "time\030\003 \001(\t\022\020\n\010end_time\030\004 \001(\t\022\024\n\014is_avail" +
+      "able\030\005 \001(\010\022\020\n\010staff_id\030\006 \001(\t*g\n\tDayOfWee" +
+      "k\022\n\n\006MONDAY\020\000\022\013\n\007TUESDAY\020\001\022\r\n\tWEDNESDAY\020" +
+      "\002\022\014\n\010THURSDAY\020\003\022\n\n\006FRIDAY\020\004\022\014\n\010SATURDAY\020" +
+      "\005\022\n\n\006SUNDAY\020\0062\325\003\n\014StaffService\022H\n\022Confir" +
+      "mAppointment\022\032.ConfirmAppointmentRequest" +
+      "\032\026.google.protobuf.Empty\022S\n\035ConfirmAppoi" +
+      "ntmentRescheduled\022\032.ConfirmAppointmentRe" +
+      "quest\032\026.google.protobuf.Empty\022F\n\021DeleteA" +
+      "ppointment\022\031.DeleteAppointmentRequest\032\026." +
+      "google.protobuf.Empty\022O\n\032GetAllAppointme" +
+      "ntsForStaff\022\027.GetAppointmentsRequest\032\030.G" +
+      "etAppointmentsResponse\022F\n\017EditAppointmen" +
+      "t\022\032.EditAppointmentRequestDto\032\027.Appointm" +
+      "entResponseDto\022E\n\023UpdateStaffSchedule\022\026." +
+      "StaffScheduleSnapshot\032\026.google.protobuf." +
+      "EmptyB\t\n\005staffP\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
@@ -134,7 +137,7 @@ public final class StaffServiceOuterClass {
     internal_static_ConfirmAppointmentRequest_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_ConfirmAppointmentRequest_descriptor,
-        new java.lang.String[] { "TenantId", "AppointmentId", "StaffId", });
+        new java.lang.String[] { "TenantId", "AppointmentId", "Confirm", "StaffId", });
     internal_static_DeleteAppointmentRequest_descriptor =
       getDescriptor().getMessageTypes().get(1);
     internal_static_DeleteAppointmentRequest_fieldAccessorTable = new
@@ -158,7 +161,7 @@ public final class StaffServiceOuterClass {
     internal_static_AppointmentResponseDto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_AppointmentResponseDto_descriptor,
-        new java.lang.String[] { "Id", "ClientName", "ClientEmail", "Notes", "Status", "Date", "StartTime", "EndTime", });
+        new java.lang.String[] { "Id", "ClientName", "ClientEmail", "Notes", "CustomerStatus", "StaffStatus", "Date", "StartTime", "EndTime", });
     internal_static_GetAppointmentsResponse_descriptor =
       getDescriptor().getMessageTypes().get(5);
     internal_static_GetAppointmentsResponse_fieldAccessorTable = new

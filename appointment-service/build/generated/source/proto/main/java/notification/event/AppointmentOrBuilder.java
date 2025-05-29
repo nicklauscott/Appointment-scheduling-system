@@ -58,60 +58,87 @@ public interface AppointmentOrBuilder extends
       getCustomerNameBytes();
 
   /**
-   * <code>string date = 5;</code>
-   * @return The date.
+   * <code>string customer_staus = 5;</code>
+   * @return The customerStaus.
    */
-  java.lang.String getDate();
+  java.lang.String getCustomerStaus();
   /**
-   * <code>string date = 5;</code>
-   * @return The bytes for date.
+   * <code>string customer_staus = 5;</code>
+   * @return The bytes for customerStaus.
    */
   com.google.protobuf.ByteString
-      getDateBytes();
+      getCustomerStausBytes();
 
   /**
-   * <code>string start_time = 6;</code>
+   * <code>string staff_status = 6;</code>
+   * @return The staffStatus.
+   */
+  java.lang.String getStaffStatus();
+  /**
+   * <code>string staff_status = 6;</code>
+   * @return The bytes for staffStatus.
+   */
+  com.google.protobuf.ByteString
+      getStaffStatusBytes();
+
+  /**
+   * <code>.google.type.Date date = 7;</code>
+   * @return Whether the date field is set.
+   */
+  boolean hasDate();
+  /**
+   * <code>.google.type.Date date = 7;</code>
+   * @return The date.
+   */
+  com.google.type.Date getDate();
+  /**
+   * <code>.google.type.Date date = 7;</code>
+   */
+  com.google.type.DateOrBuilder getDateOrBuilder();
+
+  /**
+   * <code>string start_time = 8;</code>
    * @return The startTime.
    */
   java.lang.String getStartTime();
   /**
-   * <code>string start_time = 6;</code>
+   * <code>string start_time = 8;</code>
    * @return The bytes for startTime.
    */
   com.google.protobuf.ByteString
       getStartTimeBytes();
 
   /**
-   * <code>string end_time = 7;</code>
+   * <code>string end_time = 9;</code>
    * @return The endTime.
    */
   java.lang.String getEndTime();
   /**
-   * <code>string end_time = 7;</code>
+   * <code>string end_time = 9;</code>
    * @return The bytes for endTime.
    */
   com.google.protobuf.ByteString
       getEndTimeBytes();
 
   /**
-   * <code>string note = 8;</code>
+   * <code>string note = 10;</code>
    * @return The note.
    */
   java.lang.String getNote();
   /**
-   * <code>string note = 8;</code>
+   * <code>string note = 10;</code>
    * @return The bytes for note.
    */
   com.google.protobuf.ByteString
       getNoteBytes();
 
   /**
-   * <code>string event_type = 10;</code>
+   * <code>string event_type = 11;</code>
    * @return The eventType.
    */
   java.lang.String getEventType();
   /**
-   * <code>string event_type = 10;</code>
+   * <code>string event_type = 11;</code>
    * @return The bytes for eventType.
    */
   com.google.protobuf.ByteString

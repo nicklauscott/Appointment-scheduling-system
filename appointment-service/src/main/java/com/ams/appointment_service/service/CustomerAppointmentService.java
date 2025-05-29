@@ -2,6 +2,7 @@ package com.ams.appointment_service.service;
 
 import com.ams.appointment_service.dto.AppointmentRequestDTO;
 import com.ams.appointment_service.dto.AppointmentResponseDTO;
+import com.ams.appointment_service.dto.ConfirmRescheduleRequestDTO;
 import com.ams.appointment_service.dto.RescheduleRequestDTO;
 import com.ams.appointment_service.exception.AppointmentNotFoundException;
 import com.ams.appointment_service.exception.AppointmentTimeSlotException;
@@ -10,14 +11,16 @@ import com.ams.appointment_service.mapper.AppointmentMapper;
 import com.ams.appointment_service.model.entities.Appointment;
 import com.ams.appointment_service.model.entities.StaffScheduleSnapshot;
 import com.ams.appointment_service.model.TimeSlot;
-import com.ams.appointment_service.model.constant.StaffConfirmStatus;
+import com.ams.appointment_service.model.constant.AppointmentStatus;
 import com.ams.appointment_service.repository.AppointmentRepository;
 import com.ams.appointment_service.repository.StaffScheduleSnapshotRepository;
 import com.ams.appointment_service.util.SlotUtils;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.util.*;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class CustomerAppointmentService {
@@ -25,7 +28,7 @@ public class CustomerAppointmentService {
     private final SlotService slotService;
     private final StaffScheduleSnapshotRepository staffRepository;
     private final AppointmentRepository appointmentRepository;
-    private final KafkaService kafkaService;
+    private final NotificationService notificationService;
 
     public AppointmentResponseDTO bookAppointment(AppointmentRequestDTO appointmentRequestDTO) {
         if (appointmentRequestDTO.getDurationInMinutes() > 120) {
@@ -50,9 +53,7 @@ public class CustomerAppointmentService {
         Appointment savedAppointment = appointmentRepository.save(appointment);
 
         // Notify customer and staff
-        kafkaService.sendAppointmentBookedNotification(savedAppointment);
-
-        System.out.println("Appointment booked");
+        notificationService.sendAppointmentBookedNotification(savedAppointment);
         return AppointmentMapper.toDTO(savedAppointment);
     }
 
@@ -63,11 +64,10 @@ public class CustomerAppointmentService {
         }
         appointmentRepository.deleteById(appointmentId);
         //notify staff
-        kafkaService.notifyStaffAppointmentCancelled(optional.get());
+        notificationService.notifyStaffAppointmentHasBeenCancelled(optional.get());
     }
 
     public void reschedule(long appointmentId, RescheduleRequestDTO request) {
-        System.out.println("Rescheduling...");
         Optional<Appointment> appointment = appointmentRepository.findByIdAndCustomerEmail(appointmentId, request.getEmail());
         if (appointment.isEmpty()) {
             throw new AppointmentNotFoundException("Appointment with the id " + appointmentId + " not found");
@@ -110,11 +110,23 @@ public class CustomerAppointmentService {
         updatedAppointment.setDate(request.getDate());
         updatedAppointment.setStartTime(request.getStartTime());
         updatedAppointment.setEndTime(request.getEndTime());
-        updatedAppointment.setStatus(StaffConfirmStatus.PENDING);
+        updatedAppointment.setCustomerStatus(AppointmentStatus.APPROVED);
+        updatedAppointment.setStaffStatus(AppointmentStatus.PENDING);
         Appointment savedAppointment = appointmentRepository.save(updatedAppointment);
 
         // Send APPOINTMENT_RESCHEDULED notification for staff confirmation.
-        kafkaService.sendRescheduleRequestNotification(savedAppointment);
+        notificationService.notifyStaffAppointmentWasRescheduled(savedAppointment);
+    }
+
+    public AppointmentResponseDTO confirmReschedule(long appointmentId, ConfirmRescheduleRequestDTO request) {
+        Optional<Appointment> optional = appointmentRepository.findByIdAndCustomerEmail(appointmentId, request.getEmail());
+        if (optional.isEmpty()) {
+            throw new AppointmentNotFoundException("Appointment with the id " + appointmentId + " not found");
+        }
+        Appointment appointment = optional.get();
+        appointment.setCustomerStatus(request.isConfirm() ? AppointmentStatus.APPROVED : AppointmentStatus.DECLINED);
+        notificationService.notifyStaffReschedulingWasComFirm(appointment);
+        return AppointmentMapper.toDTO(appointment);
     }
 
     private static UUID getAvailableStaffId(
@@ -122,8 +134,8 @@ public class CustomerAppointmentService {
     ) {
         UUID availableStaff = null;
         for (Map.Entry<UUID, List<TimeSlot>> entry : availableStaffs.entrySet()) {
-            System.out.println("Slots ");
-            entry.getValue().forEach(System.out::println);
+            log.info("Slots ");
+            entry.getValue().forEach(ts -> log.error(String.valueOf(ts)));
             if (entry.getValue().size() > 1) {
                 var start = entry.getValue().getFirst().getStart();
                 var end = entry.getValue().getLast().getEnd();
@@ -150,6 +162,7 @@ public class CustomerAppointmentService {
         appointment.setCustomerName(appointmentRequestDTO.getName());
         appointment.setCustomerEmail(appointmentRequestDTO.getEmail());
         appointment.setNotes(appointmentRequestDTO.getNotes());
+        appointment.setCustomerStatus(AppointmentStatus.APPROVED);
         return appointment;
     }
 }

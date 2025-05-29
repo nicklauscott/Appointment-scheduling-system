@@ -1,6 +1,6 @@
 package com.ams.appointment_service.dto.staffdto;
 
-import com.ams.appointment_service.model.constant.StaffConfirmStatus;
+import com.ams.appointment_service.model.constant.AppointmentStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,5 +15,5 @@ public class UpdateDTO {
     private LocalDate date;
     private LocalTime startTime;
     private LocalTime endTime;
-    private StaffConfirmStatus status;
+    private AppointmentStatus status;
 }

@@ -14,7 +14,7 @@ public class AppointmentMapper {
         appointmentResponseDTO.setDate(appointment.getDate());
         appointmentResponseDTO.setStartTime(appointment.getStartTime());
         appointmentResponseDTO.setEndTime(appointment.getEndTime());
-        appointmentResponseDTO.setStatus(appointment.getStatus());
+        appointmentResponseDTO.setStatus(appointment.getStaffStatus());
         return appointmentResponseDTO;
     }
 }

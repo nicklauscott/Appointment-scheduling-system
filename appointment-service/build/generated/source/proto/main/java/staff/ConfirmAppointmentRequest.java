@@ -123,11 +123,22 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int STAFF_ID_FIELD_NUMBER = 3;
+  public static final int CONFIRM_FIELD_NUMBER = 3;
+  private boolean confirm_ = false;
+  /**
+   * <code>bool confirm = 3;</code>
+   * @return The confirm.
+   */
+  @java.lang.Override
+  public boolean getConfirm() {
+    return confirm_;
+  }
+
+  public static final int STAFF_ID_FIELD_NUMBER = 4;
   @SuppressWarnings("serial")
   private volatile java.lang.Object staffId_ = "";
   /**
-   * <code>string staff_id = 3;</code>
+   * <code>string staff_id = 4;</code>
    * @return The staffId.
    */
   @java.lang.Override
@@ -144,7 +155,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string staff_id = 3;</code>
+   * <code>string staff_id = 4;</code>
    * @return The bytes for staffId.
    */
   @java.lang.Override
@@ -182,8 +193,11 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(appointmentId_)) {
       com.google.protobuf.GeneratedMessage.writeString(output, 2, appointmentId_);
     }
+    if (confirm_ != false) {
+      output.writeBool(3, confirm_);
+    }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(staffId_)) {
-      com.google.protobuf.GeneratedMessage.writeString(output, 3, staffId_);
+      com.google.protobuf.GeneratedMessage.writeString(output, 4, staffId_);
     }
     getUnknownFields().writeTo(output);
   }
@@ -200,8 +214,12 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(appointmentId_)) {
       size += com.google.protobuf.GeneratedMessage.computeStringSize(2, appointmentId_);
     }
+    if (confirm_ != false) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeBoolSize(3, confirm_);
+    }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(staffId_)) {
-      size += com.google.protobuf.GeneratedMessage.computeStringSize(3, staffId_);
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(4, staffId_);
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -222,6 +240,8 @@ private static final long serialVersionUID = 0L;
         .equals(other.getTenantId())) return false;
     if (!getAppointmentId()
         .equals(other.getAppointmentId())) return false;
+    if (getConfirm()
+        != other.getConfirm()) return false;
     if (!getStaffId()
         .equals(other.getStaffId())) return false;
     if (!getUnknownFields().equals(other.getUnknownFields())) return false;
@@ -239,6 +259,9 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getTenantId().hashCode();
     hash = (37 * hash) + APPOINTMENT_ID_FIELD_NUMBER;
     hash = (53 * hash) + getAppointmentId().hashCode();
+    hash = (37 * hash) + CONFIRM_FIELD_NUMBER;
+    hash = (53 * hash) + com.google.protobuf.Internal.hashBoolean(
+        getConfirm());
     hash = (37 * hash) + STAFF_ID_FIELD_NUMBER;
     hash = (53 * hash) + getStaffId().hashCode();
     hash = (29 * hash) + getUnknownFields().hashCode();
@@ -374,6 +397,7 @@ private static final long serialVersionUID = 0L;
       bitField0_ = 0;
       tenantId_ = "";
       appointmentId_ = "";
+      confirm_ = false;
       staffId_ = "";
       return this;
     }
@@ -415,6 +439,9 @@ private static final long serialVersionUID = 0L;
         result.appointmentId_ = appointmentId_;
       }
       if (((from_bitField0_ & 0x00000004) != 0)) {
+        result.confirm_ = confirm_;
+      }
+      if (((from_bitField0_ & 0x00000008) != 0)) {
         result.staffId_ = staffId_;
       }
     }
@@ -441,9 +468,12 @@ private static final long serialVersionUID = 0L;
         bitField0_ |= 0x00000002;
         onChanged();
       }
+      if (other.getConfirm() != false) {
+        setConfirm(other.getConfirm());
+      }
       if (!other.getStaffId().isEmpty()) {
         staffId_ = other.staffId_;
-        bitField0_ |= 0x00000004;
+        bitField0_ |= 0x00000008;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -482,11 +512,16 @@ private static final long serialVersionUID = 0L;
               bitField0_ |= 0x00000002;
               break;
             } // case 18
-            case 26: {
-              staffId_ = input.readStringRequireUtf8();
+            case 24: {
+              confirm_ = input.readBool();
               bitField0_ |= 0x00000004;
               break;
-            } // case 26
+            } // case 24
+            case 34: {
+              staffId_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000008;
+              break;
+            } // case 34
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -648,9 +683,41 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
+    private boolean confirm_ ;
+    /**
+     * <code>bool confirm = 3;</code>
+     * @return The confirm.
+     */
+    @java.lang.Override
+    public boolean getConfirm() {
+      return confirm_;
+    }
+    /**
+     * <code>bool confirm = 3;</code>
+     * @param value The confirm to set.
+     * @return This builder for chaining.
+     */
+    public Builder setConfirm(boolean value) {
+
+      confirm_ = value;
+      bitField0_ |= 0x00000004;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>bool confirm = 3;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearConfirm() {
+      bitField0_ = (bitField0_ & ~0x00000004);
+      confirm_ = false;
+      onChanged();
+      return this;
+    }
+
     private java.lang.Object staffId_ = "";
     /**
-     * <code>string staff_id = 3;</code>
+     * <code>string staff_id = 4;</code>
      * @return The staffId.
      */
     public java.lang.String getStaffId() {
@@ -666,7 +733,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string staff_id = 3;</code>
+     * <code>string staff_id = 4;</code>
      * @return The bytes for staffId.
      */
     public com.google.protobuf.ByteString
@@ -683,7 +750,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string staff_id = 3;</code>
+     * <code>string staff_id = 4;</code>
      * @param value The staffId to set.
      * @return This builder for chaining.
      */
@@ -691,22 +758,22 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       staffId_ = value;
-      bitField0_ |= 0x00000004;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }
     /**
-     * <code>string staff_id = 3;</code>
+     * <code>string staff_id = 4;</code>
      * @return This builder for chaining.
      */
     public Builder clearStaffId() {
       staffId_ = getDefaultInstance().getStaffId();
-      bitField0_ = (bitField0_ & ~0x00000004);
+      bitField0_ = (bitField0_ & ~0x00000008);
       onChanged();
       return this;
     }
     /**
-     * <code>string staff_id = 3;</code>
+     * <code>string staff_id = 4;</code>
      * @param value The bytes for staffId to set.
      * @return This builder for chaining.
      */
@@ -715,7 +782,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       staffId_ = value;
-      bitField0_ |= 0x00000004;
+      bitField0_ |= 0x00000008;
       onChanged();
       return this;
     }

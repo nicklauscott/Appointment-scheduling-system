@@ -1,6 +1,6 @@
 package com.ams.appointment_service.model.entities;
 
-import com.ams.appointment_service.model.constant.StaffConfirmStatus;
+import com.ams.appointment_service.model.constant.AppointmentStatus;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDate;
@@ -20,9 +20,9 @@ public class Appointment {
     @Column(nullable = false) private String customerName;
     @Column(nullable = false) private String customerEmail;
     private String notes;
-    @Column(nullable = false) private boolean customerCancel = false;
+    @Column(nullable = false) @Enumerated(EnumType.STRING) private AppointmentStatus customerStatus = AppointmentStatus.APPROVED;;
 
-    @Column(nullable = false) @Enumerated(EnumType.STRING) private StaffConfirmStatus status = StaffConfirmStatus.PENDING;
+    @Column(nullable = false) @Enumerated(EnumType.STRING) private AppointmentStatus staffStatus = AppointmentStatus.PENDING;
 
     @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
     private Payment payment;

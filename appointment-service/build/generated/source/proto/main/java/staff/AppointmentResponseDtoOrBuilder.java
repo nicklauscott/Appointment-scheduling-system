@@ -58,48 +58,60 @@ public interface AppointmentResponseDtoOrBuilder extends
       getNotesBytes();
 
   /**
-   * <code>string status = 6;</code>
-   * @return The status.
+   * <code>string customer_status = 6;</code>
+   * @return The customerStatus.
    */
-  java.lang.String getStatus();
+  java.lang.String getCustomerStatus();
   /**
-   * <code>string status = 6;</code>
-   * @return The bytes for status.
+   * <code>string customer_status = 6;</code>
+   * @return The bytes for customerStatus.
    */
   com.google.protobuf.ByteString
-      getStatusBytes();
+      getCustomerStatusBytes();
 
   /**
-   * <code>string date = 7;</code>
+   * <code>string staff_status = 7;</code>
+   * @return The staffStatus.
+   */
+  java.lang.String getStaffStatus();
+  /**
+   * <code>string staff_status = 7;</code>
+   * @return The bytes for staffStatus.
+   */
+  com.google.protobuf.ByteString
+      getStaffStatusBytes();
+
+  /**
+   * <code>string date = 8;</code>
    * @return The date.
    */
   java.lang.String getDate();
   /**
-   * <code>string date = 7;</code>
+   * <code>string date = 8;</code>
    * @return The bytes for date.
    */
   com.google.protobuf.ByteString
       getDateBytes();
 
   /**
-   * <code>string start_time = 8;</code>
+   * <code>string start_time = 9;</code>
    * @return The startTime.
    */
   java.lang.String getStartTime();
   /**
-   * <code>string start_time = 8;</code>
+   * <code>string start_time = 9;</code>
    * @return The bytes for startTime.
    */
   com.google.protobuf.ByteString
       getStartTimeBytes();
 
   /**
-   * <code>string end_time = 9;</code>
+   * <code>string end_time = 10;</code>
    * @return The endTime.
    */
   java.lang.String getEndTime();
   /**
-   * <code>string end_time = 9;</code>
+   * <code>string end_time = 10;</code>
    * @return The bytes for endTime.
    */
   com.google.protobuf.ByteString

@@ -34,12 +34,18 @@ public interface ConfirmAppointmentRequestOrBuilder extends
       getAppointmentIdBytes();
 
   /**
-   * <code>string staff_id = 3;</code>
+   * <code>bool confirm = 3;</code>
+   * @return The confirm.
+   */
+  boolean getConfirm();
+
+  /**
+   * <code>string staff_id = 4;</code>
    * @return The staffId.
    */
   java.lang.String getStaffId();
   /**
-   * <code>string staff_id = 3;</code>
+   * <code>string staff_id = 4;</code>
    * @return The bytes for staffId.
    */
   com.google.protobuf.ByteString

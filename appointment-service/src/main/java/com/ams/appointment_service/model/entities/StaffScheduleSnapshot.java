@@ -24,3 +24,5 @@ public class StaffScheduleSnapshot {
     @OneToMany(mappedBy = "staff", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Appointment> appointments;
 }
+
+

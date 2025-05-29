@@ -21,7 +21,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-@Component
+//@Component
 @RequiredArgsConstructor
 public class CML implements CommandLineRunner {
 

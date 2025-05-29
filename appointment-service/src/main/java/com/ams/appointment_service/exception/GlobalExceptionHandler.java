@@ -11,11 +11,18 @@ import java.util.Map;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-    // AppointmentTimeSlotException
+    // TenantNotFoundException
+    @ExceptionHandler(TenantNotFoundException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ResponseEntity<Map<String, String>> handleTenantNotFoundException(TenantNotFoundException e) {
+        Map<String, String> errors = new HashMap<>();
+        errors.put("message", e.getMessage());
+        return  ResponseEntity.badRequest().body(errors);
+    }
 
     @ExceptionHandler(AppointmentTimeSlotException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    private ResponseEntity<Map<String, String>> handleAppointmentTimeSlotException(AppointmentTimeSlotException e) {
+    public ResponseEntity<Map<String, String>> handleAppointmentTimeSlotException(AppointmentTimeSlotException e) {
         Map<String, String> errors = new HashMap<>();
         errors.put("message", e.getMessage());
         return  ResponseEntity.badRequest().body(errors);
@@ -23,7 +30,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AppointmentNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    private ResponseEntity<Map<String, String>> handleAppointmentNotFoundException(AppointmentNotFoundException e) {
+    public ResponseEntity<Map<String, String>> handleAppointmentNotFoundException(AppointmentNotFoundException e) {
         Map<String, String> errors = new HashMap<>();
         errors.put("message", e.getMessage());
         return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
@@ -31,7 +38,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(NoStaffAvailableException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    private ResponseEntity<Map<String, String>> handleNoStaffAvailableException(NoStaffAvailableException e) {
+    public ResponseEntity<Map<String, String>> handleNoStaffAvailableException(NoStaffAvailableException e) {
         Map<String, String> errors = new HashMap<>();
         errors.put("message", e.getMessage());
         return ResponseEntity.badRequest().body(errors);

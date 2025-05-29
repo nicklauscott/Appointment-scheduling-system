@@ -8,6 +8,7 @@ option java_package = "staff";
 
 service StaffService {
     rpc ConfirmAppointment (ConfirmAppointmentRequest) returns (google.protobuf.Empty);
+    rpc ConfirmAppointmentRescheduled (ConfirmAppointmentRequest) returns (google.protobuf.Empty);
     rpc DeleteAppointment (DeleteAppointmentRequest) returns (google.protobuf.Empty);
     rpc GetAllAppointmentsForStaff (GetAppointmentsRequest) returns (GetAppointmentsResponse);
     rpc EditAppointment (EditAppointmentRequestDto) returns (AppointmentResponseDto);
@@ -17,7 +18,8 @@ service StaffService {
 message ConfirmAppointmentRequest {
     string tenant_id = 1;
     string appointment_id = 2;
-    string staff_id = 3;
+    bool confirm = 3;
+    string staff_id = 4;
 }
 
 message DeleteAppointmentRequest {
@@ -48,10 +50,11 @@ message AppointmentResponseDto {
     string client_name = 3;
     string client_email = 4;
     string notes = 5;
-    string status = 6;
-    string date = 7;
-    string start_time = 8;
-    string end_time = 9;
+    string customer_status = 6;
+    string staff_status = 7;
+    string date = 8;
+    string start_time = 9;
+    string end_time = 10;
 }
 
 message GetAppointmentsResponse {

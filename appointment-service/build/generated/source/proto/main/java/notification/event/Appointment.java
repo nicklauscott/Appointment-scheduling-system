@@ -31,7 +31,8 @@ private static final long serialVersionUID = 0L;
     staffName_ = "";
     customerEmail_ = "";
     customerName_ = "";
-    date_ = "";
+    customerStaus_ = "";
+    staffStatus_ = "";
     startTime_ = "";
     endTime_ = "";
     note_ = "";
@@ -51,6 +52,7 @@ private static final long serialVersionUID = 0L;
             notification.event.Appointment.class, notification.event.Appointment.Builder.class);
   }
 
+  private int bitField0_;
   public static final int STAFF_EMAIL_FIELD_NUMBER = 1;
   @SuppressWarnings("serial")
   private volatile java.lang.Object staffEmail_ = "";
@@ -207,50 +209,115 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int DATE_FIELD_NUMBER = 5;
+  public static final int CUSTOMER_STAUS_FIELD_NUMBER = 5;
   @SuppressWarnings("serial")
-  private volatile java.lang.Object date_ = "";
+  private volatile java.lang.Object customerStaus_ = "";
   /**
-   * <code>string date = 5;</code>
-   * @return The date.
+   * <code>string customer_staus = 5;</code>
+   * @return The customerStaus.
    */
   @java.lang.Override
-  public java.lang.String getDate() {
-    java.lang.Object ref = date_;
+  public java.lang.String getCustomerStaus() {
+    java.lang.Object ref = customerStaus_;
     if (ref instanceof java.lang.String) {
       return (java.lang.String) ref;
     } else {
       com.google.protobuf.ByteString bs = 
           (com.google.protobuf.ByteString) ref;
       java.lang.String s = bs.toStringUtf8();
-      date_ = s;
+      customerStaus_ = s;
       return s;
     }
   }
   /**
-   * <code>string date = 5;</code>
-   * @return The bytes for date.
+   * <code>string customer_staus = 5;</code>
+   * @return The bytes for customerStaus.
    */
   @java.lang.Override
   public com.google.protobuf.ByteString
-      getDateBytes() {
-    java.lang.Object ref = date_;
+      getCustomerStausBytes() {
+    java.lang.Object ref = customerStaus_;
     if (ref instanceof java.lang.String) {
       com.google.protobuf.ByteString b = 
           com.google.protobuf.ByteString.copyFromUtf8(
               (java.lang.String) ref);
-      date_ = b;
+      customerStaus_ = b;
       return b;
     } else {
       return (com.google.protobuf.ByteString) ref;
     }
   }
 
-  public static final int START_TIME_FIELD_NUMBER = 6;
+  public static final int STAFF_STATUS_FIELD_NUMBER = 6;
+  @SuppressWarnings("serial")
+  private volatile java.lang.Object staffStatus_ = "";
+  /**
+   * <code>string staff_status = 6;</code>
+   * @return The staffStatus.
+   */
+  @java.lang.Override
+  public java.lang.String getStaffStatus() {
+    java.lang.Object ref = staffStatus_;
+    if (ref instanceof java.lang.String) {
+      return (java.lang.String) ref;
+    } else {
+      com.google.protobuf.ByteString bs = 
+          (com.google.protobuf.ByteString) ref;
+      java.lang.String s = bs.toStringUtf8();
+      staffStatus_ = s;
+      return s;
+    }
+  }
+  /**
+   * <code>string staff_status = 6;</code>
+   * @return The bytes for staffStatus.
+   */
+  @java.lang.Override
+  public com.google.protobuf.ByteString
+      getStaffStatusBytes() {
+    java.lang.Object ref = staffStatus_;
+    if (ref instanceof java.lang.String) {
+      com.google.protobuf.ByteString b = 
+          com.google.protobuf.ByteString.copyFromUtf8(
+              (java.lang.String) ref);
+      staffStatus_ = b;
+      return b;
+    } else {
+      return (com.google.protobuf.ByteString) ref;
+    }
+  }
+
+  public static final int DATE_FIELD_NUMBER = 7;
+  private com.google.type.Date date_;
+  /**
+   * <code>.google.type.Date date = 7;</code>
+   * @return Whether the date field is set.
+   */
+  @java.lang.Override
+  public boolean hasDate() {
+    return ((bitField0_ & 0x00000001) != 0);
+  }
+  /**
+   * <code>.google.type.Date date = 7;</code>
+   * @return The date.
+   */
+  @java.lang.Override
+  public com.google.type.Date getDate() {
+    return date_ == null ? com.google.type.Date.getDefaultInstance() : date_;
+  }
+  /**
+   * <code>.google.type.Date date = 7;</code>
+   */
+  @java.lang.Override
+  public com.google.type.DateOrBuilder getDateOrBuilder() {
+    return date_ == null ? com.google.type.Date.getDefaultInstance() : date_;
+  }
+
+  public static final int START_TIME_FIELD_NUMBER = 8;
   @SuppressWarnings("serial")
   private volatile java.lang.Object startTime_ = "";
   /**
-   * <code>string start_time = 6;</code>
+   * <code>string start_time = 8;</code>
    * @return The startTime.
    */
   @java.lang.Override
@@ -267,7 +334,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string start_time = 6;</code>
+   * <code>string start_time = 8;</code>
    * @return The bytes for startTime.
    */
   @java.lang.Override
@@ -285,11 +352,11 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int END_TIME_FIELD_NUMBER = 7;
+  public static final int END_TIME_FIELD_NUMBER = 9;
   @SuppressWarnings("serial")
   private volatile java.lang.Object endTime_ = "";
   /**
-   * <code>string end_time = 7;</code>
+   * <code>string end_time = 9;</code>
    * @return The endTime.
    */
   @java.lang.Override
@@ -306,7 +373,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string end_time = 7;</code>
+   * <code>string end_time = 9;</code>
    * @return The bytes for endTime.
    */
   @java.lang.Override
@@ -324,11 +391,11 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int NOTE_FIELD_NUMBER = 8;
+  public static final int NOTE_FIELD_NUMBER = 10;
   @SuppressWarnings("serial")
   private volatile java.lang.Object note_ = "";
   /**
-   * <code>string note = 8;</code>
+   * <code>string note = 10;</code>
    * @return The note.
    */
   @java.lang.Override
@@ -345,7 +412,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string note = 8;</code>
+   * <code>string note = 10;</code>
    * @return The bytes for note.
    */
   @java.lang.Override
@@ -363,11 +430,11 @@ private static final long serialVersionUID = 0L;
     }
   }
 
-  public static final int EVENT_TYPE_FIELD_NUMBER = 10;
+  public static final int EVENT_TYPE_FIELD_NUMBER = 11;
   @SuppressWarnings("serial")
   private volatile java.lang.Object eventType_ = "";
   /**
-   * <code>string event_type = 10;</code>
+   * <code>string event_type = 11;</code>
    * @return The eventType.
    */
   @java.lang.Override
@@ -384,7 +451,7 @@ private static final long serialVersionUID = 0L;
     }
   }
   /**
-   * <code>string event_type = 10;</code>
+   * <code>string event_type = 11;</code>
    * @return The bytes for eventType.
    */
   @java.lang.Override
@@ -428,20 +495,26 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(customerName_)) {
       com.google.protobuf.GeneratedMessage.writeString(output, 4, customerName_);
     }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(date_)) {
-      com.google.protobuf.GeneratedMessage.writeString(output, 5, date_);
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(customerStaus_)) {
+      com.google.protobuf.GeneratedMessage.writeString(output, 5, customerStaus_);
+    }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(staffStatus_)) {
+      com.google.protobuf.GeneratedMessage.writeString(output, 6, staffStatus_);
+    }
+    if (((bitField0_ & 0x00000001) != 0)) {
+      output.writeMessage(7, getDate());
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(startTime_)) {
-      com.google.protobuf.GeneratedMessage.writeString(output, 6, startTime_);
+      com.google.protobuf.GeneratedMessage.writeString(output, 8, startTime_);
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(endTime_)) {
-      com.google.protobuf.GeneratedMessage.writeString(output, 7, endTime_);
+      com.google.protobuf.GeneratedMessage.writeString(output, 9, endTime_);
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(note_)) {
-      com.google.protobuf.GeneratedMessage.writeString(output, 8, note_);
+      com.google.protobuf.GeneratedMessage.writeString(output, 10, note_);
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(eventType_)) {
-      com.google.protobuf.GeneratedMessage.writeString(output, 10, eventType_);
+      com.google.protobuf.GeneratedMessage.writeString(output, 11, eventType_);
     }
     getUnknownFields().writeTo(output);
   }
@@ -464,20 +537,27 @@ private static final long serialVersionUID = 0L;
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(customerName_)) {
       size += com.google.protobuf.GeneratedMessage.computeStringSize(4, customerName_);
     }
-    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(date_)) {
-      size += com.google.protobuf.GeneratedMessage.computeStringSize(5, date_);
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(customerStaus_)) {
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(5, customerStaus_);
+    }
+    if (!com.google.protobuf.GeneratedMessage.isStringEmpty(staffStatus_)) {
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(6, staffStatus_);
+    }
+    if (((bitField0_ & 0x00000001) != 0)) {
+      size += com.google.protobuf.CodedOutputStream
+        .computeMessageSize(7, getDate());
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(startTime_)) {
-      size += com.google.protobuf.GeneratedMessage.computeStringSize(6, startTime_);
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(8, startTime_);
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(endTime_)) {
-      size += com.google.protobuf.GeneratedMessage.computeStringSize(7, endTime_);
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(9, endTime_);
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(note_)) {
-      size += com.google.protobuf.GeneratedMessage.computeStringSize(8, note_);
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(10, note_);
     }
     if (!com.google.protobuf.GeneratedMessage.isStringEmpty(eventType_)) {
-      size += com.google.protobuf.GeneratedMessage.computeStringSize(10, eventType_);
+      size += com.google.protobuf.GeneratedMessage.computeStringSize(11, eventType_);
     }
     size += getUnknownFields().getSerializedSize();
     memoizedSize = size;
@@ -502,8 +582,15 @@ private static final long serialVersionUID = 0L;
         .equals(other.getCustomerEmail())) return false;
     if (!getCustomerName()
         .equals(other.getCustomerName())) return false;
-    if (!getDate()
-        .equals(other.getDate())) return false;
+    if (!getCustomerStaus()
+        .equals(other.getCustomerStaus())) return false;
+    if (!getStaffStatus()
+        .equals(other.getStaffStatus())) return false;
+    if (hasDate() != other.hasDate()) return false;
+    if (hasDate()) {
+      if (!getDate()
+          .equals(other.getDate())) return false;
+    }
     if (!getStartTime()
         .equals(other.getStartTime())) return false;
     if (!getEndTime()
@@ -531,8 +618,14 @@ private static final long serialVersionUID = 0L;
     hash = (53 * hash) + getCustomerEmail().hashCode();
     hash = (37 * hash) + CUSTOMER_NAME_FIELD_NUMBER;
     hash = (53 * hash) + getCustomerName().hashCode();
-    hash = (37 * hash) + DATE_FIELD_NUMBER;
-    hash = (53 * hash) + getDate().hashCode();
+    hash = (37 * hash) + CUSTOMER_STAUS_FIELD_NUMBER;
+    hash = (53 * hash) + getCustomerStaus().hashCode();
+    hash = (37 * hash) + STAFF_STATUS_FIELD_NUMBER;
+    hash = (53 * hash) + getStaffStatus().hashCode();
+    if (hasDate()) {
+      hash = (37 * hash) + DATE_FIELD_NUMBER;
+      hash = (53 * hash) + getDate().hashCode();
+    }
     hash = (37 * hash) + START_TIME_FIELD_NUMBER;
     hash = (53 * hash) + getStartTime().hashCode();
     hash = (37 * hash) + END_TIME_FIELD_NUMBER;
@@ -660,13 +753,19 @@ private static final long serialVersionUID = 0L;
 
     // Construct using notification.event.Appointment.newBuilder()
     private Builder() {
-
+      maybeForceBuilderInitialization();
     }
 
     private Builder(
         com.google.protobuf.GeneratedMessage.BuilderParent parent) {
       super(parent);
-
+      maybeForceBuilderInitialization();
+    }
+    private void maybeForceBuilderInitialization() {
+      if (com.google.protobuf.GeneratedMessage
+              .alwaysUseFieldBuilders) {
+        internalGetDateFieldBuilder();
+      }
     }
     @java.lang.Override
     public Builder clear() {
@@ -676,7 +775,13 @@ private static final long serialVersionUID = 0L;
       staffName_ = "";
       customerEmail_ = "";
       customerName_ = "";
-      date_ = "";
+      customerStaus_ = "";
+      staffStatus_ = "";
+      date_ = null;
+      if (dateBuilder_ != null) {
+        dateBuilder_.dispose();
+        dateBuilder_ = null;
+      }
       startTime_ = "";
       endTime_ = "";
       note_ = "";
@@ -727,20 +832,31 @@ private static final long serialVersionUID = 0L;
         result.customerName_ = customerName_;
       }
       if (((from_bitField0_ & 0x00000010) != 0)) {
-        result.date_ = date_;
+        result.customerStaus_ = customerStaus_;
       }
       if (((from_bitField0_ & 0x00000020) != 0)) {
-        result.startTime_ = startTime_;
+        result.staffStatus_ = staffStatus_;
       }
+      int to_bitField0_ = 0;
       if (((from_bitField0_ & 0x00000040) != 0)) {
-        result.endTime_ = endTime_;
+        result.date_ = dateBuilder_ == null
+            ? date_
+            : dateBuilder_.build();
+        to_bitField0_ |= 0x00000001;
       }
       if (((from_bitField0_ & 0x00000080) != 0)) {
-        result.note_ = note_;
+        result.startTime_ = startTime_;
       }
       if (((from_bitField0_ & 0x00000100) != 0)) {
+        result.endTime_ = endTime_;
+      }
+      if (((from_bitField0_ & 0x00000200) != 0)) {
+        result.note_ = note_;
+      }
+      if (((from_bitField0_ & 0x00000400) != 0)) {
         result.eventType_ = eventType_;
       }
+      result.bitField0_ |= to_bitField0_;
     }
 
     @java.lang.Override
@@ -775,29 +891,37 @@ private static final long serialVersionUID = 0L;
         bitField0_ |= 0x00000008;
         onChanged();
       }
-      if (!other.getDate().isEmpty()) {
-        date_ = other.date_;
+      if (!other.getCustomerStaus().isEmpty()) {
+        customerStaus_ = other.customerStaus_;
         bitField0_ |= 0x00000010;
         onChanged();
       }
+      if (!other.getStaffStatus().isEmpty()) {
+        staffStatus_ = other.staffStatus_;
+        bitField0_ |= 0x00000020;
+        onChanged();
+      }
+      if (other.hasDate()) {
+        mergeDate(other.getDate());
+      }
       if (!other.getStartTime().isEmpty()) {
         startTime_ = other.startTime_;
-        bitField0_ |= 0x00000020;
+        bitField0_ |= 0x00000080;
         onChanged();
       }
       if (!other.getEndTime().isEmpty()) {
         endTime_ = other.endTime_;
-        bitField0_ |= 0x00000040;
+        bitField0_ |= 0x00000100;
         onChanged();
       }
       if (!other.getNote().isEmpty()) {
         note_ = other.note_;
-        bitField0_ |= 0x00000080;
+        bitField0_ |= 0x00000200;
         onChanged();
       }
       if (!other.getEventType().isEmpty()) {
         eventType_ = other.eventType_;
-        bitField0_ |= 0x00000100;
+        bitField0_ |= 0x00000400;
         onChanged();
       }
       this.mergeUnknownFields(other.getUnknownFields());
@@ -847,30 +971,42 @@ private static final long serialVersionUID = 0L;
               break;
             } // case 34
             case 42: {
-              date_ = input.readStringRequireUtf8();
+              customerStaus_ = input.readStringRequireUtf8();
               bitField0_ |= 0x00000010;
               break;
             } // case 42
             case 50: {
-              startTime_ = input.readStringRequireUtf8();
+              staffStatus_ = input.readStringRequireUtf8();
               bitField0_ |= 0x00000020;
               break;
             } // case 50
             case 58: {
-              endTime_ = input.readStringRequireUtf8();
+              input.readMessage(
+                  internalGetDateFieldBuilder().getBuilder(),
+                  extensionRegistry);
               bitField0_ |= 0x00000040;
               break;
             } // case 58
             case 66: {
-              note_ = input.readStringRequireUtf8();
+              startTime_ = input.readStringRequireUtf8();
               bitField0_ |= 0x00000080;
               break;
             } // case 66
-            case 82: {
-              eventType_ = input.readStringRequireUtf8();
+            case 74: {
+              endTime_ = input.readStringRequireUtf8();
               bitField0_ |= 0x00000100;
               break;
+            } // case 74
+            case 82: {
+              note_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000200;
+              break;
             } // case 82
+            case 90: {
+              eventType_ = input.readStringRequireUtf8();
+              bitField0_ |= 0x00000400;
+              break;
+            } // case 90
             default: {
               if (!super.parseUnknownField(input, extensionRegistry, tag)) {
                 done = true; // was an endgroup tag
@@ -1176,81 +1312,274 @@ private static final long serialVersionUID = 0L;
       return this;
     }
 
-    private java.lang.Object date_ = "";
+    private java.lang.Object customerStaus_ = "";
     /**
-     * <code>string date = 5;</code>
-     * @return The date.
+     * <code>string customer_staus = 5;</code>
+     * @return The customerStaus.
      */
-    public java.lang.String getDate() {
-      java.lang.Object ref = date_;
+    public java.lang.String getCustomerStaus() {
+      java.lang.Object ref = customerStaus_;
       if (!(ref instanceof java.lang.String)) {
         com.google.protobuf.ByteString bs =
             (com.google.protobuf.ByteString) ref;
         java.lang.String s = bs.toStringUtf8();
-        date_ = s;
+        customerStaus_ = s;
         return s;
       } else {
         return (java.lang.String) ref;
       }
     }
     /**
-     * <code>string date = 5;</code>
-     * @return The bytes for date.
+     * <code>string customer_staus = 5;</code>
+     * @return The bytes for customerStaus.
      */
     public com.google.protobuf.ByteString
-        getDateBytes() {
-      java.lang.Object ref = date_;
+        getCustomerStausBytes() {
+      java.lang.Object ref = customerStaus_;
       if (ref instanceof String) {
         com.google.protobuf.ByteString b = 
             com.google.protobuf.ByteString.copyFromUtf8(
                 (java.lang.String) ref);
-        date_ = b;
+        customerStaus_ = b;
         return b;
       } else {
         return (com.google.protobuf.ByteString) ref;
       }
     }
     /**
-     * <code>string date = 5;</code>
-     * @param value The date to set.
+     * <code>string customer_staus = 5;</code>
+     * @param value The customerStaus to set.
      * @return This builder for chaining.
      */
-    public Builder setDate(
+    public Builder setCustomerStaus(
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
-      date_ = value;
+      customerStaus_ = value;
       bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
     /**
-     * <code>string date = 5;</code>
+     * <code>string customer_staus = 5;</code>
      * @return This builder for chaining.
      */
-    public Builder clearDate() {
-      date_ = getDefaultInstance().getDate();
+    public Builder clearCustomerStaus() {
+      customerStaus_ = getDefaultInstance().getCustomerStaus();
       bitField0_ = (bitField0_ & ~0x00000010);
       onChanged();
       return this;
     }
     /**
-     * <code>string date = 5;</code>
-     * @param value The bytes for date to set.
+     * <code>string customer_staus = 5;</code>
+     * @param value The bytes for customerStaus to set.
      * @return This builder for chaining.
      */
-    public Builder setDateBytes(
+    public Builder setCustomerStausBytes(
         com.google.protobuf.ByteString value) {
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
-      date_ = value;
+      customerStaus_ = value;
       bitField0_ |= 0x00000010;
       onChanged();
       return this;
     }
 
+    private java.lang.Object staffStatus_ = "";
+    /**
+     * <code>string staff_status = 6;</code>
+     * @return The staffStatus.
+     */
+    public java.lang.String getStaffStatus() {
+      java.lang.Object ref = staffStatus_;
+      if (!(ref instanceof java.lang.String)) {
+        com.google.protobuf.ByteString bs =
+            (com.google.protobuf.ByteString) ref;
+        java.lang.String s = bs.toStringUtf8();
+        staffStatus_ = s;
+        return s;
+      } else {
+        return (java.lang.String) ref;
+      }
+    }
+    /**
+     * <code>string staff_status = 6;</code>
+     * @return The bytes for staffStatus.
+     */
+    public com.google.protobuf.ByteString
+        getStaffStatusBytes() {
+      java.lang.Object ref = staffStatus_;
+      if (ref instanceof String) {
+        com.google.protobuf.ByteString b = 
+            com.google.protobuf.ByteString.copyFromUtf8(
+                (java.lang.String) ref);
+        staffStatus_ = b;
+        return b;
+      } else {
+        return (com.google.protobuf.ByteString) ref;
+      }
+    }
+    /**
+     * <code>string staff_status = 6;</code>
+     * @param value The staffStatus to set.
+     * @return This builder for chaining.
+     */
+    public Builder setStaffStatus(
+        java.lang.String value) {
+      if (value == null) { throw new NullPointerException(); }
+      staffStatus_ = value;
+      bitField0_ |= 0x00000020;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string staff_status = 6;</code>
+     * @return This builder for chaining.
+     */
+    public Builder clearStaffStatus() {
+      staffStatus_ = getDefaultInstance().getStaffStatus();
+      bitField0_ = (bitField0_ & ~0x00000020);
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>string staff_status = 6;</code>
+     * @param value The bytes for staffStatus to set.
+     * @return This builder for chaining.
+     */
+    public Builder setStaffStatusBytes(
+        com.google.protobuf.ByteString value) {
+      if (value == null) { throw new NullPointerException(); }
+      checkByteStringIsUtf8(value);
+      staffStatus_ = value;
+      bitField0_ |= 0x00000020;
+      onChanged();
+      return this;
+    }
+
+    private com.google.type.Date date_;
+    private com.google.protobuf.SingleFieldBuilder<
+        com.google.type.Date, com.google.type.Date.Builder, com.google.type.DateOrBuilder> dateBuilder_;
+    /**
+     * <code>.google.type.Date date = 7;</code>
+     * @return Whether the date field is set.
+     */
+    public boolean hasDate() {
+      return ((bitField0_ & 0x00000040) != 0);
+    }
+    /**
+     * <code>.google.type.Date date = 7;</code>
+     * @return The date.
+     */
+    public com.google.type.Date getDate() {
+      if (dateBuilder_ == null) {
+        return date_ == null ? com.google.type.Date.getDefaultInstance() : date_;
+      } else {
+        return dateBuilder_.getMessage();
+      }
+    }
+    /**
+     * <code>.google.type.Date date = 7;</code>
+     */
+    public Builder setDate(com.google.type.Date value) {
+      if (dateBuilder_ == null) {
+        if (value == null) {
+          throw new NullPointerException();
+        }
+        date_ = value;
+      } else {
+        dateBuilder_.setMessage(value);
+      }
+      bitField0_ |= 0x00000040;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.google.type.Date date = 7;</code>
+     */
+    public Builder setDate(
+        com.google.type.Date.Builder builderForValue) {
+      if (dateBuilder_ == null) {
+        date_ = builderForValue.build();
+      } else {
+        dateBuilder_.setMessage(builderForValue.build());
+      }
+      bitField0_ |= 0x00000040;
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.google.type.Date date = 7;</code>
+     */
+    public Builder mergeDate(com.google.type.Date value) {
+      if (dateBuilder_ == null) {
+        if (((bitField0_ & 0x00000040) != 0) &&
+          date_ != null &&
+          date_ != com.google.type.Date.getDefaultInstance()) {
+          getDateBuilder().mergeFrom(value);
+        } else {
+          date_ = value;
+        }
+      } else {
+        dateBuilder_.mergeFrom(value);
+      }
+      if (date_ != null) {
+        bitField0_ |= 0x00000040;
+        onChanged();
+      }
+      return this;
+    }
+    /**
+     * <code>.google.type.Date date = 7;</code>
+     */
+    public Builder clearDate() {
+      bitField0_ = (bitField0_ & ~0x00000040);
+      date_ = null;
+      if (dateBuilder_ != null) {
+        dateBuilder_.dispose();
+        dateBuilder_ = null;
+      }
+      onChanged();
+      return this;
+    }
+    /**
+     * <code>.google.type.Date date = 7;</code>
+     */
+    public com.google.type.Date.Builder getDateBuilder() {
+      bitField0_ |= 0x00000040;
+      onChanged();
+      return internalGetDateFieldBuilder().getBuilder();
+    }
+    /**
+     * <code>.google.type.Date date = 7;</code>
+     */
+    public com.google.type.DateOrBuilder getDateOrBuilder() {
+      if (dateBuilder_ != null) {
+        return dateBuilder_.getMessageOrBuilder();
+      } else {
+        return date_ == null ?
+            com.google.type.Date.getDefaultInstance() : date_;
+      }
+    }
+    /**
+     * <code>.google.type.Date date = 7;</code>
+     */
+    private com.google.protobuf.SingleFieldBuilder<
+        com.google.type.Date, com.google.type.Date.Builder, com.google.type.DateOrBuilder> 
+        internalGetDateFieldBuilder() {
+      if (dateBuilder_ == null) {
+        dateBuilder_ = new com.google.protobuf.SingleFieldBuilder<
+            com.google.type.Date, com.google.type.Date.Builder, com.google.type.DateOrBuilder>(
+                getDate(),
+                getParentForChildren(),
+                isClean());
+        date_ = null;
+      }
+      return dateBuilder_;
+    }
+
     private java.lang.Object startTime_ = "";
     /**
-     * <code>string start_time = 6;</code>
+     * <code>string start_time = 8;</code>
      * @return The startTime.
      */
     public java.lang.String getStartTime() {
@@ -1266,7 +1595,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string start_time = 6;</code>
+     * <code>string start_time = 8;</code>
      * @return The bytes for startTime.
      */
     public com.google.protobuf.ByteString
@@ -1283,7 +1612,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string start_time = 6;</code>
+     * <code>string start_time = 8;</code>
      * @param value The startTime to set.
      * @return This builder for chaining.
      */
@@ -1291,22 +1620,22 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       startTime_ = value;
-      bitField0_ |= 0x00000020;
+      bitField0_ |= 0x00000080;
       onChanged();
       return this;
     }
     /**
-     * <code>string start_time = 6;</code>
+     * <code>string start_time = 8;</code>
      * @return This builder for chaining.
      */
     public Builder clearStartTime() {
       startTime_ = getDefaultInstance().getStartTime();
-      bitField0_ = (bitField0_ & ~0x00000020);
+      bitField0_ = (bitField0_ & ~0x00000080);
       onChanged();
       return this;
     }
     /**
-     * <code>string start_time = 6;</code>
+     * <code>string start_time = 8;</code>
      * @param value The bytes for startTime to set.
      * @return This builder for chaining.
      */
@@ -1315,14 +1644,14 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       startTime_ = value;
-      bitField0_ |= 0x00000020;
+      bitField0_ |= 0x00000080;
       onChanged();
       return this;
     }
 
     private java.lang.Object endTime_ = "";
     /**
-     * <code>string end_time = 7;</code>
+     * <code>string end_time = 9;</code>
      * @return The endTime.
      */
     public java.lang.String getEndTime() {
@@ -1338,7 +1667,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string end_time = 7;</code>
+     * <code>string end_time = 9;</code>
      * @return The bytes for endTime.
      */
     public com.google.protobuf.ByteString
@@ -1355,7 +1684,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string end_time = 7;</code>
+     * <code>string end_time = 9;</code>
      * @param value The endTime to set.
      * @return This builder for chaining.
      */
@@ -1363,22 +1692,22 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       endTime_ = value;
-      bitField0_ |= 0x00000040;
+      bitField0_ |= 0x00000100;
       onChanged();
       return this;
     }
     /**
-     * <code>string end_time = 7;</code>
+     * <code>string end_time = 9;</code>
      * @return This builder for chaining.
      */
     public Builder clearEndTime() {
       endTime_ = getDefaultInstance().getEndTime();
-      bitField0_ = (bitField0_ & ~0x00000040);
+      bitField0_ = (bitField0_ & ~0x00000100);
       onChanged();
       return this;
     }
     /**
-     * <code>string end_time = 7;</code>
+     * <code>string end_time = 9;</code>
      * @param value The bytes for endTime to set.
      * @return This builder for chaining.
      */
@@ -1387,14 +1716,14 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       endTime_ = value;
-      bitField0_ |= 0x00000040;
+      bitField0_ |= 0x00000100;
       onChanged();
       return this;
     }
 
     private java.lang.Object note_ = "";
     /**
-     * <code>string note = 8;</code>
+     * <code>string note = 10;</code>
      * @return The note.
      */
     public java.lang.String getNote() {
@@ -1410,7 +1739,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string note = 8;</code>
+     * <code>string note = 10;</code>
      * @return The bytes for note.
      */
     public com.google.protobuf.ByteString
@@ -1427,7 +1756,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string note = 8;</code>
+     * <code>string note = 10;</code>
      * @param value The note to set.
      * @return This builder for chaining.
      */
@@ -1435,22 +1764,22 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       note_ = value;
-      bitField0_ |= 0x00000080;
+      bitField0_ |= 0x00000200;
       onChanged();
       return this;
     }
     /**
-     * <code>string note = 8;</code>
+     * <code>string note = 10;</code>
      * @return This builder for chaining.
      */
     public Builder clearNote() {
       note_ = getDefaultInstance().getNote();
-      bitField0_ = (bitField0_ & ~0x00000080);
+      bitField0_ = (bitField0_ & ~0x00000200);
       onChanged();
       return this;
     }
     /**
-     * <code>string note = 8;</code>
+     * <code>string note = 10;</code>
      * @param value The bytes for note to set.
      * @return This builder for chaining.
      */
@@ -1459,14 +1788,14 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       note_ = value;
-      bitField0_ |= 0x00000080;
+      bitField0_ |= 0x00000200;
       onChanged();
       return this;
     }
 
     private java.lang.Object eventType_ = "";
     /**
-     * <code>string event_type = 10;</code>
+     * <code>string event_type = 11;</code>
      * @return The eventType.
      */
     public java.lang.String getEventType() {
@@ -1482,7 +1811,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string event_type = 10;</code>
+     * <code>string event_type = 11;</code>
      * @return The bytes for eventType.
      */
     public com.google.protobuf.ByteString
@@ -1499,7 +1828,7 @@ private static final long serialVersionUID = 0L;
       }
     }
     /**
-     * <code>string event_type = 10;</code>
+     * <code>string event_type = 11;</code>
      * @param value The eventType to set.
      * @return This builder for chaining.
      */
@@ -1507,22 +1836,22 @@ private static final long serialVersionUID = 0L;
         java.lang.String value) {
       if (value == null) { throw new NullPointerException(); }
       eventType_ = value;
-      bitField0_ |= 0x00000100;
+      bitField0_ |= 0x00000400;
       onChanged();
       return this;
     }
     /**
-     * <code>string event_type = 10;</code>
+     * <code>string event_type = 11;</code>
      * @return This builder for chaining.
      */
     public Builder clearEventType() {
       eventType_ = getDefaultInstance().getEventType();
-      bitField0_ = (bitField0_ & ~0x00000100);
+      bitField0_ = (bitField0_ & ~0x00000400);
       onChanged();
       return this;
     }
     /**
-     * <code>string event_type = 10;</code>
+     * <code>string event_type = 11;</code>
      * @param value The bytes for eventType to set.
      * @return This builder for chaining.
      */
@@ -1531,7 +1860,7 @@ private static final long serialVersionUID = 0L;
       if (value == null) { throw new NullPointerException(); }
       checkByteStringIsUtf8(value);
       eventType_ = value;
-      bitField0_ |= 0x00000100;
+      bitField0_ |= 0x00000400;
       onChanged();
       return this;
     }

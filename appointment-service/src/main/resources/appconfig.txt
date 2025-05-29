@@ -1,0 +1,36 @@
+spring:
+  application:
+    name:appointment-service
+
+  datasource:
+    url: jdbc:h2:mem:appointment_db
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    hibernate:
+      ddl-auto: create-drop
+
+    # properties: # spring.jpa
+      # javax.persistence.schema-generation.create-source: metadata
+      # javax.persistence.schema-generation.scripts.action: create
+      # javax.persistence.schema-generation.scripts.create-target: create.sql
+
+  # flyway:
+    # enabled: false
+    # baseline-on-migration: false
+
+  kafka:
+    bootstrap-servers: localhost:9094  # replace it with [kafka:port] when running inside docker
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.ByteArraySerializer
+
+

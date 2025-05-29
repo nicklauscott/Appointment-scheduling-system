@@ -17,5 +17,5 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
 
     @Modifying
     @Query("DELETE FROM Appointment a WHERE a.id = :id AND a.staff.id = :staffId")
-    void deleteByIdAndStaffId(long id, UUID staffId);
+    int deleteByIdAndStaffId(long id, UUID staffId);
 }

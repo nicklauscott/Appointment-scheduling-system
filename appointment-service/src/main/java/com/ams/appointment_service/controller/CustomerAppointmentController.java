@@ -1,9 +1,7 @@
 package com.ams.appointment_service.controller;
 
-import com.ams.appointment_service.dto.AppointmentRequestDTO;
-import com.ams.appointment_service.dto.AppointmentResponseDTO;
-import com.ams.appointment_service.dto.CancelRequestDTO;
-import com.ams.appointment_service.dto.RescheduleRequestDTO;
+import com.ams.appointment_service.dto.*;
+import com.ams.appointment_service.multitenancy.sevice.TenantSchemaService;
 import com.ams.appointment_service.service.CustomerAppointmentService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
@@ -17,6 +15,13 @@ import org.springframework.web.bind.annotation.*;
 public class CustomerAppointmentController {
 
     private final CustomerAppointmentService service;
+    private final TenantSchemaService schemaService;
+
+    @GetMapping("/{tenant}")
+    public String createTenant(@PathVariable("tenant") String tenantId) {
+        schemaService.createTenantSchema(tenantId);
+        return tenantId;
+    }
 
     @PostMapping
     public ResponseEntity<AppointmentResponseDTO> book(@Valid @RequestBody AppointmentRequestDTO request) {
@@ -33,6 +38,14 @@ public class CustomerAppointmentController {
     ) {
         service.reschedule(request.getId(), request);
         return ResponseEntity.ok("You'll receive an email when your request has been approved");
+    }
+
+    @PostMapping("/confirm_reschedule")
+    public ResponseEntity<AppointmentResponseDTO> confirmReschedule(
+            @Valid @RequestBody ConfirmRescheduleRequestDTO request
+    ) {
+        AppointmentResponseDTO response = service.confirmReschedule(request.getId(), request);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping

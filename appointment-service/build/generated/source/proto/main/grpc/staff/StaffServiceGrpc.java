@@ -43,6 +43,37 @@ public final class StaffServiceGrpc {
     return getConfirmAppointmentMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<staff.ConfirmAppointmentRequest,
+      com.google.protobuf.Empty> getConfirmAppointmentRescheduledMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "ConfirmAppointmentRescheduled",
+      requestType = staff.ConfirmAppointmentRequest.class,
+      responseType = com.google.protobuf.Empty.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<staff.ConfirmAppointmentRequest,
+      com.google.protobuf.Empty> getConfirmAppointmentRescheduledMethod() {
+    io.grpc.MethodDescriptor<staff.ConfirmAppointmentRequest, com.google.protobuf.Empty> getConfirmAppointmentRescheduledMethod;
+    if ((getConfirmAppointmentRescheduledMethod = StaffServiceGrpc.getConfirmAppointmentRescheduledMethod) == null) {
+      synchronized (StaffServiceGrpc.class) {
+        if ((getConfirmAppointmentRescheduledMethod = StaffServiceGrpc.getConfirmAppointmentRescheduledMethod) == null) {
+          StaffServiceGrpc.getConfirmAppointmentRescheduledMethod = getConfirmAppointmentRescheduledMethod =
+              io.grpc.MethodDescriptor.<staff.ConfirmAppointmentRequest, com.google.protobuf.Empty>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "ConfirmAppointmentRescheduled"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  staff.ConfirmAppointmentRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.google.protobuf.Empty.getDefaultInstance()))
+              .setSchemaDescriptor(new StaffServiceMethodDescriptorSupplier("ConfirmAppointmentRescheduled"))
+              .build();
+        }
+      }
+    }
+    return getConfirmAppointmentRescheduledMethod;
+  }
+
   private static volatile io.grpc.MethodDescriptor<staff.DeleteAppointmentRequest,
       com.google.protobuf.Empty> getDeleteAppointmentMethod;
 
@@ -239,6 +270,13 @@ public final class StaffServiceGrpc {
 
     /**
      */
+    default void confirmAppointmentRescheduled(staff.ConfirmAppointmentRequest request,
+        io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getConfirmAppointmentRescheduledMethod(), responseObserver);
+    }
+
+    /**
+     */
     default void deleteAppointment(staff.DeleteAppointmentRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getDeleteAppointmentMethod(), responseObserver);
@@ -303,6 +341,14 @@ public final class StaffServiceGrpc {
 
     /**
      */
+    public void confirmAppointmentRescheduled(staff.ConfirmAppointmentRequest request,
+        io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getConfirmAppointmentRescheduledMethod(), getCallOptions()), request, responseObserver);
+    }
+
+    /**
+     */
     public void deleteAppointment(staff.DeleteAppointmentRequest request,
         io.grpc.stub.StreamObserver<com.google.protobuf.Empty> responseObserver) {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
@@ -359,6 +405,13 @@ public final class StaffServiceGrpc {
 
     /**
      */
+    public com.google.protobuf.Empty confirmAppointmentRescheduled(staff.ConfirmAppointmentRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getConfirmAppointmentRescheduledMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
     public com.google.protobuf.Empty deleteAppointment(staff.DeleteAppointmentRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getDeleteAppointmentMethod(), getCallOptions(), request);
@@ -407,6 +460,13 @@ public final class StaffServiceGrpc {
     public com.google.protobuf.Empty confirmAppointment(staff.ConfirmAppointmentRequest request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getConfirmAppointmentMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public com.google.protobuf.Empty confirmAppointmentRescheduled(staff.ConfirmAppointmentRequest request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getConfirmAppointmentRescheduledMethod(), getCallOptions(), request);
     }
 
     /**
@@ -464,6 +524,14 @@ public final class StaffServiceGrpc {
 
     /**
      */
+    public com.google.common.util.concurrent.ListenableFuture<com.google.protobuf.Empty> confirmAppointmentRescheduled(
+        staff.ConfirmAppointmentRequest request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getConfirmAppointmentRescheduledMethod(), getCallOptions()), request);
+    }
+
+    /**
+     */
     public com.google.common.util.concurrent.ListenableFuture<com.google.protobuf.Empty> deleteAppointment(
         staff.DeleteAppointmentRequest request) {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
@@ -496,10 +564,11 @@ public final class StaffServiceGrpc {
   }
 
   private static final int METHODID_CONFIRM_APPOINTMENT = 0;
-  private static final int METHODID_DELETE_APPOINTMENT = 1;
-  private static final int METHODID_GET_ALL_APPOINTMENTS_FOR_STAFF = 2;
-  private static final int METHODID_EDIT_APPOINTMENT = 3;
-  private static final int METHODID_UPDATE_STAFF_SCHEDULE = 4;
+  private static final int METHODID_CONFIRM_APPOINTMENT_RESCHEDULED = 1;
+  private static final int METHODID_DELETE_APPOINTMENT = 2;
+  private static final int METHODID_GET_ALL_APPOINTMENTS_FOR_STAFF = 3;
+  private static final int METHODID_EDIT_APPOINTMENT = 4;
+  private static final int METHODID_UPDATE_STAFF_SCHEDULE = 5;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -520,6 +589,10 @@ public final class StaffServiceGrpc {
       switch (methodId) {
         case METHODID_CONFIRM_APPOINTMENT:
           serviceImpl.confirmAppointment((staff.ConfirmAppointmentRequest) request,
+              (io.grpc.stub.StreamObserver<com.google.protobuf.Empty>) responseObserver);
+          break;
+        case METHODID_CONFIRM_APPOINTMENT_RESCHEDULED:
+          serviceImpl.confirmAppointmentRescheduled((staff.ConfirmAppointmentRequest) request,
               (io.grpc.stub.StreamObserver<com.google.protobuf.Empty>) responseObserver);
           break;
         case METHODID_DELETE_APPOINTMENT:
@@ -563,6 +636,13 @@ public final class StaffServiceGrpc {
               staff.ConfirmAppointmentRequest,
               com.google.protobuf.Empty>(
                 service, METHODID_CONFIRM_APPOINTMENT)))
+        .addMethod(
+          getConfirmAppointmentRescheduledMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              staff.ConfirmAppointmentRequest,
+              com.google.protobuf.Empty>(
+                service, METHODID_CONFIRM_APPOINTMENT_RESCHEDULED)))
         .addMethod(
           getDeleteAppointmentMethod(),
           io.grpc.stub.ServerCalls.asyncUnaryCall(
@@ -640,6 +720,7 @@ public final class StaffServiceGrpc {
           serviceDescriptor = result = io.grpc.ServiceDescriptor.newBuilder(SERVICE_NAME)
               .setSchemaDescriptor(new StaffServiceFileDescriptorSupplier())
               .addMethod(getConfirmAppointmentMethod())
+              .addMethod(getConfirmAppointmentRescheduledMethod())
               .addMethod(getDeleteAppointmentMethod())
               .addMethod(getGetAllAppointmentsForStaffMethod())
               .addMethod(getEditAppointmentMethod())

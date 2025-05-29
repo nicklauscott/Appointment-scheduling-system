@@ -1,6 +1,6 @@
 package com.ams.appointment_service.dto;
 
-import com.ams.appointment_service.model.constant.StaffConfirmStatus;
+import com.ams.appointment_service.model.constant.AppointmentStatus;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,5 +17,5 @@ public class AppointmentResponseDTO {
     private String clientName;
     private String clientEmail;
     private String notes;
-    private StaffConfirmStatus status;
+    private AppointmentStatus status;
 }

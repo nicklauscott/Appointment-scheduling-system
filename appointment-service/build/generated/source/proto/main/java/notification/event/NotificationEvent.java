@@ -40,24 +40,28 @@ public final class NotificationEvent {
   static {
     java.lang.String[] descriptorData = {
       "\n\030notification_event.proto\022\022notification" +
-      ".event\"\273\001\n\013Appointment\022\023\n\013staff_email\030\001 " +
-      "\001(\t\022\022\n\nstaff_name\030\002 \001(\t\022\026\n\016customer_emai" +
-      "l\030\003 \001(\t\022\025\n\rcustomer_name\030\004 \001(\t\022\014\n\004date\030\005" +
-      " \001(\t\022\022\n\nstart_time\030\006 \001(\t\022\020\n\010end_time\030\007 \001" +
-      "(\t\022\014\n\004note\030\010 \001(\t\022\022\n\nevent_type\030\n \001(\tB\002P\001" +
-      "b\006proto3"
+      ".event\032\026google/type/date.proto\"\374\001\n\013Appoi" +
+      "ntment\022\023\n\013staff_email\030\001 \001(\t\022\022\n\nstaff_nam" +
+      "e\030\002 \001(\t\022\026\n\016customer_email\030\003 \001(\t\022\025\n\rcusto" +
+      "mer_name\030\004 \001(\t\022\026\n\016customer_staus\030\005 \001(\t\022\024" +
+      "\n\014staff_status\030\006 \001(\t\022\037\n\004date\030\007 \001(\0132\021.goo" +
+      "gle.type.Date\022\022\n\nstart_time\030\010 \001(\t\022\020\n\010end" +
+      "_time\030\t \001(\t\022\014\n\004note\030\n \001(\t\022\022\n\nevent_type\030" +
+      "\013 \001(\tB\002P\001b\006proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
+          com.google.type.DateProto.getDescriptor(),
         });
     internal_static_notification_event_Appointment_descriptor =
       getDescriptor().getMessageTypes().get(0);
     internal_static_notification_event_Appointment_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessage.FieldAccessorTable(
         internal_static_notification_event_Appointment_descriptor,
-        new java.lang.String[] { "StaffEmail", "StaffName", "CustomerEmail", "CustomerName", "Date", "StartTime", "EndTime", "Note", "EventType", });
+        new java.lang.String[] { "StaffEmail", "StaffName", "CustomerEmail", "CustomerName", "CustomerStaus", "StaffStatus", "Date", "StartTime", "EndTime", "Note", "EventType", });
     descriptor.resolveAllFeaturesImmutable();
+    com.google.type.DateProto.getDescriptor();
   }
 
   // @@protoc_insertion_point(outer_class_scope)

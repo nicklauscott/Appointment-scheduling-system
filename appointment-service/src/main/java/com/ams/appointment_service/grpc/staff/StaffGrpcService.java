@@ -23,11 +23,23 @@ public class StaffGrpcService extends StaffServiceGrpc.StaffServiceImplBase {
     public void confirmAppointment(ConfirmAppointmentRequest request, StreamObserver<Empty> responseObserver) {
         try {
             // Switch tenant
-            service.confirmAppointment(Long.parseLong(request.getAppointmentId()));
+            service.confirmAppointment(Long.parseLong(request.getAppointmentId()), request.getConfirm());
             responseObserver.onNext(Empty.getDefaultInstance());
             responseObserver.onCompleted();
         } catch (Exception e) {
             log.error("Error occurred while confirming appointment %s", e);
+        }
+    }
+
+    @Override
+    public void confirmAppointmentRescheduled(ConfirmAppointmentRequest request, StreamObserver<Empty> responseObserver) {
+        try {
+            // Switch tenant
+            service.confirmAppointmentReschedule(Long.parseLong(request.getAppointmentId()), request.getConfirm());
+            responseObserver.onNext(Empty.getDefaultInstance());
+            responseObserver.onCompleted();
+        } catch (Exception e) {
+            log.error("Error occurred while confirming rescheduled appointment %s", e);
         }
     }
 
