@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package notification.event;
+option java_multiple_files = true;
+
+message Appointment {
+    string staff_email = 1;
+    string staff_name = 2;
+
+    string customer_email = 3;
+    string customer_name = 4;
+
+    string date = 5;
+    string start_time = 6;
+    string end_time = 7;
+    string note = 8;
+
+    string event_type = 10;
+}
+

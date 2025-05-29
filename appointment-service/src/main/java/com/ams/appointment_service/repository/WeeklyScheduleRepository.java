@@ -1,6 +1,6 @@
 package com.ams.appointment_service.repository;
 
-import com.ams.appointment_service.model.WeeklySchedule;
+import com.ams.appointment_service.model.entities.WeeklySchedule;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import java.time.DayOfWeek;

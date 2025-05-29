@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<meta http-equiv="x-ua-compatible" content="IE=edge"/>
+<title>Test results - CustomerKafkaServiceApplicationTests</title>
+<link href="../css/base-style.css" rel="stylesheet" type="text/css"/>
+<link href="../css/style.css" rel="stylesheet" type="text/css"/>
+<script src="../js/report.js" type="text/javascript"></script>
+</head>
+<body>
+<div id="content">
+<h1>CustomerKafkaServiceApplicationTests</h1>
+<div class="breadcrumbs">
+<a href="../index.html">all</a> &gt; 
+<a href="../packages/com.ams.appointment_service.html">com.ams.appointment_service</a> &gt; CustomerKafkaServiceApplicationTests</div>
+<div id="summary">
+<table>
+<tr>
+<td>
+<div class="summaryGroup">
+<table>
+<tr>
+<td>
+<div class="infoBox" id="tests">
+<div class="counter">1</div>
+<p>tests</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="failures">
+<div class="counter">0</div>
+<p>failures</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="ignored">
+<div class="counter">0</div>
+<p>ignored</p>
+</div>
+</td>
+<td>
+<div class="infoBox" id="duration">
+<div class="counter">0.804s</div>
+<p>duration</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+</td>
+<td>
+<div class="infoBox success" id="successRate">
+<div class="percent">100%</div>
+<p>successful</p>
+</div>
+</td>
+</tr>
+</table>
+</div>
+<div class="tab-container">
+<ul class="tabLinks">
+<li>
+<a href="#">Tests</a>
+</li>
+<li>
+<a href="#">Standard output</a>
+</li>
+<li>
+<a href="#">Standard error</a>
+</li>
+</ul>
+<div class="tab">
+<h2>Tests</h2>
+<table>
+<thead>
+<tr>
+<th>Test</th>
+<th>Duration</th>
+<th>Result</th>
+</tr>
+</thead>
+<tr>
+<td class="success">contextLoads()</td>
+<td class="success">0.804s</td>
+<td class="success">passed</td>
+</tr>
+</table>
+</div>
+<div class="tab">
+<h2>Standard output</h2>
+<span class="code">
+<pre>09:09:25.182 [Test worker] INFO org.springframework.test.context.support.AnnotationConfigContextLoaderUtils -- Could not detect default configuration classes for test class [com.ams.appointment_service.CustomerKafkaServiceApplicationTests]: CustomerKafkaServiceApplicationTests does not declare any static, non-private, non-final, nested classes annotated with @Configuration.
+09:09:25.351 [Test worker] INFO org.springframework.boot.test.context.SpringBootTestContextBootstrapper -- Found @SpringBootConfiguration com.ams.appointment_service.AppointmentServiceApplication for test class com.ams.appointment_service.CustomerKafkaServiceApplicationTests
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+
+ :: Spring Boot ::                (v3.5.0)
+
+2025-05-29T09:09:26.074+03:00  INFO 2479 --- [    Test worker] a.a.CustomerKafkaServiceApplicationTests : Starting CustomerKafkaServiceApplicationTests using Java 21.0.7 with PID 2479 (started by mac in /Users/mac/Documents/Programming/spring boot/Multi-Tenant Appointment Scheduling System/Appointment Scheduling System/appointment-service)
+2025-05-29T09:09:26.076+03:00  INFO 2479 --- [    Test worker] a.a.CustomerKafkaServiceApplicationTests : No active profile set, falling back to 1 default profile: &quot;default&quot;
+2025-05-29T09:09:27.100+03:00  INFO 2479 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-05-29T09:09:27.187+03:00  INFO 2479 --- [    Test worker] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 75 ms. Found 4 JPA repository interfaces.
+2025-05-29T09:09:27.901+03:00  INFO 2479 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-05-29T09:09:28.197+03:00  INFO 2479 --- [    Test worker] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:appointment_db user=SA
+2025-05-29T09:09:28.200+03:00  INFO 2479 --- [    Test worker] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-05-29T09:09:28.260+03:00  INFO 2479 --- [    Test worker] org.flywaydb.core.FlywayExecutor         : Database: jdbc:h2:mem:appointment_db (H2 2.3)
+2025-05-29T09:09:28.285+03:00  INFO 2479 --- [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Schema history table &quot;PUBLIC&quot;.&quot;flyway_schema_history&quot; does not exist yet
+2025-05-29T09:09:28.287+03:00  INFO 2479 --- [    Test worker] o.f.core.internal.command.DbValidate     : Successfully validated 0 migrations (execution time 00:00.009s)
+2025-05-29T09:09:28.288+03:00  WARN 2479 --- [    Test worker] o.f.core.internal.command.DbValidate     : No migrations found. Are your locations set up correctly?
+2025-05-29T09:09:28.295+03:00  INFO 2479 --- [    Test worker] o.f.c.i.s.JdbcTableSchemaHistory         : Creating Schema History table &quot;PUBLIC&quot;.&quot;flyway_schema_history&quot; ...
+2025-05-29T09:09:28.341+03:00  INFO 2479 --- [    Test worker] o.f.core.internal.command.DbMigrate      : Current version of schema &quot;PUBLIC&quot;: &lt;&lt; Empty Schema &gt;&gt;
+2025-05-29T09:09:28.345+03:00  INFO 2479 --- [    Test worker] o.f.core.internal.command.DbMigrate      : Schema &quot;PUBLIC&quot; is up to date. No migration necessary.
+2025-05-29T09:09:28.463+03:00  INFO 2479 --- [    Test worker] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-05-29T09:09:28.552+03:00  INFO 2479 --- [    Test worker] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2025-05-29T09:09:28.611+03:00  INFO 2479 --- [    Test worker] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-05-29T09:09:28.992+03:00  INFO 2479 --- [    Test worker] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-05-29T09:09:29.081+03:00  WARN 2479 --- [    Test worker] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-05-29T09:09:30.510+03:00  INFO 2479 --- [    Test worker] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-05-29T09:09:30.568+03:00  INFO 2479 --- [    Test worker] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-05-29T09:09:31.047+03:00  INFO 2479 --- [    Test worker] o.s.d.j.r.query.QueryEnhancerFactory     : Hibernate is in classpath; If applicable, HQL parser will be used.
+2025-05-29T09:09:31.926+03:00  WARN 2479 --- [    Test worker] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-05-29T09:09:32.373+03:00  INFO 2479 --- [    Test worker] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:appointment_db'
+2025-05-29T09:09:32.572+03:00  INFO 2479 --- [    Test worker] o.s.grpc.server.NettyGrpcServerFactory   : Registered gRPC service: StaffService
+2025-05-29T09:09:32.572+03:00  INFO 2479 --- [    Test worker] o.s.grpc.server.NettyGrpcServerFactory   : Registered gRPC service: grpc.reflection.v1.ServerReflection
+2025-05-29T09:09:32.572+03:00  INFO 2479 --- [    Test worker] o.s.grpc.server.NettyGrpcServerFactory   : Registered gRPC service: grpc.health.v1.Health
+2025-05-29T09:09:32.748+03:00  INFO 2479 --- [    Test worker] o.s.g.s.lifecycle.GrpcServerLifecycle    : gRPC Server started, listening on address: [/[0:0:0:0:0:0:0:0]:9090]
+2025-05-29T09:09:32.766+03:00  INFO 2479 --- [    Test worker] a.a.CustomerKafkaServiceApplicationTests : Started CustomerKafkaServiceApplicationTests in 7.177 seconds (process running for 8.77)
+CML -&gt; bookAppointments: saving appointment
+</pre>
+</span>
+</div>
+<div class="tab">
+<h2>Standard error</h2>
+<span class="code">
+<pre>ANTLR Tool version 4.10.1 used for code generation does not match the current runtime version 4.13.0
+ANTLR Runtime version 4.10.1 used for parser compilation does not match the current runtime version 4.13.0
+ANTLR Tool version 4.10.1 used for code generation does not match the current runtime version 4.13.0
+ANTLR Runtime version 4.10.1 used for parser compilation does not match the current runtime version 4.13.0
+WARNING: A Java agent has been loaded dynamically (/Users/mac/.gradle/caches/modules-2/files-2.1/net.bytebuddy/byte-buddy-agent/1.17.5/58f9507f5f28d1d3e7adfb4ec2fe37c29d332c9b/byte-buddy-agent-1.17.5.jar)
+WARNING: If a serviceability tool is in use, please run with -XX:+EnableDynamicAgentLoading to hide this warning
+WARNING: If a serviceability tool is not in use, please run with -Djdk.instrument.traceUsage for more information
+WARNING: Dynamic loading of agents will be disallowed by default in a future release
+</pre>
+</span>
+</div>
+</div>
+<div id="footer">
+<p>
+<div>
+<label class="hidden" id="label-for-line-wrapping-toggle" for="line-wrapping-toggle">Wrap lines
+<input id="line-wrapping-toggle" type="checkbox" autocomplete="off"/>
+</label>
+</div>Generated by 
+<a href="https://www.gradle.org">Gradle 8.14</a> at May 29, 2025, 9:09:34 AM</p>
+</div>
+</div>
+</body>
+</html>

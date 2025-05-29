@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
-import com.ams.appointment_service.model.StaffScheduleSnapshot;
+import com.ams.appointment_service.model.entities.StaffScheduleSnapshot;
 
 @Repository
 public interface StaffScheduleSnapshotRepository extends JpaRepository<StaffScheduleSnapshot, UUID> {

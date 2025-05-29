@@ -1,12 +1,13 @@
 package com.ams.appointment_service.service;
 
-import com.ams.appointment_service.model.Appointment;
-import com.ams.appointment_service.model.CustomSchedule;
-import com.ams.appointment_service.model.WeeklySchedule;
+import com.ams.appointment_service.model.*;
+import com.ams.appointment_service.model.entities.Appointment;
+import com.ams.appointment_service.model.entities.CustomSchedule;
+import com.ams.appointment_service.model.entities.StaffScheduleSnapshot;
+import com.ams.appointment_service.model.entities.WeeklySchedule;
 import com.ams.appointment_service.repository.AppointmentRepository;
 import com.ams.appointment_service.repository.CustomScheduleRepository;
 import com.ams.appointment_service.repository.WeeklyScheduleRepository;
-import com.ams.appointment_service.model.TimeSlot;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.DayOfWeek;
@@ -23,6 +24,16 @@ public class SlotService {
     private final WeeklyScheduleRepository weeklyScheduleRepository;
     private final CustomScheduleRepository customScheduleRepository;
     private final AppointmentRepository appointmentRepository;
+
+    public Map<UUID, List<TimeSlot>> availableSlots() { // Map<StaffId, List<TimeSlot>>
+        List<StaffScheduleSnapshot> allStaffs = staffRepository.findAll();
+        Map<UUID, List<TimeSlot>> availableTimeSlots = new HashMap<>();
+        for (StaffScheduleSnapshot staff : allStaffs) {
+            var slots = getAvailableSlots(staff.getId(), LocalDate.now(), 30);
+            availableTimeSlots.put(staff.getId(), slots);
+        }
+        return availableTimeSlots;
+    }
 
     public List<TimeSlot> getAvailableSlots(UUID staffId, LocalDate date, int slotMinutes) {
         staffRepository.findById(staffId).orElseThrow(() -> new IllegalArgumentException("Staff not found"));
@@ -76,5 +87,43 @@ public class SlotService {
 
         return availableSlots;
     }
+
+    public AbstractMap.SimpleEntry<UUID, TimeSlot> getFirstAvailableStaff(
+            Map<UUID, List<TimeSlot>> availableStaffs, int sessionInMinutes
+    ) {
+        for (Map.Entry<UUID, List<TimeSlot>> entry : availableStaffs.entrySet()) {
+            List<TimeSlot> slots
+                    = entry.getValue();
+            slots.sort(Comparator.comparing(TimeSlot::getStart)); // Ensure sorted
+
+            int accumulatedMinutes = 0;
+            LocalTime blockStart = null;
+            LocalTime lastEnd = null;
+
+            for (TimeSlot slot : slots) {
+                LocalTime start = slot.getStart();
+                LocalTime end = slot.getEnd();
+                int slotMinutes = (int) ((end.toNanoOfDay() - start.toNanoOfDay()) / 60_000_000_000L);
+
+                if (lastEnd == null || lastEnd.equals(start)) {
+                    if (blockStart == null) blockStart = start;
+                    accumulatedMinutes += slotMinutes;
+
+                    if (accumulatedMinutes >= sessionInMinutes) {
+                        return new AbstractMap.SimpleEntry<>(entry.getKey(), new TimeSlot(blockStart, end));
+                    }
+                } else {
+                    accumulatedMinutes = slotMinutes;
+                    blockStart = start;
+                }
+
+                lastEnd = end;
+            }
+        }
+
+        return null;
+    }
+
 }
+
 

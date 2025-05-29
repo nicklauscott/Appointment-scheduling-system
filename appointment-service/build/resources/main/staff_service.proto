@@ -1,0 +1,101 @@
+syntax = "proto3";
+
+import "google/protobuf/empty.proto";
+import "google/type/date.proto";
+
+option java_multiple_files = true;
+option java_package = "staff";
+
+service StaffService {
+    rpc ConfirmAppointment (ConfirmAppointmentRequest) returns (google.protobuf.Empty);
+    rpc DeleteAppointment (DeleteAppointmentRequest) returns (google.protobuf.Empty);
+    rpc GetAllAppointmentsForStaff (GetAppointmentsRequest) returns (GetAppointmentsResponse);
+    rpc EditAppointment (EditAppointmentRequestDto) returns (AppointmentResponseDto);
+    rpc UpdateStaffSchedule (StaffScheduleSnapshot) returns (google.protobuf.Empty);
+}
+
+message ConfirmAppointmentRequest {
+    string tenant_id = 1;
+    string appointment_id = 2;
+    string staff_id = 3;
+}
+
+message DeleteAppointmentRequest {
+    string tenant_id = 1;
+    string appointment_id = 2;
+    string staff_id = 3;
+}
+
+message GetAppointmentsRequest {
+    string tenant_id = 1;
+    string staff_id = 2;
+}
+
+message EditAppointmentRequestDto {
+    string tenant_id = 1;
+    string id = 2;
+    string client_name = 3;
+    string client_email = 4;
+    string notes = 5;
+    string status = 6;
+    string date = 7;
+    string start_time = 8;
+    string end_time = 9;
+}
+
+message AppointmentResponseDto {
+    string id = 2;
+    string client_name = 3;
+    string client_email = 4;
+    string notes = 5;
+    string status = 6;
+    string date = 7;
+    string start_time = 8;
+    string end_time = 9;
+}
+
+message GetAppointmentsResponse {
+    repeated AppointmentResponseDto appointments = 1;
+}
+
+
+// Enum matching java.time.DayOfWeek
+enum DayOfWeek {
+    MONDAY = 0;
+    TUESDAY = 1;
+    WEDNESDAY = 2;
+    THURSDAY = 3;
+    FRIDAY = 4;
+    SATURDAY = 5;
+    SUNDAY = 6;
+}
+
+// Top-level schedule snapshot
+message StaffScheduleSnapshot {
+    string tenant_id = 1;
+    string id = 2; // UUID
+    string email = 3;
+    string name = 4;
+    repeated WeeklySchedule weekly_schedule = 5;
+    repeated CustomSchedule custom_schedules = 6;
+}
+
+// Weekly recurring schedule
+message WeeklySchedule {
+    int32 id = 1;
+    DayOfWeek day_of_week = 2;
+    string start_time = 3; // "HH:mm:ss"
+    string end_time = 4;   // "HH:mm:ss"
+    bool is_working_day = 5;
+}
+
+// One-off custom schedule override
+message CustomSchedule {
+    int32 id = 1;
+    google.type.Date date = 2;
+    string start_time = 3;  // "HH:mm:ss"
+    string end_time = 4;    // "HH:mm:ss"
+    bool is_available = 5;
+    string staff_id = 6;    // link back to StaffScheduleSnapshot
+}
+

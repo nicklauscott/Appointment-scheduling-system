@@ -30,9 +30,10 @@ repositories {
 extra["springGrpcVersion"] = "0.8.0"
 
 dependencies {
-	implementation("org.springframework.boot:spring-boot-starter-web") // remove after
+	testImplementation("org.mockito:mockito-core:5.12.0")
+	testImplementation("org.mockito:mockito-junit-jupiter:5.12.0")
 
-
+	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.hibernate.orm:hibernate-core:6.3.1.Final")
 	implementation("org.springframework.boot:spring-boot-starter-validation")

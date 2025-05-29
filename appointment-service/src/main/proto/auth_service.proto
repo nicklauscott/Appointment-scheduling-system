@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "auth";
+
+service AuthService {
+    rpc CreateTenant (TenantRequestDto) returns (TenantResponseDto);
+    rpc DeleteTenant (TenantRequestDto) returns (TenantResponseDto);
+}
+
+message TenantRequestDto {
+    string tenant_id = 1;
+}
+
+message TenantResponseDto {
+    bool successful = 1;
+}
