@@ -38,8 +38,6 @@ dependencies {
 	implementation("org.hibernate.orm:hibernate-core:6.3.1.Final")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
 	implementation("io.grpc:grpc-services")
-	//implementation("org.flywaydb:flyway-core")
-	// implementation("org.flywaydb:flyway-database-postgresql")
 	implementation("org.springframework.grpc:spring-grpc-spring-boot-starter")
 	compileOnly("org.projectlombok:lombok")
 	//runtimeOnly("com.h2database:h2")

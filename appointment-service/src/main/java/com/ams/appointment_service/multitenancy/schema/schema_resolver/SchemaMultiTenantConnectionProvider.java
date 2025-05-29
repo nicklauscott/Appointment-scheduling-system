@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.SingleConnectionDataSource;
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 @AllArgsConstructor
 public class SchemaMultiTenantConnectionProvider

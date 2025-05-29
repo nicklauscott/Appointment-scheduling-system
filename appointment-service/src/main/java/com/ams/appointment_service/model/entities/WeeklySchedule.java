@@ -7,6 +7,7 @@ import java.time.LocalTime;
 
 @Data
 @Entity
+@Table(name = "weekly_schedule_seq")
 public class WeeklySchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

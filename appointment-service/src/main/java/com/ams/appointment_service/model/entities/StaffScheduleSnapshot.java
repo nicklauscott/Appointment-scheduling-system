@@ -7,6 +7,7 @@ import lombok.Data;
 
 @Data
 @Entity
+@Table(name = "staff_schedule_snapshot")
 public class StaffScheduleSnapshot { 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -25,7 +25,7 @@ public class SlotService {
     private final CustomScheduleRepository customScheduleRepository;
     private final AppointmentRepository appointmentRepository;
 
-    public Map<UUID, List<TimeSlot>> availableSlots() { // Map<StaffId, List<TimeSlot>>
+    public Map<UUID, List<TimeSlot>> availableSlots() {
         List<StaffScheduleSnapshot> allStaffs = staffRepository.findAll();
         Map<UUID, List<TimeSlot>> availableTimeSlots = new HashMap<>();
         for (StaffScheduleSnapshot staff : allStaffs) {

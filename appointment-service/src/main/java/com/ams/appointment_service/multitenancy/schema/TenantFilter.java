@@ -21,7 +21,7 @@ public class TenantFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
         String tenant = request.getHeader("X-Tenant-ID");
-        if (tenant == null) {
+        if (tenant == null || tenant.equals("public")) {
             response.setStatus(HttpStatus.BAD_REQUEST.value());
             response.setContentType("application/json");
             response.getWriter().write("{\"message\": \"X-Tenant-ID header is required\"}");
@@ -29,7 +29,6 @@ public class TenantFilter extends OncePerRequestFilter {
         }
 
         TenantContext.INSTANCE.setCurrentTenant(tenant);
-        // PSQLException
         try {
             filterChain.doFilter(request, response);
         } finally {

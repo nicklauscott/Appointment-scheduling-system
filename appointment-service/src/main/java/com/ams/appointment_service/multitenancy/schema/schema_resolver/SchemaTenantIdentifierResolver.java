@@ -2,7 +2,11 @@ package com.ams.appointment_service.multitenancy.schema.schema_resolver;
 
 import org.hibernate.context.spi.CurrentTenantIdentifierResolver;
 import org.springframework.lang.NonNull;
+import org.springframework.stereotype.Component;
 
+import javax.sql.DataSource;
+
+@Component
 public class SchemaTenantIdentifierResolver implements CurrentTenantIdentifierResolver {
 
     @Override

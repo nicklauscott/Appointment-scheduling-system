@@ -7,6 +7,7 @@ import java.time.LocalTime;
 
 @Data
 @Entity
+@Table(name = "custom_schedule")
 public class CustomSchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

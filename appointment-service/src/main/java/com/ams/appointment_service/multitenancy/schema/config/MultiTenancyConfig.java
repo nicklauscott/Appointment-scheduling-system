@@ -46,7 +46,7 @@ public class MultiTenancyConfig {
     ) {
         LocalContainerEntityManagerFactoryBean entityManager = new LocalContainerEntityManagerFactoryBean();
         entityManager.setDataSource(dataSource);
-        entityManager.setPackagesToScan("com.ams.appointment_service.model"); // our entity package
+        entityManager.setPackagesToScan("com.ams.appointment_service.model");
 
         HibernateJpaVendorAdapter jpaVendorAdapter = new HibernateJpaVendorAdapter();
         entityManager.setJpaVendorAdapter(jpaVendorAdapter);

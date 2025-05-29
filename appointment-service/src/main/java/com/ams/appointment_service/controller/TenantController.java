@@ -1,6 +1,6 @@
 package com.ams.appointment_service.controller;
 
-import com.ams.appointment_service.multitenancy.database.database_resolver.TenantContext;
+import com.ams.appointment_service.multitenancy.schema.schema_resolver.TenantContext;
 import com.ams.appointment_service.multitenancy.schema.sevice.TenantSchemaService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;

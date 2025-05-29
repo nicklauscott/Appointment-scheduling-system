@@ -7,17 +7,21 @@ import com.ams.appointment_service.dto.RescheduleRequestDTO;
 import com.ams.appointment_service.exception.AppointmentNotFoundException;
 import com.ams.appointment_service.exception.AppointmentTimeSlotException;
 import com.ams.appointment_service.exception.NoStaffAvailableException;
+import com.ams.appointment_service.exception.TenantNotFoundException;
 import com.ams.appointment_service.mapper.AppointmentMapper;
 import com.ams.appointment_service.model.entities.Appointment;
 import com.ams.appointment_service.model.entities.StaffScheduleSnapshot;
 import com.ams.appointment_service.model.TimeSlot;
 import com.ams.appointment_service.model.constant.AppointmentStatus;
+import com.ams.appointment_service.multitenancy.schema.schema_resolver.TenantContext;
 import com.ams.appointment_service.repository.AppointmentRepository;
 import com.ams.appointment_service.repository.StaffScheduleSnapshotRepository;
 import com.ams.appointment_service.util.SlotUtils;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
+import java.sql.SQLException;
 import java.util.*;
 
 @Slf4j
@@ -31,102 +35,137 @@ public class CustomerAppointmentService {
     private final NotificationService notificationService;
 
     public AppointmentResponseDTO bookAppointment(AppointmentRequestDTO appointmentRequestDTO) {
-        if (appointmentRequestDTO.getDurationInMinutes() > 120) {
-            throw new AppointmentTimeSlotException("Appointment duration too long");
-        }
+        try {
+            if (appointmentRequestDTO.getDurationInMinutes() > 120) {
+                throw new AppointmentTimeSlotException("Appointment duration too long");
+            }
 
-        Map<UUID, List<TimeSlot>> availableSlots = slotService.availableSlots();
-        if (availableSlots.isEmpty()) {
-            throw new NoStaffAvailableException("No available spot. Try again later");
-        }
+            Map<UUID, List<TimeSlot>> availableSlots = slotService.availableSlots();
+            if (availableSlots.isEmpty()) {
+                throw new NoStaffAvailableException("No available spot. Try again later");
+            }
 
-        var staffIdAndTimeSlot = slotService.getFirstAvailableStaff(availableSlots, appointmentRequestDTO.getDurationInMinutes());
-        if (staffIdAndTimeSlot == null) {
-            throw new NoStaffAvailableException("No available spot. Try again later");
-        }
+            var staffIdAndTimeSlot = slotService.getFirstAvailableStaff(availableSlots, appointmentRequestDTO.getDurationInMinutes());
+            if (staffIdAndTimeSlot == null) {
+                throw new NoStaffAvailableException("No available spot. Try again later");
+            }
 
-        StaffScheduleSnapshot staff = staffRepository
-                .findById(staffIdAndTimeSlot.getKey())
-                .orElseThrow(() -> new NoStaffAvailableException("No available spot. Try again later"));
+            StaffScheduleSnapshot staff = staffRepository
+                    .findById(staffIdAndTimeSlot.getKey())
+                    .orElseThrow(() -> new NoStaffAvailableException("No available spot. Try again later"));
 
-        Appointment appointment = getAppointment(appointmentRequestDTO, staffIdAndTimeSlot, staff);
-        Appointment savedAppointment = appointmentRepository.save(appointment);
+            Appointment appointment = getAppointment(appointmentRequestDTO, staffIdAndTimeSlot, staff);
+            Appointment savedAppointment = appointmentRepository.save(appointment);
 
-        // Notify customer and staff
-        notificationService.sendAppointmentBookedNotification(savedAppointment);
-        return AppointmentMapper.toDTO(savedAppointment);
+            // Notify customer and staff
+            notificationService.sendAppointmentBookedNotification(savedAppointment);
+            return AppointmentMapper.toDTO(savedAppointment);
+        } catch (DataAccessException e) {
+            if (e.getCause() instanceof SQLException psqlEx) {
+                if (psqlEx.getSQLState().equals("42P01")) {
+                    throw new TenantNotFoundException("Invalid X-Tenant-ID value: " + TenantContext.INSTANCE.getCurrentTenant());
+                } else { log.info("Unknown error {}", e.getMessage()); }
+            }
+        } finally { TenantContext.INSTANCE.clear(); }
+
+        throw new TenantNotFoundException("Invalid X-Tenant-ID value: " + TenantContext.INSTANCE.getCurrentTenant());
     }
 
     public void cancelAppointment(long appointmentId, String email) {
-        Optional<Appointment> optional = appointmentRepository.findByIdAndCustomerEmail(appointmentId, email);
-        if (optional.isEmpty()) {
-            throw new AppointmentNotFoundException("Appointment with the id " + appointmentId + " not found");
-        }
-        appointmentRepository.deleteById(appointmentId);
-        //notify staff
-        notificationService.notifyStaffAppointmentHasBeenCancelled(optional.get());
+        try {
+            Optional<Appointment> optional = appointmentRepository.findByIdAndCustomerEmail(appointmentId, email);
+            if (optional.isEmpty()) {
+                throw new AppointmentNotFoundException("Appointment with the id " + appointmentId + " not found");
+            }
+            appointmentRepository.deleteById(appointmentId);
+            //notify staff
+            notificationService.notifyStaffAppointmentHasBeenCancelled(optional.get());
+        }  catch (DataAccessException e) {
+            if (e.getCause() instanceof SQLException psqlEx) {
+                if (psqlEx.getSQLState().equals("42P01")) {
+                    throw new TenantNotFoundException("Invalid X-Tenant-ID value: " + TenantContext.INSTANCE.getCurrentTenant());
+                } else { log.info("cancelAppointment -> Unknown error {}", e.getMessage()); }
+            }
+        } finally { TenantContext.INSTANCE.clear(); }
     }
 
     public void reschedule(long appointmentId, RescheduleRequestDTO request) {
-        Optional<Appointment> appointment = appointmentRepository.findByIdAndCustomerEmail(appointmentId, request.getEmail());
-        if (appointment.isEmpty()) {
-            throw new AppointmentNotFoundException("Appointment with the id " + appointmentId + " not found");
-        }
-
-        if (request.getStartTime().isAfter(request.getEndTime())) {
-            throw new AppointmentTimeSlotException("Invalid appointment time");
-        }
-
-        if (SlotUtils.startAndEndTimeToMinute(new TimeSlot(request.getStartTime(), request.getEndTime())) > 120) {
-            throw new AppointmentTimeSlotException("Appointment time too long");
-        }
-
-        // Check if there's an opening
-        var availableStaffs = slotService.availableSlots();
-
-        // Find a staff with enough free slots to fit in the customer
-        UUID availableStaff = getAvailableStaffId(request, availableStaffs);
-
-        if (availableStaff == null) {
-            if (!availableStaffs.isEmpty()) {
-                Optional<List<TimeSlot>> firstValidList = availableStaffs.values().stream()
-                        .filter(list -> list != null && list.size() > 1)
-                        .findFirst();
-
-                if (firstValidList.isPresent()) {
-                    var timeSlots = firstValidList.get();
-                    var first = timeSlots.getFirst();
-                    var last = timeSlots.getLast();
-                    throw new AppointmentTimeSlotException(
-                      "No available staff. Try time slot between " + first.getStart() + " and " + last.getEnd()
-                    );
-                } else throw new AppointmentTimeSlotException("No available staff");
+        try {
+            Optional<Appointment> appointment = appointmentRepository.findByIdAndCustomerEmail(appointmentId, request.getEmail());
+            if (appointment.isEmpty()) {
+                throw new AppointmentNotFoundException("Appointment with the id " + appointmentId + " not found");
             }
-            return;
-        }
 
-        // reschedule and update appointment after staff confirmation
-        Appointment updatedAppointment = appointment.get();
-        updatedAppointment.setDate(request.getDate());
-        updatedAppointment.setStartTime(request.getStartTime());
-        updatedAppointment.setEndTime(request.getEndTime());
-        updatedAppointment.setCustomerStatus(AppointmentStatus.APPROVED);
-        updatedAppointment.setStaffStatus(AppointmentStatus.PENDING);
-        Appointment savedAppointment = appointmentRepository.save(updatedAppointment);
+            if (request.getStartTime().isAfter(request.getEndTime())) {
+                throw new AppointmentTimeSlotException("Invalid appointment time");
+            }
 
-        // Send APPOINTMENT_RESCHEDULED notification for staff confirmation.
-        notificationService.notifyStaffAppointmentWasRescheduled(savedAppointment);
+            if (SlotUtils.startAndEndTimeToMinute(new TimeSlot(request.getStartTime(), request.getEndTime())) > 120) {
+                throw new AppointmentTimeSlotException("Appointment time too long");
+            }
+
+            // Check if there's an opening
+            var availableStaffs = slotService.availableSlots();
+
+            // Find a staff with enough free slots to fit in the customer
+            UUID availableStaff = getAvailableStaffId(request, availableStaffs);
+
+            if (availableStaff == null) {
+                if (!availableStaffs.isEmpty()) {
+                    Optional<List<TimeSlot>> firstValidList = availableStaffs.values().stream()
+                            .filter(list -> list != null && list.size() > 1)
+                            .findFirst();
+
+                    if (firstValidList.isPresent()) {
+                        var timeSlots = firstValidList.get();
+                        var first = timeSlots.getFirst();
+                        var last = timeSlots.getLast();
+                        throw new AppointmentTimeSlotException(
+                                "No available staff. Try time slot between " + first.getStart() + " and " + last.getEnd()
+                        );
+                    } else throw new AppointmentTimeSlotException("No available staff");
+                }
+                return;
+            }
+
+            // reschedule and update appointment after staff confirmation
+            Appointment updatedAppointment = appointment.get();
+            updatedAppointment.setDate(request.getDate());
+            updatedAppointment.setStartTime(request.getStartTime());
+            updatedAppointment.setEndTime(request.getEndTime());
+            updatedAppointment.setCustomerStatus(AppointmentStatus.APPROVED);
+            updatedAppointment.setStaffStatus(AppointmentStatus.PENDING);
+            Appointment savedAppointment = appointmentRepository.save(updatedAppointment);
+
+            // Send APPOINTMENT_RESCHEDULED notification for staff confirmation.
+            notificationService.notifyStaffAppointmentWasRescheduled(savedAppointment);
+        } catch (DataAccessException e) {
+            if (e.getCause() instanceof SQLException psqlEx) {
+                if (psqlEx.getSQLState().equals("42P01")) {
+                    throw new TenantNotFoundException("Invalid X-Tenant-ID value: " + TenantContext.INSTANCE.getCurrentTenant());
+                } else { log.info("Reschedule -> Unknown error {}", e.getMessage()); }
+            }
+        } finally { TenantContext.INSTANCE.clear(); }
     }
 
     public AppointmentResponseDTO confirmReschedule(long appointmentId, ConfirmRescheduleRequestDTO request) {
-        Optional<Appointment> optional = appointmentRepository.findByIdAndCustomerEmail(appointmentId, request.getEmail());
-        if (optional.isEmpty()) {
-            throw new AppointmentNotFoundException("Appointment with the id " + appointmentId + " not found");
-        }
-        Appointment appointment = optional.get();
-        appointment.setCustomerStatus(request.isConfirm() ? AppointmentStatus.APPROVED : AppointmentStatus.DECLINED);
-        notificationService.notifyStaffReschedulingWasComFirm(appointment);
-        return AppointmentMapper.toDTO(appointment);
+        try {
+            Optional<Appointment> optional = appointmentRepository.findByIdAndCustomerEmail(appointmentId, request.getEmail());
+            if (optional.isEmpty()) {
+                throw new AppointmentNotFoundException("Appointment with the id " + appointmentId + " not found");
+            }
+            Appointment appointment = optional.get();
+            appointment.setCustomerStatus(request.isConfirm() ? AppointmentStatus.APPROVED : AppointmentStatus.DECLINED);
+            notificationService.notifyStaffReschedulingWasComFirm(appointment);
+            return AppointmentMapper.toDTO(appointment);
+        } catch (DataAccessException e) {
+            if (e.getCause() instanceof SQLException psqlEx) {
+                if (psqlEx.getSQLState().equals("42P01")) {
+                    throw new TenantNotFoundException("Invalid X-Tenant-ID value: " + TenantContext.INSTANCE.getCurrentTenant());
+                } else { log.info("ConfirmReschedule -> Unknown error {}", e.getMessage()); }
+            }
+        } finally { TenantContext.INSTANCE.clear(); }
+        throw new TenantNotFoundException("Invalid X-Tenant-ID value: " + TenantContext.INSTANCE.getCurrentTenant());
     }
 
     private static UUID getAvailableStaffId(
