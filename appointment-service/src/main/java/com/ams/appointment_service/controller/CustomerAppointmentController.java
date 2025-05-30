@@ -8,16 +8,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.sql.DataSource;
-import java.sql.SQLException;
-
 @RestController
 @RequestMapping("/booking")
 @AllArgsConstructor
 public class CustomerAppointmentController {
 
     private final CustomerAppointmentService service;
-    private final DataSource dataSource;
 
     @PostMapping
     public ResponseEntity<AppointmentResponseDTO> book(@Valid @RequestBody AppointmentRequestDTO request) {

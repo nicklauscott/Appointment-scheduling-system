@@ -1,0 +1,23 @@
+<html lang="en">
+<head>
+    <style>
+        body { font-family: sans-serif; }
+        .header { background-color: {{primaryColor}}; padding: 10px; }
+        .footer { font-size: 12px; margin-top: 40px; border-top: 1px solid #ddd; padding-top: 10px; }
+    </style>
+</head>
+<body>
+<div class="header">
+    <img src="{{logoUrl}}" alt="{{companyName}} logo" height="50" />
+</div>
+
+<div class="content">
+    {{bodyContent}} <!-- Actual email content goes here -->
+</div>
+
+<div class="footer">
+    <p>Contact us: {{email}} | {{phone}} | {{address}}</p>
+    <p>&copy; {{companyName}} {{year}}</p>
+</div>
+</body>
+</html>

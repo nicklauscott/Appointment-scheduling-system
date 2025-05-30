@@ -14,13 +14,28 @@ public class CustomSchedule {
     private int id;
 
     private LocalDate date;
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private boolean isAvailable;
+    @Column(name = "start_time")private LocalTime startTime;
+    @Column(name = "end_time") private LocalTime endTime;
+    @Column(name = "is_available") private boolean isAvailable;
 
     @ManyToOne
-    @JoinColumn(name = "staffScheduleSnapshot_id", nullable = false)
+    @JoinColumn(name = "staff_schedule_snapshot_id", nullable = false)
     private StaffScheduleSnapshot staff;
 }
+
+/*
+
+private LocalDate date;
+
+@ManyToOne
+    @JoinColumn(name = "staff_schedule_snapshot_id", nullable = false)
+    private StaffScheduleSnapshot staff;
+
+
+    "i need date to be unique based on the staff id"
+
+    ALTER TABLE custom_schedule ADD CONSTRAINT unique_date_per_staff UNIQUE (date, staff_schedule_snapshot_id);
+
+ */
 
 

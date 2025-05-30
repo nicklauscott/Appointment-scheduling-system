@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(NoStaffAvailableException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
     public ResponseEntity<Map<String, String>> handleNoStaffAvailableException(NoStaffAvailableException e) {
         Map<String, String> errors = new HashMap<>();
         errors.put("message", e.getMessage());

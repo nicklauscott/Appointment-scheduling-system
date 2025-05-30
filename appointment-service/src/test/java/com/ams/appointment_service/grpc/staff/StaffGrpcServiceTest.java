@@ -33,14 +33,14 @@ class StaffGrpcServiceTest {
         MockitoAnnotations.openMocks(this);
 
         grpcServer = ServerBuilder
-                .forPort(9090)
+                .forPort(9010)
                 .addService(new StaffGrpcService(staffService))
                 .directExecutor()
                 .build()
                 .start();
 
         channel = ManagedChannelBuilder
-                .forAddress("localhost", 9090)
+                .forAddress("localhost", 9010)
                 .usePlaintext()
                 .build();
 

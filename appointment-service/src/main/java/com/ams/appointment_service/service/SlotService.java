@@ -9,6 +9,7 @@ import com.ams.appointment_service.repository.AppointmentRepository;
 import com.ams.appointment_service.repository.CustomScheduleRepository;
 import com.ams.appointment_service.repository.WeeklyScheduleRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -16,6 +17,7 @@ import java.time.LocalTime;
 import java.util.*;
 import com.ams.appointment_service.repository.StaffScheduleSnapshotRepository;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class SlotService {
@@ -36,13 +38,15 @@ public class SlotService {
     }
 
     public List<TimeSlot> getAvailableSlots(UUID staffId, LocalDate date, int slotMinutes) {
-        staffRepository.findById(staffId).orElseThrow(() -> new IllegalArgumentException("Staff not found"));
+        Optional<StaffScheduleSnapshot> staffScheduleSnapshot = staffRepository.findById(staffId);
+        if (staffScheduleSnapshot.isEmpty()) return Collections.emptyList();
 
         LocalTime workingStart;
         LocalTime workingEnd;
 
         // 1. Use CustomSchedule if available
         Optional<CustomSchedule> customOpt = customScheduleRepository.findByStaffIdAndDate(staffId, date);
+
         if (customOpt.isPresent()) {
             CustomSchedule custom = customOpt.get();
             if (!custom.isAvailable()) {
@@ -53,8 +57,10 @@ public class SlotService {
         } else {
             // 2. Fall back to WeeklySchedule
             DayOfWeek dayOfWeek = date.getDayOfWeek();
-            WeeklySchedule weekly = weeklyScheduleRepository.findByStaffIdAndDayOfWeek(staffId, dayOfWeek)
-                    .orElseThrow(() -> new RuntimeException("Weekly schedule not found"));
+            Optional<WeeklySchedule> optional = weeklyScheduleRepository.findByStaffIdAndDayOfWeek(staffId, dayOfWeek);
+
+            if (optional.isEmpty()) return Collections.emptyList();
+            WeeklySchedule weekly = optional.get();
 
             if (!weekly.isWorkingDay()) {
                 return Collections.emptyList();
@@ -76,7 +82,7 @@ public class SlotService {
             TimeSlot slot = new TimeSlot(slotStart, slotEnd);
 
             boolean overlaps = appointments.stream()
-                    .anyMatch(appt -> slot.overlapsWith(appt.getStartTime(), appt.getEndTime()));
+                    .anyMatch(appointment -> slot.overlapsWith(appointment.getStartTime(), appointment.getEndTime()));
 
             if (!overlaps) {
                 availableSlots.add(slot);
@@ -125,5 +131,7 @@ public class SlotService {
     }
 
 }
+
+
 
 

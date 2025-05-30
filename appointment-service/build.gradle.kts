@@ -27,21 +27,31 @@ repositories {
 	mavenCentral()
 }
 
-extra["springGrpcVersion"] = "0.8.0"
 
 dependencies {
+	// gRPC
+	implementation("io.grpc:grpc-netty-shaded:1.69.0")
+	implementation("io.grpc:grpc-protobuf:1.69.0")
+	implementation("io.grpc:grpc-stub:1.69.0")
+
+	// For Java 9+ compatibility
+	compileOnly("org.apache.tomcat:annotations-api:6.0.53")
+
+	// Protobuf
+	implementation("com.google.protobuf:protobuf-java:4.29.1")
+
+	// Spring Boot gRPC Integration
+	implementation("net.devh:grpc-spring-boot-starter:3.1.0.RELEASE")
+
 	implementation("org.springframework.kafka:spring-kafka:3.3.0")
 	implementation("org.flywaydb:flyway-core:9.22.0")
-
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.hibernate.orm:hibernate-core:6.3.1.Final")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
-	implementation("io.grpc:grpc-services")
-	implementation("org.springframework.grpc:spring-grpc-spring-boot-starter")
-	compileOnly("org.projectlombok:lombok")
 	//runtimeOnly("com.h2database:h2")
 	runtimeOnly("org.postgresql:postgresql")
+	compileOnly("org.projectlombok:lombok")
 	annotationProcessor("org.projectlombok:lombok")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.grpc:spring-grpc-test")
@@ -51,32 +61,24 @@ dependencies {
 	testImplementation("org.mockito:mockito-junit-jupiter:5.12.0")
 }
 
-dependencyManagement {
-	imports {
-		mavenBom("org.springframework.grpc:spring-grpc-dependencies:${property("springGrpcVersion")}")
-	}
-}
-
 protobuf {
 	protoc {
-		artifact = "com.google.protobuf:protoc"
+		artifact = "com.google.protobuf:protoc:3.25.5"
 	}
 	plugins {
 		id("grpc") {
-			artifact = "io.grpc:protoc-gen-grpc-java"
+			artifact = "io.grpc:protoc-gen-grpc-java:1.68.1"
 		}
 	}
 	generateProtoTasks {
-		all().forEach {
-			it.plugins {
-				id("grpc") {
-					option("jakarta_omit")
-					option("@generated=omit")
-				}
+		all().forEach { task ->
+			task.plugins {
+				id("grpc")
 			}
 		}
 	}
 }
+
 
 jib {
 	to {

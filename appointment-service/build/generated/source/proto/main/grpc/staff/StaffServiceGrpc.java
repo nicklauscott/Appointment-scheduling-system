@@ -4,6 +4,9 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
 
 /**
  */
+@javax.annotation.Generated(
+    value = "by gRPC proto compiler (version 1.68.1)",
+    comments = "Source: staff_service.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class StaffServiceGrpc {
 
@@ -213,21 +216,6 @@ public final class StaffServiceGrpc {
   }
 
   /**
-   * Creates a new blocking-style stub that supports all types of calls on the service
-   */
-  public static StaffServiceBlockingV2Stub newBlockingV2Stub(
-      io.grpc.Channel channel) {
-    io.grpc.stub.AbstractStub.StubFactory<StaffServiceBlockingV2Stub> factory =
-      new io.grpc.stub.AbstractStub.StubFactory<StaffServiceBlockingV2Stub>() {
-        @java.lang.Override
-        public StaffServiceBlockingV2Stub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
-          return new StaffServiceBlockingV2Stub(channel, callOptions);
-        }
-      };
-    return StaffServiceBlockingV2Stub.newStub(factory, channel);
-  }
-
-  /**
    * Creates a new blocking-style stub that supports unary and streaming output calls on the service
    */
   public static StaffServiceBlockingStub newBlockingStub(
@@ -382,65 +370,6 @@ public final class StaffServiceGrpc {
 
   /**
    * A stub to allow clients to do synchronous rpc calls to service StaffService.
-   */
-  public static final class StaffServiceBlockingV2Stub
-      extends io.grpc.stub.AbstractBlockingStub<StaffServiceBlockingV2Stub> {
-    private StaffServiceBlockingV2Stub(
-        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
-      super(channel, callOptions);
-    }
-
-    @java.lang.Override
-    protected StaffServiceBlockingV2Stub build(
-        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
-      return new StaffServiceBlockingV2Stub(channel, callOptions);
-    }
-
-    /**
-     */
-    public com.google.protobuf.Empty confirmAppointment(staff.ConfirmAppointmentRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getConfirmAppointmentMethod(), getCallOptions(), request);
-    }
-
-    /**
-     */
-    public com.google.protobuf.Empty confirmAppointmentRescheduled(staff.ConfirmAppointmentRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getConfirmAppointmentRescheduledMethod(), getCallOptions(), request);
-    }
-
-    /**
-     */
-    public com.google.protobuf.Empty deleteAppointment(staff.DeleteAppointmentRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getDeleteAppointmentMethod(), getCallOptions(), request);
-    }
-
-    /**
-     */
-    public staff.GetAppointmentsResponse getAllAppointmentsForStaff(staff.GetAppointmentsRequest request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getGetAllAppointmentsForStaffMethod(), getCallOptions(), request);
-    }
-
-    /**
-     */
-    public staff.AppointmentResponseDto editAppointment(staff.EditAppointmentRequestDto request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getEditAppointmentMethod(), getCallOptions(), request);
-    }
-
-    /**
-     */
-    public com.google.protobuf.Empty updateStaffSchedule(staff.StaffScheduleSnapshot request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getUpdateStaffScheduleMethod(), getCallOptions(), request);
-    }
-  }
-
-  /**
-   * A stub to allow clients to do limited synchronous rpc calls to service StaffService.
    */
   public static final class StaffServiceBlockingStub
       extends io.grpc.stub.AbstractBlockingStub<StaffServiceBlockingStub> {

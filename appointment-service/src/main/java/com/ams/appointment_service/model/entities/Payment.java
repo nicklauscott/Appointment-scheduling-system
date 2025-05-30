@@ -19,13 +19,13 @@ public class Payment {
 
     private BigDecimal amount;
     private String currency;
-    private String paymentProvider;
-    private String externalPaymentId;
+    @Column(name = "payment_provider") private String paymentProvider;
+    @Column(name = "external_payment_id") private String externalPaymentId;
 
     @Enumerated(EnumType.STRING)
     private PaymentStatus status;
 
-    private Instant createdAt;
+    @Column(name = "created_at") private Instant createdAt;
 }
 
 enum PaymentStatus{

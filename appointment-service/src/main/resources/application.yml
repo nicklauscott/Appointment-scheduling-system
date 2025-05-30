@@ -1,5 +1,16 @@
+grpc:
+  server:
+    port: 8040
+
 server:
   port: 4000
+
+logging:
+  level:
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+
+
 
 
 spring:
@@ -18,8 +29,8 @@ spring:
     hibernate:
       ddl-auto: update  # use 'update' for dev, 'validate' or 'none' for production
 
-  #flyway:
-    #enabled: true
+  flyway:
+    enabled: false
     #baseline-on-migration: false
     # Remove `schemas` if you want to dynamically pass it via Java config
     # Or set a default shared schema if you're using a default

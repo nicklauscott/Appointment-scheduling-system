@@ -23,7 +23,7 @@ import java.util.List;
 
 //@Component
 @RequiredArgsConstructor
-public class CML implements CommandLineRunner {
+public class CML {
 
     private final StaffScheduleSnapshotRepository staffRepository;
     private final CustomScheduleRepository scheduleRepository;
@@ -31,6 +31,7 @@ public class CML implements CommandLineRunner {
     private final AppointmentRepository appointmentRepository;
     private final CustomerAppointmentService customerAppointmentService;
 
+    /*
     @Transactional
     @Override
     public void run(String... args) {
@@ -41,6 +42,8 @@ public class CML implements CommandLineRunner {
 
 
     }
+
+     */
 
     private AppointmentResponseDTO testCASBookApt() {
         getStaff();
@@ -160,7 +163,7 @@ public class CML implements CommandLineRunner {
         }
     }
 
-    private StaffScheduleSnapshot getStaff() {
+    public StaffScheduleSnapshot getStaff() {
         StaffScheduleSnapshot staffA = new StaffScheduleSnapshot();
         staffRepository.save(staffA);
         List<StaffScheduleSnapshot> staffList = staffRepository.findAll();

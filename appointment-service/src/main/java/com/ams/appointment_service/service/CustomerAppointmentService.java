@@ -22,6 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.*;
 
 @Slf4j
@@ -36,6 +37,11 @@ public class CustomerAppointmentService {
 
     public AppointmentResponseDTO bookAppointment(AppointmentRequestDTO appointmentRequestDTO) {
         try {
+
+            if (appointmentRequestDTO.getDate().isBefore(LocalDate.now())) {
+                throw new AppointmentTimeSlotException("Appointment date is behind");
+            }
+
             if (appointmentRequestDTO.getDurationInMinutes() > 120) {
                 throw new AppointmentTimeSlotException("Appointment duration too long");
             }
@@ -57,7 +63,6 @@ public class CustomerAppointmentService {
             Appointment appointment = getAppointment(appointmentRequestDTO, staffIdAndTimeSlot, staff);
             Appointment savedAppointment = appointmentRepository.save(appointment);
 
-            // Notify customer and staff
             notificationService.sendAppointmentBookedNotification(savedAppointment);
             return AppointmentMapper.toDTO(savedAppointment);
         } catch (DataAccessException e) {
@@ -67,7 +72,6 @@ public class CustomerAppointmentService {
                 } else { log.info("Unknown error {}", e.getMessage()); }
             }
         } finally { TenantContext.INSTANCE.clear(); }
-
         throw new TenantNotFoundException("Invalid X-Tenant-ID value: " + TenantContext.INSTANCE.getCurrentTenant());
     }
 
@@ -78,7 +82,6 @@ public class CustomerAppointmentService {
                 throw new AppointmentNotFoundException("Appointment with the id " + appointmentId + " not found");
             }
             appointmentRepository.deleteById(appointmentId);
-            //notify staff
             notificationService.notifyStaffAppointmentHasBeenCancelled(optional.get());
         }  catch (DataAccessException e) {
             if (e.getCause() instanceof SQLException psqlEx) {
@@ -91,6 +94,10 @@ public class CustomerAppointmentService {
 
     public void reschedule(long appointmentId, RescheduleRequestDTO request) {
         try {
+            if (request.getDate().isBefore(LocalDate.now())) {
+                throw new AppointmentTimeSlotException("Appointment date is behind");
+            }
+
             Optional<Appointment> appointment = appointmentRepository.findByIdAndCustomerEmail(appointmentId, request.getEmail());
             if (appointment.isEmpty()) {
                 throw new AppointmentNotFoundException("Appointment with the id " + appointmentId + " not found");
@@ -128,7 +135,6 @@ public class CustomerAppointmentService {
                 return;
             }
 
-            // reschedule and update appointment after staff confirmation
             Appointment updatedAppointment = appointment.get();
             updatedAppointment.setDate(request.getDate());
             updatedAppointment.setStartTime(request.getStartTime());
@@ -137,7 +143,6 @@ public class CustomerAppointmentService {
             updatedAppointment.setStaffStatus(AppointmentStatus.PENDING);
             Appointment savedAppointment = appointmentRepository.save(updatedAppointment);
 
-            // Send APPOINTMENT_RESCHEDULED notification for staff confirmation.
             notificationService.notifyStaffAppointmentWasRescheduled(savedAppointment);
         } catch (DataAccessException e) {
             if (e.getCause() instanceof SQLException psqlEx) {

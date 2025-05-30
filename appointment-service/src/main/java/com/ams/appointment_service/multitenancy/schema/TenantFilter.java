@@ -24,7 +24,7 @@ public class TenantFilter extends OncePerRequestFilter {
         if (tenant == null || tenant.equals("public")) {
             response.setStatus(HttpStatus.BAD_REQUEST.value());
             response.setContentType("application/json");
-            response.getWriter().write("{\"message\": \"X-Tenant-ID header is required\"}");
+            response.getWriter().write("{\"message\": \"Missing X-Tenant-ID header\"}");
             return;
         }
 

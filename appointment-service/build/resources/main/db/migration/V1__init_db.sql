@@ -10,3 +10,4 @@ alter table if exists appointment add constraint FKo4v5b8m2nj5fa56jobrt3i7t fore
 alter table if exists custom_schedule add constraint FKnhd6qhjlj3ukpjorropxty0bv foreign key (staff_schedule_snapshot_id) references staff_schedule_snapshot;
 alter table if exists payment add constraint FK9vafbyi48ic7wo7n417cun7tf foreign key (appointment_id) references appointment;
 alter table if exists weekly_schedule add constraint FKcwwa4u3xlosfa8pofrfy0dykc foreign key (staff_schedule_snapshot_id) references staff_schedule_snapshot;
+ALTER TABLE custom_schedule ADD CONSTRAINT Fakoa4u367naj2azy0dykc UNIQUE (date, staff_schedule_snapshot_id);

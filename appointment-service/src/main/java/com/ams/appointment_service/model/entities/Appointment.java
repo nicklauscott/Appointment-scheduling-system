@@ -14,21 +14,22 @@ public class Appointment {
     private long id;
 
     @Column(nullable = false) private LocalDate date;
-    @Column(nullable = false) private LocalTime startTime;
-    @Column(nullable = false) private LocalTime endTime;
+    @Column(nullable = false, name = "start_time") private LocalTime startTime;
+    @Column(nullable = false, name = "end_time") private LocalTime endTime;
 
-    @Column(nullable = false) private String customerName;
-    @Column(nullable = false) private String customerEmail;
+    @Column(nullable = false, name = "customer_name") private String customerName;
+    @Column(nullable = false, name = "customer_email") private String customerEmail;
     private String notes;
-    @Column(nullable = false) @Enumerated(EnumType.STRING) private AppointmentStatus customerStatus = AppointmentStatus.APPROVED;;
+    @Column(nullable = false, name = "customer_status")
+    @Enumerated(EnumType.STRING) private AppointmentStatus customerStatus = AppointmentStatus.APPROVED;;
 
-    @Column(nullable = false) @Enumerated(EnumType.STRING) private AppointmentStatus staffStatus = AppointmentStatus.PENDING;
+    @Column(nullable = false, name = "staff_status") @Enumerated(EnumType.STRING) private AppointmentStatus staffStatus = AppointmentStatus.PENDING;
 
     @OneToOne(mappedBy = "appointment", cascade = CascadeType.ALL)
     private Payment payment;
 
     @ManyToOne
-    @JoinColumn(name = "staffScheduleSnapshot_id", nullable = false)
+    @JoinColumn(name = "staff_schedule_snapshot_id", nullable = false)
     private StaffScheduleSnapshot staff;
 }
 

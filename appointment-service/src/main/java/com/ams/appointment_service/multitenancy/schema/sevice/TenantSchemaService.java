@@ -19,6 +19,16 @@ public class TenantSchemaService {
         this.schemaInitialization = schemaInitialization;
     }
 
+    public void dropTenantSchema(String tenantId) {
+        try {
+            jdbcTemplate.execute("DROP SCHEMA IF EXISTS " + tenantId);
+            log.info("Dropping {} schema...", tenantId);
+        } catch (Exception e) {
+            log.error("Couldn't Drop {} schema \ne -> ", tenantId, e);
+            throw new RuntimeException(e);
+        }
+    }
+
     public void createTenantSchema(String tenantId) {
         try {
             jdbcTemplate.execute("CREATE SCHEMA IF NOT EXISTS " + tenantId);

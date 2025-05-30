@@ -7,21 +7,21 @@ import java.time.LocalTime;
 
 @Data
 @Entity
-@Table(name = "weekly_schedule_seq")
+@Table(name = "weekly_schedule")
 public class WeeklySchedule {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
 
     @Enumerated(EnumType.STRING)
-    private DayOfWeek dayOfWeek;
+    @Column(name = "day_of_week") private DayOfWeek dayOfWeek;
 
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private boolean isWorkingDay;
+    @Column(name = "start_time") private LocalTime startTime;
+    @Column(name = "end_time") private LocalTime endTime;
+    @Column(name = "is_working_day") private boolean isWorkingDay;
 
     @ManyToOne
-    @JoinColumn(name = "staffScheduleSnapshot_id", nullable = false)
+    @JoinColumn(name = "staff_schedule_snapshot_id", nullable = false)
     private StaffScheduleSnapshot staff;
 }
 

@@ -4,6 +4,9 @@ import static io.grpc.MethodDescriptor.generateFullMethodName;
 
 /**
  */
+@javax.annotation.Generated(
+    value = "by gRPC proto compiler (version 1.68.1)",
+    comments = "Source: auth_service.proto")
 @io.grpc.stub.annotations.GrpcGenerated
 public final class AuthServiceGrpc {
 
@@ -86,21 +89,6 @@ public final class AuthServiceGrpc {
         }
       };
     return AuthServiceStub.newStub(factory, channel);
-  }
-
-  /**
-   * Creates a new blocking-style stub that supports all types of calls on the service
-   */
-  public static AuthServiceBlockingV2Stub newBlockingV2Stub(
-      io.grpc.Channel channel) {
-    io.grpc.stub.AbstractStub.StubFactory<AuthServiceBlockingV2Stub> factory =
-      new io.grpc.stub.AbstractStub.StubFactory<AuthServiceBlockingV2Stub>() {
-        @java.lang.Override
-        public AuthServiceBlockingV2Stub newStub(io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
-          return new AuthServiceBlockingV2Stub(channel, callOptions);
-        }
-      };
-    return AuthServiceBlockingV2Stub.newStub(factory, channel);
   }
 
   /**
@@ -198,37 +186,6 @@ public final class AuthServiceGrpc {
 
   /**
    * A stub to allow clients to do synchronous rpc calls to service AuthService.
-   */
-  public static final class AuthServiceBlockingV2Stub
-      extends io.grpc.stub.AbstractBlockingStub<AuthServiceBlockingV2Stub> {
-    private AuthServiceBlockingV2Stub(
-        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
-      super(channel, callOptions);
-    }
-
-    @java.lang.Override
-    protected AuthServiceBlockingV2Stub build(
-        io.grpc.Channel channel, io.grpc.CallOptions callOptions) {
-      return new AuthServiceBlockingV2Stub(channel, callOptions);
-    }
-
-    /**
-     */
-    public auth.TenantResponseDto createTenant(auth.TenantRequestDto request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getCreateTenantMethod(), getCallOptions(), request);
-    }
-
-    /**
-     */
-    public auth.TenantResponseDto deleteTenant(auth.TenantRequestDto request) {
-      return io.grpc.stub.ClientCalls.blockingUnaryCall(
-          getChannel(), getDeleteTenantMethod(), getCallOptions(), request);
-    }
-  }
-
-  /**
-   * A stub to allow clients to do limited synchronous rpc calls to service AuthService.
    */
   public static final class AuthServiceBlockingStub
       extends io.grpc.stub.AbstractBlockingStub<AuthServiceBlockingStub> {

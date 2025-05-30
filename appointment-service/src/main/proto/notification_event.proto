@@ -20,6 +20,7 @@ message Appointment {
     string end_time = 9;
     string note = 10;
 
-    string event_type = 11;
+    string tenant_id = 11;
+    string event_type = 12;
 }
 

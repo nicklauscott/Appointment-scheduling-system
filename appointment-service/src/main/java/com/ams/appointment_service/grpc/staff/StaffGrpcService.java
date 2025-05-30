@@ -9,7 +9,7 @@ import com.google.protobuf.Empty;
 import io.grpc.stub.StreamObserver;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.grpc.server.service.GrpcService;
+import net.devh.boot.grpc.server.service.GrpcService;
 import staff.*;
 import java.util.UUID;
 
