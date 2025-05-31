@@ -18,7 +18,7 @@ public class TenantServiceGrpcClient {
 
     public TenantServiceGrpcClient(
             @Value("${tenant.service.address:localhost}") String serverAddress,
-            @Value("${tenant.service.grpc.port:9093}") String serverPort
+            @Value("${tenant.service.grpc.port:8043}") String serverPort
     ) {
         log.info("Connecting to GRPC Tenant service at {}:{}", serverAddress, serverPort);
         ManagedChannel channel = ManagedChannelBuilder
