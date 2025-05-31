@@ -1,4 +1,4 @@
-package com.ams.appointment_service.grpc.auth;
+package com.ams.appointment_service.grpc.server.auth;
 
 import auth.AuthServiceGrpc;
 import auth.TenantRequestDto;

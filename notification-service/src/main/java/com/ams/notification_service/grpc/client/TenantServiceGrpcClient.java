@@ -1,4 +1,4 @@
-package com.ams.notification_service.grpc;
+package com.ams.notification_service.grpc.client;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -10,6 +10,9 @@ import tenant.Tenant;
 import tenant.TenantIdRequest;
 import tenant.TenantServiceGrpc;
 
+/**
+ * Making gRPC request to Tenant Service
+ */
 @Service
 public class TenantServiceGrpcClient {
 
@@ -29,13 +32,19 @@ public class TenantServiceGrpcClient {
     }
 
     public Tenant getTenantDetails(String tenantId) {
-        TenantIdRequest request = TenantIdRequest.newBuilder()
-                .setTenantId(tenantId)
-                .build();
+        try {
+            log.info("Making GRPC request to Tenant service: {}", tenantId);
+            TenantIdRequest request = TenantIdRequest.newBuilder()
+                    .setTenantId(tenantId)
+                    .build();
 
-        Tenant response = blockingStub.getTenantById(request);
-        log.info("Received GRPC tenant service: {}", response.toString());
-        return response;
+            Tenant response = blockingStub.getTenantById(request);
+            log.info("Received GRPC tenant service: {}", response.toString());
+            return response;
+        } catch (Exception e) {
+            log.info("Received GRPC tenant service: ", e);
+        }
+        return null;
     }
 
 }

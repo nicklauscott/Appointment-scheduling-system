@@ -21,6 +21,7 @@ public class KafkaConsumer {
         try {
             Appointment appointment = Appointment.parseFrom(event);
             log.info("Received GRPC Appointment event: {}", appointment.toString());
+            log.info("Received GRPC Appointment event with tenant id: {}", appointment.getTenantId());
             service.handleNotificationEvent(appointment);
         } catch (InvalidProtocolBufferException e) {
             log.info("Error deserializing {} event", e.getMessage());

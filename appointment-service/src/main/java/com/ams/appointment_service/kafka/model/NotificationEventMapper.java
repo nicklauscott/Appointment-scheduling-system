@@ -1,6 +1,7 @@
 package com.ams.appointment_service.kafka.model;
 
 import com.ams.appointment_service.model.constant.EventType;
+import com.ams.appointment_service.multitenancy.schema.schema_resolver.TenantContext;
 import com.google.type.Date;
 import notification.event.Appointment;
 
@@ -12,6 +13,7 @@ public class NotificationEventMapper {
             EventType eventType
     ) {
         return Appointment.newBuilder()
+                .setTenantId(TenantContext.INSTANCE.getCurrentTenant())
                 .setStaffEmail(staffEmail != null ? staffEmail : "")
                 .setStaffName(staffName != null ? staffName : "")
                 .setCustomerEmail(appointment.getCustomerEmail())

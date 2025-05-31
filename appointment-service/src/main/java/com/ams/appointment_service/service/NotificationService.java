@@ -5,9 +5,12 @@ import com.ams.appointment_service.kafka.model.NotificationEventMapper;
 import com.ams.appointment_service.model.constant.EventType;
 import com.ams.appointment_service.model.entities.Appointment;
 import com.ams.appointment_service.model.entities.StaffScheduleSnapshot;
+import com.ams.appointment_service.multitenancy.schema.schema_resolver.TenantContext;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class NotificationService {
@@ -16,6 +19,7 @@ public class NotificationService {
 
     // APPOINTMENT_BOOKED: notify staff and customer
     public void sendAppointmentBookedNotification(Appointment appointment) {
+        log.info("Tenant id: {}", TenantContext.INSTANCE.getCurrentTenant());
         StaffScheduleSnapshot staffSnapshot = appointment.getStaff();
         var event = NotificationEventMapper
                 .toEvent(staffSnapshot.getName(), staffSnapshot.getName(), appointment, EventType.APPOINTMENT_BOOKED);

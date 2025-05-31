@@ -1,4 +1,4 @@
-package com.ams.appointment_service.grpc.staff;
+package com.ams.appointment_service.grpc.server.staff;
 
 import com.ams.appointment_service.dto.staffdto.UpdateDTO;
 import com.ams.appointment_service.grpc.staff.mapper.GrpcStaffMapper;

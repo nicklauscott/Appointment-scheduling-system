@@ -1,8 +1,7 @@
 package com.ams.notification_service.service;
 
 import com.ams.notification_service.constant.EmailType;
-import com.ams.notification_service.grpc.TenantServiceGrpcClient;
-import io.grpc.binarylog.v1.GrpcLogEntry;
+import com.ams.notification_service.grpc.client.TenantServiceGrpcClient;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import notification.event.Appointment;
