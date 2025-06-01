@@ -52,7 +52,7 @@ public class StaffGrpcService extends StaffServiceGrpc.StaffServiceImplBase {
     public void deleteAppointment(DeleteAppointmentRequest request, StreamObserver<Empty> responseObserver) {
         try {
             TenantContext.INSTANCE.setCurrentTenant(request.getTenantId());
-            service.deleteAppointment(Long.parseLong(request.getAppointmentId()), UUID.fromString(request.getStaffId()));
+            service.deleteAppointment(Long.parseLong(request.getAppointmentId()), request.getStaffId());
             responseObserver.onNext(Empty.getDefaultInstance());
             responseObserver.onCompleted();
         } catch (Exception e) {
@@ -66,7 +66,7 @@ public class StaffGrpcService extends StaffServiceGrpc.StaffServiceImplBase {
     public void getAllAppointmentsForStaff(GetAppointmentsRequest request, StreamObserver<GetAppointmentsResponse> responseObserver) {
         try {
             TenantContext.INSTANCE.setCurrentTenant(request.getTenantId());
-            var allAppointmentForAStaff = service.getAllAppointmentForAStaff(UUID.fromString(request.getStaffId()));
+            var allAppointmentForAStaff = service.getAllAppointmentForAStaff(request.getStaffId());
             GetAppointmentsResponse response = GrpcStaffMapper.toDTo(allAppointmentForAStaff);
             responseObserver.onNext(response);
             responseObserver.onCompleted();
@@ -96,7 +96,7 @@ public class StaffGrpcService extends StaffServiceGrpc.StaffServiceImplBase {
     public void updateStaffSchedule(StaffScheduleSnapshot request, StreamObserver<Empty> responseObserver) {
         try {
             TenantContext.INSTANCE.setCurrentTenant(request.getTenantId());
-            var staffSnapShot = service.getStaffSnapShot(UUID.fromString(request.getId()));
+            var staffSnapShot = service.getStaffSnapShot(request.getEmail());
             if (staffSnapShot.isEmpty()) throw new RuntimeException("StaffSnapShot not found");
             var updatedSnapShot = StaffSnapshotMapperService.toEntity(staffSnapShot.get(), request);
             service.updateStaffSchedule(updatedSnapShot);

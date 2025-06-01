@@ -1,5 +1,6 @@
 package com.ams.appointment_service.grpc.staff;
 
+import com.ams.appointment_service.grpc.server.staff.StaffGrpcService;
 import com.ams.appointment_service.service.StaffService;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -18,17 +19,17 @@ import java.util.UUID;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 
-//@TestInstance(TestInstance.Lifecycle.PER_CLASS)
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class StaffGrpcServiceTest {
 
     private Server grpcServer;
     private ManagedChannel channel;
     private StaffServiceGrpc.StaffServiceBlockingStub stub;
 
-    //@Mock
+    @Mock
     private StaffService staffService;
 
-    //@BeforeEach
+    @BeforeEach
     void startGrpcServer() throws IOException {
         MockitoAnnotations.openMocks(this);
 
@@ -47,13 +48,13 @@ class StaffGrpcServiceTest {
         stub = StaffServiceGrpc.newBlockingStub(channel);
     }
 
-    //@AfterEach
+    @AfterEach
     void stopGrpcServer() {
         channel.shutdownNow();
         grpcServer.shutdownNow();
     }
 
-    //@Test
+    @Test
     void testConfirmAppointment() {
         ConfirmAppointmentRequest request = ConfirmAppointmentRequest.newBuilder()
                 .setAppointmentId("123")
@@ -66,7 +67,7 @@ class StaffGrpcServiceTest {
 
     //@Test
     void testDeleteAppointment() {
-        UUID staffId = UUID.randomUUID();
+        String staffId = "abc@io.com";
         DeleteAppointmentRequest request = DeleteAppointmentRequest.newBuilder()
                 .setAppointmentId("123")
                 .setStaffId(staffId.toString())

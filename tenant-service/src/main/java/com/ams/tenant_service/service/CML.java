@@ -3,6 +3,7 @@ package com.ams.tenant_service.service;
 import com.ams.tenant_service.model.entities.Tenant;
 import com.ams.tenant_service.model.entities.tenant.CustomSchedule;
 import com.ams.tenant_service.model.entities.tenant.Staff;
+import com.ams.tenant_service.multitenancy.schema.schema_resolver.TenantContext;
 import com.ams.tenant_service.repository.CustomScheduleRepository;
 import com.ams.tenant_service.repository.StaffRepository;
 import com.ams.tenant_service.repository.TenantRepository;
@@ -11,13 +12,12 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
 @Slf4j
-@Component
+//@Component
 @AllArgsConstructor
 public class CML implements CommandLineRunner {
 
@@ -29,6 +29,7 @@ public class CML implements CommandLineRunner {
     @Transactional
     @Override
     public void run(String... args) throws Exception {
+        TenantContext.INSTANCE.setCurrentTenant("public");
         Tenant tenant = new Tenant();
         tenant.setTenantId("abc");
         tenantRepository.save(tenant);
@@ -36,6 +37,7 @@ public class CML implements CommandLineRunner {
         var ten = service.getTenantById("abc");
         log.info("------------- Tenants: {}", ten);
 
+        TenantContext.INSTANCE.setCurrentTenant("abc");
         Staff staff = getStaff();
         for (int i = 0; i < 2; i++) {
             log.info("Saved staff: {}", getStaffWithCustomSchedule(staff, i));

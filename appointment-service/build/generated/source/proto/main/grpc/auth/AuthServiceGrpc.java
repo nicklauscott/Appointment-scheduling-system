@@ -77,6 +77,37 @@ public final class AuthServiceGrpc {
     return getDeleteTenantMethod;
   }
 
+  private static volatile io.grpc.MethodDescriptor<auth.TenantStaffRequestDto,
+      auth.TenantStaffResponseDto> getCreateTenantStaffMethod;
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "CreateTenantStaff",
+      requestType = auth.TenantStaffRequestDto.class,
+      responseType = auth.TenantStaffResponseDto.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<auth.TenantStaffRequestDto,
+      auth.TenantStaffResponseDto> getCreateTenantStaffMethod() {
+    io.grpc.MethodDescriptor<auth.TenantStaffRequestDto, auth.TenantStaffResponseDto> getCreateTenantStaffMethod;
+    if ((getCreateTenantStaffMethod = AuthServiceGrpc.getCreateTenantStaffMethod) == null) {
+      synchronized (AuthServiceGrpc.class) {
+        if ((getCreateTenantStaffMethod = AuthServiceGrpc.getCreateTenantStaffMethod) == null) {
+          AuthServiceGrpc.getCreateTenantStaffMethod = getCreateTenantStaffMethod =
+              io.grpc.MethodDescriptor.<auth.TenantStaffRequestDto, auth.TenantStaffResponseDto>newBuilder()
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+              .setFullMethodName(generateFullMethodName(SERVICE_NAME, "CreateTenantStaff"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  auth.TenantStaffRequestDto.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  auth.TenantStaffResponseDto.getDefaultInstance()))
+              .setSchemaDescriptor(new AuthServiceMethodDescriptorSupplier("CreateTenantStaff"))
+              .build();
+        }
+      }
+    }
+    return getCreateTenantStaffMethod;
+  }
+
   /**
    * Creates a new async stub that supports all call types for the service
    */
@@ -138,6 +169,13 @@ public final class AuthServiceGrpc {
         io.grpc.stub.StreamObserver<auth.TenantResponseDto> responseObserver) {
       io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getDeleteTenantMethod(), responseObserver);
     }
+
+    /**
+     */
+    default void createTenantStaff(auth.TenantStaffRequestDto request,
+        io.grpc.stub.StreamObserver<auth.TenantStaffResponseDto> responseObserver) {
+      io.grpc.stub.ServerCalls.asyncUnimplementedUnaryCall(getCreateTenantStaffMethod(), responseObserver);
+    }
   }
 
   /**
@@ -182,6 +220,14 @@ public final class AuthServiceGrpc {
       io.grpc.stub.ClientCalls.asyncUnaryCall(
           getChannel().newCall(getDeleteTenantMethod(), getCallOptions()), request, responseObserver);
     }
+
+    /**
+     */
+    public void createTenantStaff(auth.TenantStaffRequestDto request,
+        io.grpc.stub.StreamObserver<auth.TenantStaffResponseDto> responseObserver) {
+      io.grpc.stub.ClientCalls.asyncUnaryCall(
+          getChannel().newCall(getCreateTenantStaffMethod(), getCallOptions()), request, responseObserver);
+    }
   }
 
   /**
@@ -212,6 +258,13 @@ public final class AuthServiceGrpc {
     public auth.TenantResponseDto deleteTenant(auth.TenantRequestDto request) {
       return io.grpc.stub.ClientCalls.blockingUnaryCall(
           getChannel(), getDeleteTenantMethod(), getCallOptions(), request);
+    }
+
+    /**
+     */
+    public auth.TenantStaffResponseDto createTenantStaff(auth.TenantStaffRequestDto request) {
+      return io.grpc.stub.ClientCalls.blockingUnaryCall(
+          getChannel(), getCreateTenantStaffMethod(), getCallOptions(), request);
     }
   }
 
@@ -246,10 +299,19 @@ public final class AuthServiceGrpc {
       return io.grpc.stub.ClientCalls.futureUnaryCall(
           getChannel().newCall(getDeleteTenantMethod(), getCallOptions()), request);
     }
+
+    /**
+     */
+    public com.google.common.util.concurrent.ListenableFuture<auth.TenantStaffResponseDto> createTenantStaff(
+        auth.TenantStaffRequestDto request) {
+      return io.grpc.stub.ClientCalls.futureUnaryCall(
+          getChannel().newCall(getCreateTenantStaffMethod(), getCallOptions()), request);
+    }
   }
 
   private static final int METHODID_CREATE_TENANT = 0;
   private static final int METHODID_DELETE_TENANT = 1;
+  private static final int METHODID_CREATE_TENANT_STAFF = 2;
 
   private static final class MethodHandlers<Req, Resp> implements
       io.grpc.stub.ServerCalls.UnaryMethod<Req, Resp>,
@@ -275,6 +337,10 @@ public final class AuthServiceGrpc {
         case METHODID_DELETE_TENANT:
           serviceImpl.deleteTenant((auth.TenantRequestDto) request,
               (io.grpc.stub.StreamObserver<auth.TenantResponseDto>) responseObserver);
+          break;
+        case METHODID_CREATE_TENANT_STAFF:
+          serviceImpl.createTenantStaff((auth.TenantStaffRequestDto) request,
+              (io.grpc.stub.StreamObserver<auth.TenantStaffResponseDto>) responseObserver);
           break;
         default:
           throw new AssertionError();
@@ -308,6 +374,13 @@ public final class AuthServiceGrpc {
               auth.TenantRequestDto,
               auth.TenantResponseDto>(
                 service, METHODID_DELETE_TENANT)))
+        .addMethod(
+          getCreateTenantStaffMethod(),
+          io.grpc.stub.ServerCalls.asyncUnaryCall(
+            new MethodHandlers<
+              auth.TenantStaffRequestDto,
+              auth.TenantStaffResponseDto>(
+                service, METHODID_CREATE_TENANT_STAFF)))
         .build();
   }
 
@@ -358,6 +431,7 @@ public final class AuthServiceGrpc {
               .setSchemaDescriptor(new AuthServiceFileDescriptorSupplier())
               .addMethod(getCreateTenantMethod())
               .addMethod(getDeleteTenantMethod())
+              .addMethod(getCreateTenantStaffMethod())
               .build();
         }
       }

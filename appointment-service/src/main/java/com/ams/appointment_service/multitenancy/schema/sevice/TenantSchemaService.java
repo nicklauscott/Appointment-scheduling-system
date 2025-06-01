@@ -24,7 +24,7 @@ public class TenantSchemaService {
             jdbcTemplate.execute("DROP SCHEMA IF EXISTS " + tenantId);
             log.info("Dropping {} schema...", tenantId);
         } catch (Exception e) {
-            log.error("Couldn't Drop {} schema \ne -> ", tenantId, e);
+            log.error("Couldn't Drop {} schema. {}", tenantId, e.getMessage());
             throw new RuntimeException(e);
         }
     }
@@ -34,7 +34,7 @@ public class TenantSchemaService {
             jdbcTemplate.execute("CREATE SCHEMA IF NOT EXISTS " + tenantId);
             log.info("Creating {} schema...", tenantId);
         } catch (Exception e) {
-            log.error("Couldn't create {} schema \ne -> ", tenantId, e);
+            log.error("Couldn't create {} schema. {}", tenantId, e.getMessage());
             throw new RuntimeException(e);
         }
 
@@ -44,7 +44,7 @@ public class TenantSchemaService {
             schemaInitialization.initializeSchema(tenantId);
             log.info("Initializing {} schema completed.", tenantId);
         } catch (Exception e) {
-            log.error("Couldn't initialize {} schema \ne -> ", tenantId, e);
+            log.error("Couldn't initialize {} schema. {}", tenantId, e.getMessage());
             throw new RuntimeException(e);
         }
     }

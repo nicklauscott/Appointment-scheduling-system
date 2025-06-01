@@ -1,23 +1,96 @@
 <html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <title>Appointment Notification</title>
     <style>
-        body { font-family: sans-serif; }
-        .header { background-color: {{primaryColor}}; padding: 10px; }
-        .footer { font-size: 12px; margin-top: 40px; border-top: 1px solid #ddd; padding-top: 10px; }
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: sans-serif;
+            background-color: #292A2A;
+            color: #ffffff;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: auto;
+            padding: 40px 20px;
+        }
+
+        .logo {
+            text-align: center;
+            padding-bottom: 30px;
+
+        }
+
+        .logo img {
+            height: 80px;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin: 0 0 20px;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        p, li {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: {{primaryColor}};
+            color: #ffffff;
+            text-decoration: none;
+            padding: 15px 25px;
+            border-radius: 30px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+
+        .footer {
+            font-size: 12px;
+            color: #888;
+            text-align: center;
+            margin-top: 40px;
+            border-top: 1px solid #333;
+            padding-top: 20px;
+        }
+
+        .footer p {
+            margin: 5px 0;
+        }
+
+        strong {
+            color: #ffffff;
+        }
     </style>
 </head>
 <body>
-<div class="header">
-    <img src="{{logoUrl}}" alt="{{companyName}} logo" height="50" />
-</div>
+<div class="container">
+    <div class="logo">
+        <img src="{{logoUrl}}" alt="{{companyName}} logo">
+    </div>
 
 <div class="content">
-    {{bodyContent}} <!-- Actual email content goes here -->
+    {{bodyContent}}
 </div>
+
+    <a href="{{domain}}" class="cta-button">Visit {{companyName}}</a>
 
 <div class="footer">
     <p>Contact us: {{email}} | {{phone}} | {{address}}</p>
     <p>&copy; {{companyName}} {{year}}</p>
+</div>
 </div>
 </body>
 </html>

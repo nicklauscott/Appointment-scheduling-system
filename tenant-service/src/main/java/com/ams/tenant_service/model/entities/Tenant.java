@@ -3,6 +3,8 @@ package com.ams.tenant_service.model.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 
 @Entity
@@ -31,9 +33,9 @@ public class Tenant {
     @Embedded
     private ContactInfo contactInfo;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "tenant_custom_config", joinColumns = @JoinColumn(name = "tenant_id"))
     @MapKeyColumn(name = "config_key")
     @Column(name = "config_value")
-    private Map<String, String> customConfig;
+    private Map<String, String> customConfig = Collections.emptyMap();
 }

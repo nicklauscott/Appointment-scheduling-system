@@ -26,13 +26,24 @@ public class StaffGrpcServiceClient {
 
     public StaffGrpcServiceClient(
             @Value("${tenant.service.address:localhost}") String serverAddress,
-            @Value("${tenant.service.grpc.port:8042}") String serverPort
+            @Value("${tenant.service.grpc.port:8041}") String serverPort
     ) {
         ManagedChannel channel = ManagedChannelBuilder
                 .forAddress(serverAddress, Integer.parseInt(serverPort))
                 .usePlaintext()
                 .build();
         this.stub = StaffServiceGrpc.newBlockingStub(channel);
+    }
+
+    public void updateStaffSchedule(Staff staff) {
+        try {
+            StaffScheduleSnapshot requestDto = StaffMapper.toDTO(staff);
+            var response = stub.updateStaffSchedule(requestDto);
+            log.info("Received {} from updateStaffSchedule gRPC request to Appointment Service", response);
+        } catch (Exception e) {
+            log.info("Error making updateStaffSchedule gRPC request to Appointment Service: {}", e.getMessage());
+            throw e;
+        }
     }
 
     public void confirmAppointment(String appointmentId, boolean confirm) {
@@ -100,16 +111,6 @@ public class StaffGrpcServiceClient {
             log.info("Received {} from editAppointment gRPC request to Appointment Service", response);
         } catch (Exception e) {
             log.info("Error making editAppointment gRPC request to Appointment Service: {}", e.getMessage());
-        }
-    }
-
-    public void updateStaffSchedule(Staff staff) {
-        try {
-            StaffScheduleSnapshot requestDto = StaffMapper.toDTO(staff);
-            var response = stub.updateStaffSchedule(requestDto);
-            log.info("Received {} from updateStaffSchedule gRPC request to Appointment Service", response);
-        } catch (Exception e) {
-            log.info("Error making updateStaffSchedule gRPC request to Appointment Service: {}", e.getMessage());
         }
     }
 

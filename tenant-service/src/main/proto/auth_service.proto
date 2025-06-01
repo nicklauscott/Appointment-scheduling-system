@@ -6,6 +6,17 @@ option java_package = "auth";
 service AuthService {
     rpc CreateTenant (TenantRequestDto) returns (TenantResponseDto);
     rpc DeleteTenant (TenantRequestDto) returns (TenantResponseDto);
+    rpc CreateTenantStaff (TenantStaffRequestDto) returns (TenantStaffResponseDto);
+}
+
+message TenantStaffRequestDto {
+    string tenant_id = 1;
+    string staff_email = 2;
+}
+
+message TenantStaffResponseDto {
+    string staff_id = 1;
+    string error_message = 2;
 }
 
 message TenantRequestDto {

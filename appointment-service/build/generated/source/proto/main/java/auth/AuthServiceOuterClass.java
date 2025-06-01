@@ -16,6 +16,16 @@ public final class AuthServiceOuterClass {
         (com.google.protobuf.ExtensionRegistryLite) registry);
   }
   static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_TenantStaffRequestDto_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_TenantStaffRequestDto_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
+    internal_static_TenantStaffResponseDto_descriptor;
+  static final 
+    com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
+      internal_static_TenantStaffResponseDto_fieldAccessorTable;
+  static final com.google.protobuf.Descriptors.Descriptor
     internal_static_TenantRequestDto_descriptor;
   static final 
     com.google.protobuf.GeneratedMessageV3.FieldAccessorTable
@@ -34,26 +44,43 @@ public final class AuthServiceOuterClass {
       descriptor;
   static {
     java.lang.String[] descriptorData = {
-      "\n\022auth_service.proto\"%\n\020TenantRequestDto" +
-      "\022\021\n\ttenant_id\030\001 \001(\t\"\'\n\021TenantResponseDto" +
-      "\022\022\n\nsuccessful\030\001 \001(\0102{\n\013AuthService\0225\n\014C" +
-      "reateTenant\022\021.TenantRequestDto\032\022.TenantR" +
-      "esponseDto\0225\n\014DeleteTenant\022\021.TenantReque" +
-      "stDto\032\022.TenantResponseDtoB\010\n\004authP\001b\006pro" +
-      "to3"
+      "\n\022auth_service.proto\"?\n\025TenantStaffReque" +
+      "stDto\022\021\n\ttenant_id\030\001 \001(\t\022\023\n\013staff_email\030" +
+      "\002 \001(\t\"A\n\026TenantStaffResponseDto\022\020\n\010staff" +
+      "_id\030\001 \001(\t\022\025\n\rerror_message\030\002 \001(\t\"%\n\020Tena" +
+      "ntRequestDto\022\021\n\ttenant_id\030\001 \001(\t\"\'\n\021Tenan" +
+      "tResponseDto\022\022\n\nsuccessful\030\001 \001(\0102\301\001\n\013Aut" +
+      "hService\0225\n\014CreateTenant\022\021.TenantRequest" +
+      "Dto\032\022.TenantResponseDto\0225\n\014DeleteTenant\022" +
+      "\021.TenantRequestDto\032\022.TenantResponseDto\022D" +
+      "\n\021CreateTenantStaff\022\026.TenantStaffRequest" +
+      "Dto\032\027.TenantStaffResponseDtoB\010\n\004authP\001b\006" +
+      "proto3"
     };
     descriptor = com.google.protobuf.Descriptors.FileDescriptor
       .internalBuildGeneratedFileFrom(descriptorData,
         new com.google.protobuf.Descriptors.FileDescriptor[] {
         });
-    internal_static_TenantRequestDto_descriptor =
+    internal_static_TenantStaffRequestDto_descriptor =
       getDescriptor().getMessageTypes().get(0);
+    internal_static_TenantStaffRequestDto_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_TenantStaffRequestDto_descriptor,
+        new java.lang.String[] { "TenantId", "StaffEmail", });
+    internal_static_TenantStaffResponseDto_descriptor =
+      getDescriptor().getMessageTypes().get(1);
+    internal_static_TenantStaffResponseDto_fieldAccessorTable = new
+      com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
+        internal_static_TenantStaffResponseDto_descriptor,
+        new java.lang.String[] { "StaffId", "ErrorMessage", });
+    internal_static_TenantRequestDto_descriptor =
+      getDescriptor().getMessageTypes().get(2);
     internal_static_TenantRequestDto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_TenantRequestDto_descriptor,
         new java.lang.String[] { "TenantId", });
     internal_static_TenantResponseDto_descriptor =
-      getDescriptor().getMessageTypes().get(1);
+      getDescriptor().getMessageTypes().get(3);
     internal_static_TenantResponseDto_fieldAccessorTable = new
       com.google.protobuf.GeneratedMessageV3.FieldAccessorTable(
         internal_static_TenantResponseDto_descriptor,

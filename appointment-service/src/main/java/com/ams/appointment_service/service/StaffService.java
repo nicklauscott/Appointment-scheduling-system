@@ -2,6 +2,8 @@ package com.ams.appointment_service.service;
 
 import com.ams.appointment_service.dto.AppointmentResponseDTO;
 import com.ams.appointment_service.dto.staffdto.UpdateDTO;
+import com.ams.appointment_service.exception.NoStaffAvailableException;
+import com.ams.appointment_service.exception.StaffAlreadyExistException;
 import com.ams.appointment_service.exception.TenantNotFoundException;
 import com.ams.appointment_service.mapper.AppointmentMapper;
 import com.ams.appointment_service.mapper.UpdateResponseMapper;
@@ -26,12 +28,21 @@ public class StaffService {
     private final AppointmentRepository appointmentRepository;
     private final NotificationService notificationService;
 
-    public Optional<StaffScheduleSnapshot> getStaffSnapShot(UUID staffId) {
-        return staffRepository.findById(staffId);
+    public Optional<StaffScheduleSnapshot> getStaffSnapShot(String email) {
+        return staffRepository.findByEmail(email);
+    }
+
+    public String createStaff(String email) {
+        Optional<StaffScheduleSnapshot> optional = staffRepository.findByEmail(email);
+        if (optional.isPresent())
+            throw new StaffAlreadyExistException("A staff with this email " + email + " already exist");
+        StaffScheduleSnapshot snapshot = new StaffScheduleSnapshot();
+        snapshot.setEmail(email);
+        return staffRepository.save(snapshot).getEmail();
     }
 
     public void updateStaffSchedule(StaffScheduleSnapshot snapshot) {
-        staffRepository.save(snapshot);
+        var x = staffRepository.save(snapshot);
     }
 
     public void confirmAppointment(long appointmentId, boolean accepted) {
@@ -79,11 +90,14 @@ public class StaffService {
         throw new TenantNotFoundException("Invalid X-Tenant-ID value: " + TenantContext.INSTANCE.getCurrentTenant());
     }
 
-    public void deleteAppointment(long appointmentId, UUID staffId) {
+    public void deleteAppointment(long appointmentId, String staffEmail) {
         try {
             Optional<Appointment> optional = appointmentRepository.findById(appointmentId);
             if (optional.isEmpty()) return;
             Appointment appointment = optional.get();
+            Optional<StaffScheduleSnapshot> staffOptional = staffRepository.findByEmail(staffEmail);
+            if (staffOptional.isEmpty()) return;
+            UUID staffId = staffOptional.get().getId();
             long aptId = appointmentRepository.deleteByIdAndStaffId(appointmentId, staffId);
             if (aptId != 0) {
                 notificationService.notifyCustomerAppointmentHasBeenCancelled(appointment);
@@ -93,9 +107,9 @@ public class StaffService {
         } finally { TenantContext.INSTANCE.clear(); }
     }
 
-    public List<AppointmentResponseDTO> getAllAppointmentForAStaff(UUID staffId) {
+    public List<AppointmentResponseDTO> getAllAppointmentForAStaff(String staffEmail) {
         try {
-            Optional<StaffScheduleSnapshot> staff = staffRepository.findById(staffId);
+            Optional<StaffScheduleSnapshot> staff = staffRepository.findByEmail(staffEmail);
             return staff.map(staffScheduleSnapshot -> staffScheduleSnapshot.getAppointments()
                     .stream().map(AppointmentMapper::toDTO).toList()).orElse(Collections.emptyList());
         } catch (DataAccessException e) {

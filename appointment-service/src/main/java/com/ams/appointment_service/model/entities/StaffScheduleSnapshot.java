@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.UUID;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 @Data
 @Entity
 @Table(name = "staff_schedule_snapshot")
+@ToString
 public class StaffScheduleSnapshot { 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
