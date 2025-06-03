@@ -34,7 +34,7 @@ public class MultiTenancyConfig {
     public FilterRegistrationBean<StaffFilter> filterStaffFilterRegistrationBean(StaffFilter filter) {
         var registration = new FilterRegistrationBean<>(filter);
         registration.setOrder(2);
-        registration.addUrlPatterns("/staff/*");
+        registration.addUrlPatterns("/*");
         return registration;
     }
 

@@ -1,8 +1,8 @@
 package com.ams.tenant_service.model.mapper;
 
-import com.ams.tenant_service.model.dto.CustomScheduleDTO;
-import com.ams.tenant_service.model.dto.StaffResponseDTO;
-import com.ams.tenant_service.model.dto.WeeklyScheduleDTO;
+import com.ams.tenant_service.model.dto.staff.CustomScheduleDTO;
+import com.ams.tenant_service.model.dto.staff.StaffResponseDTO;
+import com.ams.tenant_service.model.dto.staff.WeeklyScheduleDTO;
 import com.ams.tenant_service.model.entities.tenant.CustomSchedule;
 import com.ams.tenant_service.model.entities.tenant.Staff;
 import com.ams.tenant_service.model.entities.tenant.WeeklySchedule;
@@ -13,7 +13,6 @@ public class StaffMapper {
 
     public static StaffResponseDTO toDTO(Staff staff) {
         StaffResponseDTO response = new StaffResponseDTO();
-        response.setId(staff.getId().toString());
         response.setEmail(staff.getEmail());
         response.setFirstName(staff.getFirstName());
         response.setLastName(staff.getLastName());

@@ -21,8 +21,15 @@ public class TenantFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
+        String tenant = request.getHeader("X-Tenant-ID");
         String staffId = request.getHeader("X-USER-ID");
         String staffRole =  (request.getHeader("X-USER-ROLE") == null) ? "USER" : request.getHeader("X-USER-ROLE");
+        if (tenant == null || tenant.equals("public")) {
+            response.setStatus(HttpStatus.BAD_REQUEST.value());
+            response.setContentType("application/json");
+            response.getWriter().write("{\"message\": \"Missing or invalid X-Tenant-ID header\"}");
+            return;
+        }
 
         if (staffId == null || staffId.isBlank()) {
             response.setStatus(HttpStatus.BAD_REQUEST.value());
@@ -46,7 +53,8 @@ public class TenantFilter extends OncePerRequestFilter {
         }
 
         TenantContext.INSTANCE.setCurrentTenant("public");
-        Map<String, String> requestDetail = Map.of("X-USER-ID", "", "X-USER-ROLE", staffRole);
+        Map<String, String> requestDetail = Map.of("X-Tenant-ID" , tenant,"X-USER-ID",
+                "", "X-USER-ROLE", staffRole);
         TenantContext.INSTANCE.setRequestDetail(requestDetail);
         try {
             filterChain.doFilter(request, response);

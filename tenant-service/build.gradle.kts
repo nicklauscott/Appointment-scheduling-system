@@ -28,6 +28,8 @@ repositories {
 }
 
 dependencies {
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.8.8")
+
 	// gRPC
 	implementation("io.grpc:grpc-netty-shaded:1.69.0")
 	implementation("io.grpc:grpc-protobuf:1.69.0")

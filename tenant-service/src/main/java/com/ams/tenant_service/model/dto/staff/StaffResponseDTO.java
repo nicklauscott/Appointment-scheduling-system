@@ -1,16 +1,12 @@
-package com.ams.tenant_service.model.dto;
+package com.ams.tenant_service.model.dto.staff;
 
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Data
 public class StaffResponseDTO {
-   private String id;
    private String email;
    private String firstName;
    private String lastName;

@@ -16,22 +16,22 @@ public class Tenant {
     private String tenantId;
 
     @Column(name = "company_name")
-    private String companyName;
+    private String companyName = "";
 
     @Column(name = "logo_url")
-    private String logoUrl;
+    private String logoUrl = "";
 
     @Column(name = "primary_color")
-    private String primaryColor;
+    private String primaryColor = "";
 
     @Embedded
-    private NotificationPreferences notificationPreferences;
+    private NotificationPreferences notificationPreferences = new NotificationPreferences();
 
     @Column(name = "domain")
-    private String domain;
+    private String domain = "";
 
     @Embedded
-    private ContactInfo contactInfo;
+    private ContactInfo contactInfo = new ContactInfo();
 
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "tenant_custom_config", joinColumns = @JoinColumn(name = "tenant_id"))

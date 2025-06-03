@@ -38,11 +38,11 @@ public class AppointmentService {
         }
     }
 
-    public String deleteAppointment(AppointmentActionRequestDTO request) {
+    public String deleteAppointment(String appointmentId) {
         try {
             String staffId = TenantContext.INSTANCE.getRequestDetail().get("X-USER-ID");
-            grpcClient.deleteAppointment(staffId, request.getAppointmentId());
-            return request.getAppointmentId();
+            grpcClient.deleteAppointment(staffId, appointmentId);
+            return appointmentId;
         } catch (Exception e) {
             log.info("Error occurred while deleteAppointment an appointment. {}", e.getMessage());
             throw new AppointmentOperationException("Couldn't not delete appointment");

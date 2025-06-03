@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 public class ContactInfo {
 
-    private String email;
-    private String phone;
-    private String address;
+    private String email = "";
+    private String phone = "";
+    private String address = "";
 
 }

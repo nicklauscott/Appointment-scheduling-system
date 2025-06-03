@@ -15,6 +15,14 @@ public interface AppointmentRepository extends JpaRepository<Appointment, Long> 
     List<Appointment> findByStaffIdAndDate(UUID staffId, LocalDate date);
     Optional<Appointment> findByIdAndCustomerEmail(long id, String email);
 
+
+    @Query("""
+        SELECT a FROM Appointment a WHERE a.staff.email = :email
+    """)
+    List<Appointment> findAppointmentForAStaff(String email);
+
+
+
     @Modifying
     @Query("DELETE FROM Appointment a WHERE a.id = :id AND a.staff.id = :staffId")
     int deleteByIdAndStaffId(long id, UUID staffId);

@@ -1,4 +1,4 @@
-package com.ams.tenant_service.model.dto;
+package com.ams.tenant_service.model.dto.staff;
 
 import lombok.Data;
 import java.time.DayOfWeek;

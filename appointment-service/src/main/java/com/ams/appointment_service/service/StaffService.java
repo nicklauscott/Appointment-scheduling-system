@@ -13,6 +13,7 @@ import com.ams.appointment_service.model.constant.AppointmentStatus;
 import com.ams.appointment_service.multitenancy.schema.schema_resolver.TenantContext;
 import com.ams.appointment_service.repository.AppointmentRepository;
 import com.ams.appointment_service.repository.StaffScheduleSnapshotRepository;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -107,11 +108,11 @@ public class StaffService {
         } finally { TenantContext.INSTANCE.clear(); }
     }
 
+    @Transactional
     public List<AppointmentResponseDTO> getAllAppointmentForAStaff(String staffEmail) {
         try {
-            Optional<StaffScheduleSnapshot> staff = staffRepository.findByEmail(staffEmail);
-            return staff.map(staffScheduleSnapshot -> staffScheduleSnapshot.getAppointments()
-                    .stream().map(AppointmentMapper::toDTO).toList()).orElse(Collections.emptyList());
+            List<Appointment> appointments = appointmentRepository.findAppointmentForAStaff(staffEmail);
+            return appointments.stream().map(AppointmentMapper::toDTO).toList();
         } catch (DataAccessException e) {
             log.info("GetAllAppointmentForAStaff -> Unknown error {}", e.getMessage());
         } finally { TenantContext.INSTANCE.clear(); }

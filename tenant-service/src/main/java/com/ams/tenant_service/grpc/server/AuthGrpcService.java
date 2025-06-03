@@ -5,6 +5,7 @@ import com.ams.tenant_service.exception.StaffAlreadyExistException;
 import com.ams.tenant_service.multitenancy.schema.schema_resolver.TenantContext;
 import com.ams.tenant_service.multitenancy.schema.service.TenantSchemaService;
 import com.ams.tenant_service.service.StaffService;
+import com.ams.tenant_service.service.TenantService;
 import io.grpc.stub.StreamObserver;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,13 +18,15 @@ public class AuthGrpcService extends AuthServiceGrpc.AuthServiceImplBase {
 
     private final TenantSchemaService service;
     private final StaffService staffService;
+    private final TenantService tenantService;
 
     @Override
     public void createTenant(TenantRequestDto request, StreamObserver<TenantResponseDto> responseObserver) {
         try {
             service.createTenantSchema(request.getTenantId());
+            var created = tenantService.createTenant(request.getTenantId());
             responseObserver.onNext(TenantResponseDto.newBuilder()
-                     .setSuccessful(true)
+                     .setSuccessful(created != null)
                     .build());
             responseObserver.onCompleted();
         } catch (Exception e) {
@@ -39,6 +42,7 @@ public class AuthGrpcService extends AuthServiceGrpc.AuthServiceImplBase {
     public void deleteTenant(TenantRequestDto request, StreamObserver<TenantResponseDto> responseObserver) {
         try {
             service.dropTenantSchema(request.getTenantId());
+            tenantService.deleteTenant(request.getTenantId());
             responseObserver.onNext(TenantResponseDto.newBuilder()
                     .setSuccessful(true)
                     .build());
