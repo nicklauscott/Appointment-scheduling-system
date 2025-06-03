@@ -114,7 +114,6 @@ class TemplateRender {
         data.put("{{endTime}}", appointment.getEndTime());
         data.put("{{note}}", appointment.getNote());
         data.put("{{year}}", String.valueOf(LocalDate.now().getYear()));
-        System.out.println("data\n" + data);
         return data;
     }
 
@@ -161,41 +160,3 @@ class TemplateRender {
     }
 
 }
-
-
-/* --------------------------- Remove later  ------------------------------------------
-public static String renderTemplate(
-            String layout, String content, Map<String, String> data, String emailType, ResourceLoader resourceLoader
-    ) {
-
-        var c = content;
-        var l = layout;
-
-        if (emailType != null) {
-            try {
-                var type = EmailType.valueOf(emailType);
-                var localTemplate = switch (type) {
-                    case APPOINTMENT_BOOKED -> "templates/emails/staff_new_appointment_booked_by_client.html";
-                    case APPOINTMENT_BOOKING_CONFIRM -> "templates/emails/client_appointment_confirmed.html";
-                    case APPOINTMENT_CANCELED_BY_STAFF -> "templates/emails/client_appointment_canceled.html";
-                    case APPOINTMENT_CANCELED_BY_CUSTOMER -> "templates/emails/staff_appointment_canceled_by_client.html";
-                    case APPOINTMENT_RESCHEDULED_BY_STAFF -> "templates/emails/client_appointment_rescheduled.html";
-                    case APPOINTMENT_RESCHEDULED_BY_CUSTOMER -> "templates/emails/staff_appointment_rescheduled_by_client.html";
-                    case APPOINTMENT_RESCHEDULED_CONFIRMED_BY_STAFF -> "templates/emails/client_rescheduled_appointment_confirmed_by_staff.html";
-                    case APPOINTMENT_RESCHEDULED_CONFIRMED_BY_CUSTOMER -> "templates/emails/staff_rescheduled_appointment_confirmed_by_client";
-                };
-
-                Resource resource = resourceLoader.getResource("classpath:" + localTemplate);
-                String localContent = Files.readString(resource.getFile().toPath());
-                String localLayout = Files
-                        .readString(resourceLoader.getResource("classpath:templates/emails/layout.html").getFile().toPath());
-
-                return render(localLayout, localContent, data);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        return render(layout, content, data);
-    }
- */

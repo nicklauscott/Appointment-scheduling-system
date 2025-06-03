@@ -43,7 +43,7 @@ public class StaffService {
     }
 
     public void updateStaffSchedule(StaffScheduleSnapshot snapshot) {
-        var x = staffRepository.save(snapshot);
+        staffRepository.save(snapshot);
     }
 
     public void confirmAppointment(long appointmentId, boolean accepted) {

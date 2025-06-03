@@ -14,9 +14,7 @@ public class StaffSnapshotMapperService {
 
     public static StaffScheduleSnapshot toEntity(StaffScheduleSnapshot staffSnapshot, staff.StaffScheduleSnapshot request) {
         snapshot = staffSnapshot;
-        snapshot.setEmail(request.getEmail());
         snapshot.setName(request.getName());
-        //repository.save(staff); // Persist so CustomSchedule & WeeklySchedule can be added
 
         List<CustomSchedule> schedules = request.getCustomSchedulesList().stream()
                 .map(StaffSnapshotMapperService::toCustomScheduleEntity).toList();
@@ -29,6 +27,8 @@ public class StaffSnapshotMapperService {
 
         return snapshot;
     }
+
+
 
     private static CustomSchedule toCustomScheduleEntity(staff.CustomSchedule request) {
         CustomSchedule schedule = new CustomSchedule();

@@ -37,7 +37,6 @@ public class StaffFilter extends OncePerRequestFilter {
             return;
         }
         TenantContext.INSTANCE.setCurrentTenant(tenant);
-        System.out.println("X-USER-ID: " + staffId);
         Map<String, String> requestDetail = Map.of("X-USER-ID", staffId, "X-USER-ROLE", staffRole);
         TenantContext.INSTANCE.setRequestDetail(requestDetail);
         try {

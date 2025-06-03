@@ -22,11 +22,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
-import java.util.Random;
 
 @Slf4j
 @Service
@@ -37,58 +35,6 @@ public class StaffService {
     private final WeeklyScheduleRepository weeklyScheduleRepository;
     private final CustomScheduleRepository customScheduleRepository;
     private final StaffGrpcServiceClient grpcClient;
-
-    // ---------------------------  Remove later  --------------------------------------------
-
-    public void updateAppointmentServiceViaGrpc() {
-        try {
-            Optional<Staff> staff = repository.findByEmail("");
-            staff.ifPresent(grpcClient::updateStaffSchedule);
-        } catch (Exception e) {
-            log.info(e.getLocalizedMessage());
-            log.info(e.getMessage());
-        }
-    }
-
-    public void createTestStaff() {
-        List<Staff> list = repository.findAll();
-        for (Staff staff: list) {
-            for (int i = 0; i < 2; i++) {
-                log.info("Saved staff: {}", getStaffWithCustomSchedule(staff, i));
-            }
-        }
-        log.info(repository.findAll().toString());
-    }
-
-    public Staff getStaff() {
-        var random = new Random();
-        Staff staff = new Staff();
-        //staff.setId(UUID.randomUUID());
-        staff.setEmail("abc@io.io" + random.nextInt(100));
-        staff.setFirstName("Abc");
-        staff.setLastName("Def");
-        repository.save(staff);
-        List<Staff> staffList = repository.findAll();
-        if (staffList.isEmpty()) {
-            System.out.println("Staff list is empty");
-            return null;
-        }
-        return staffList.getFirst();
-    }
-
-    public Staff getStaffWithCustomSchedule(Staff staff, int count) {
-        CustomSchedule schedule = new CustomSchedule();
-        schedule.setDate(LocalDate.now().plusDays(count));
-        schedule.setStartTime(LocalTime.of(9, 0));
-        schedule.setEndTime(LocalTime.of(17, 0));
-        schedule.setAvailable(true);
-        schedule.setStaff(staff);
-        customScheduleRepository.save(schedule);
-        return staff;
-    }
-
-
-    // ----------------------------------------------------------------------------------
 
     public String createStaff(String email) {
         Optional<Staff> optional = repository.findByEmail(email);
@@ -119,6 +65,7 @@ public class StaffService {
         try {
             Staff staff = repository.findByEmail(staffEmail)
                     .orElseThrow(() -> new StaffNotFoundException("No staff with the id: " + staffEmail));
+
             staff.setFirstName(request.getFirstName());
             staff.setLastName(request.getLastName());
             if (!request.getGender().isBlank()) staff.setGender(request.getGender());
@@ -127,7 +74,14 @@ public class StaffService {
             if (!request.getProfilePictureUrl().isBlank()) staff.setProfilePictureUrl(request.getProfilePictureUrl());
             if (request.getDateOfBirth() != null) staff.setDateOfBirth(request.getDateOfBirth());
             repository.save(staff);
-            grpcClient.updateStaffSchedule(staff);
+
+            Staff grpcStaff = new Staff();
+            grpcStaff.setEmail(staffEmail);
+            grpcStaff.setFirstName(staff.getFirstName());
+            grpcStaff.setWeeklySchedule(Collections.emptyList());
+            grpcStaff.setCustomSchedules(Collections.emptyList());
+            grpcClient.updateStaffSchedule(grpcStaff);
+
             return StaffMapper.toDTO(staff);
         } catch (IllegalArgumentException e) {
             throw new StaffNotFoundException("No staff with the id: " + staffEmail);

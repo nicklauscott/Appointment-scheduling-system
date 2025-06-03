@@ -13,7 +13,7 @@ public class StaffMapper {
     public static StaffScheduleSnapshot toDTO(Staff staff) {
         return StaffScheduleSnapshot.newBuilder()
                 .setTenantId(TenantContext.INSTANCE.getCurrentTenant())
-                .setId(staff.getId().toString())
+                .setId(TenantContext.INSTANCE.getRequestDetail().get("X-USER-ID"))
                 .setEmail(staff.getEmail())
                 .setName(staff.getFirstName())
                 .addAllCustomSchedules(staff.getCustomSchedules().stream().map(StaffMapper::toDTO).toList())

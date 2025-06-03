@@ -1,9 +1,6 @@
 package com.ams.appointment_service.service;
 
-import com.ams.appointment_service.dto.AppointmentRequestDTO;
-import com.ams.appointment_service.dto.AppointmentResponseDTO;
-import com.ams.appointment_service.dto.ConfirmRescheduleRequestDTO;
-import com.ams.appointment_service.dto.RescheduleRequestDTO;
+import com.ams.appointment_service.dto.*;
 import com.ams.appointment_service.exception.AppointmentNotFoundException;
 import com.ams.appointment_service.exception.AppointmentTimeSlotException;
 import com.ams.appointment_service.exception.NoStaffAvailableException;
@@ -34,6 +31,20 @@ public class CustomerAppointmentService {
     private final StaffScheduleSnapshotRepository staffRepository;
     private final AppointmentRepository appointmentRepository;
     private final NotificationService notificationService;
+
+    public AppointmentResponseDTO getAppointment(AppointmentActionDTO request) {
+        try {
+            Optional<Appointment> appointment = appointmentRepository
+                    .findByIdAndCustomerEmail(request.getAppointmentId(), request.getEmail());
+            if (appointment.isEmpty()) {
+                throw new AppointmentNotFoundException("Appointment with the id " + request.getAppointmentId() + " not found");
+            }
+            return AppointmentMapper.toDTO(appointment.get());
+        } catch (Exception e) {
+            throw new AppointmentNotFoundException("Appointment with the id " + request.getAppointmentId() + " not found");
+        }
+
+    }
 
     public AppointmentResponseDTO bookAppointment(AppointmentRequestDTO appointmentRequestDTO) {
         try {

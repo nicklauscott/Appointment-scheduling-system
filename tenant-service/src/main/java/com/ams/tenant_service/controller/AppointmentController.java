@@ -6,6 +6,7 @@ import com.ams.tenant_service.model.dto.AppointmentActionRequestDTO;
 import com.ams.tenant_service.service.AppointmentService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class AppointmentController {
     @PostMapping("confirm_appointment")
     @Operation(summary = "Confirm a booked appointment")
     public ResponseEntity<String> confirmAppointment(
-            @RequestBody AppointmentActionRequestDTO request
+            @Valid @RequestBody AppointmentActionRequestDTO request
     ) {
         return ResponseEntity.ok(service.confirmAppointment(request));
     }
@@ -30,7 +31,7 @@ public class AppointmentController {
     @PostMapping("confirm_booked_appointment")
     @Operation(summary = "Confirm a rescheduled appointment")
     public ResponseEntity<String> confirmAppointmentRescheduled(
-            @RequestBody AppointmentActionRequestDTO request
+            @Valid @RequestBody AppointmentActionRequestDTO request
     ) {
         return ResponseEntity.ok(service.confirmAppointmentRescheduled(request));
     }
