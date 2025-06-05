@@ -9,6 +9,8 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.NoSuchAlgorithmException;
+
 @RestController
 @RequestMapping("/tenant")
 @AllArgsConstructor
@@ -21,7 +23,7 @@ public class TenantController {
     @Operation(summary = "Login tenant")
     public ResponseEntity<TokenPairResponseDTO> login(
             @Valid @RequestBody LoginRequestDTO request
-    ) {
+    ) throws NoSuchAlgorithmException {
         return ResponseEntity.ok(service.login(request));
     }
 
@@ -29,7 +31,7 @@ public class TenantController {
     @Operation(summary = "Refresh tenant access token")
     public ResponseEntity<TokenPairResponseDTO> refresh(
             @Valid @RequestBody RefreshTokenRequestDTO request
-    ) {
+    ) throws NoSuchAlgorithmException {
         return ResponseEntity.ok(service.refresh(request));
     }
 

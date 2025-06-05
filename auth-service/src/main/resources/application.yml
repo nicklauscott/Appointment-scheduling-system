@@ -6,7 +6,8 @@ server:
   port: 4044
 
 jwt:
-  private-key: ${JWT_PRIVATE_KEY}
+  private-key: ${JWT_PRIVATE_KEY:NOT_SET}
+  public-key: ${JWT_PUBLIC_KEY:NOT_SET}
 
 spring:
   application:
@@ -17,6 +18,11 @@ spring:
     username: sa # postgres
     password:
     driver-class-name: org.h2.Driver # org.postgresql.Driver
+
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
 
   jpa:
     show-sql: true

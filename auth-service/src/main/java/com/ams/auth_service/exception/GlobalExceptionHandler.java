@@ -20,9 +20,9 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(errors, HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler(StaffNotFoundException.class)
+    @ExceptionHandler(InvalidOrExpiredTokenException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ResponseEntity<Map<String, String>> handleStaffNotFoundException(StaffNotFoundException e) {
+    public ResponseEntity<Map<String, String>> handleStaffNotFoundException(InvalidOrExpiredTokenException e) {
         Map<String, String> error = Map.of("message", e.getMessage());
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
     }

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.security.NoSuchAlgorithmException;
 
 @RestController
 @RequestMapping("/staff")
@@ -24,7 +25,7 @@ public class StaffController {
     @Operation(summary = "Login a staff")
     public ResponseEntity<TokenPairResponseDTO> login(
             @Valid @RequestBody LoginRequestDTO request
-    ) {
+    ) throws NoSuchAlgorithmException {
         return ResponseEntity.ok(service.login(request));
     }
 
@@ -32,7 +33,7 @@ public class StaffController {
     @Operation(summary = "Refresh staff access token")
     public ResponseEntity<TokenPairResponseDTO> refresh(
             @Valid @RequestBody RefreshTokenRequestDTO request
-    ) {
+    ) throws NoSuchAlgorithmException {
         return ResponseEntity.ok(service.refresh(request));
     }
 }
