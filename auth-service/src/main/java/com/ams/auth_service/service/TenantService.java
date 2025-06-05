@@ -5,6 +5,7 @@ import com.ams.auth_service.exception.BadCredentialsException;
 import com.ams.auth_service.exception.InvalidOrExpiredTokenException;
 import com.ams.auth_service.exception.StaffAlreadyExistException;
 import com.ams.auth_service.exception.TenantAlreadyExistException;
+import com.ams.auth_service.grpc.GrpcService;
 import com.ams.auth_service.jwt.JwtService;
 import com.ams.auth_service.model.RefreshToken;
 import com.ams.auth_service.model.Staff;
@@ -32,6 +33,8 @@ public class TenantService {
     private StaffRepository staffRepository;
     private PasswordEncoder passwordEncoder;
     private JwtService jwtService;
+
+    private final GrpcService grpcService;
 
     @Transactional
     public TokenPairResponseDTO login(LoginRequestDTO request) throws NoSuchAlgorithmException {
@@ -96,6 +99,8 @@ public class TenantService {
         tenant.setEmail(request.getTenantEmail());
         tenant.setHashedPassword(passwordEncoder.encode(request.getPassword()));
 
+        // Throws exception if other services can't create a tenant schema
+        grpcService.createTenant(request.getTenantId());
         Tenant dbTenant = repository.save(tenant);
         return new RegisterTenantResponseDTO(dbTenant.getId(), dbTenant.getName(), dbTenant.getEmail());
     }
@@ -112,6 +117,7 @@ public class TenantService {
         if (request.getRole() != null) staff.setRole(request.getRole());
         staff.setTenantId(request.getTenantId());
 
+        grpcService.createTenantStaff(request.getTenantId(), request.getEmail());
         Staff dbStaff = staffRepository.save(staff);
         return new RegisterStaffResponseDTO(dbStaff.getTenantId(), dbStaff.getEmail());
     }

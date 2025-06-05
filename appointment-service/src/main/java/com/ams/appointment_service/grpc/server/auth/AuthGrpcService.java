@@ -52,7 +52,9 @@ public class AuthGrpcService extends AuthServiceGrpc.AuthServiceImplBase {
             responseObserver.onNext(TenantStaffResponseDto.newBuilder().setStaffId(staffId).build());
             responseObserver.onCompleted();
         } catch (StaffAlreadyExistException e) {
-            responseObserver.onNext(TenantStaffResponseDto.newBuilder().setErrorMessage(e.getMessage()).build());
+            responseObserver.onNext(TenantStaffResponseDto.newBuilder()
+                    .setStaffId("")
+                    .setErrorMessage(e.getMessage()).build());
             responseObserver.onCompleted();
         } catch (Exception e) {
             log.error("Error occurred while creating tenant staff {}", e.getMessage());
