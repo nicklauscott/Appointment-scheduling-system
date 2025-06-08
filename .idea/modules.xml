@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Appointment Scheduling System.iml" filepath="$PROJECT_DIR$/Appointment Scheduling System.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/api-gateway.main.iml" filepath="$PROJECT_DIR$/.idea/modules/api-gateway.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/appointment-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/appointment-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/auth-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/auth-service.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/notification-service.main.iml" filepath="$PROJECT_DIR$/.idea/modules/notification-service.main.iml" />

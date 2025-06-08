@@ -1,6 +1,7 @@
 grpc:
   server:
     port: 8044
+    enabled: false
 
 server:
   port: 4044

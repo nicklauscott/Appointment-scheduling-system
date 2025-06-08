@@ -1,0 +1,54 @@
+server:
+  port: 4040
+
+spring:
+  application:
+    name: api-gateway
+
+  cloud:
+    gateway:
+      routes:
+
+        # auth service [ localhost:4040/auth/tenant/register >> localhost:4044/tenant/register ]
+        - id: auth-service-route
+          uri: http://localhost:4044
+          predicates:
+            - Path=/auth/**
+          filters:
+            - StripPrefix=1
+
+
+        # Appointment Service
+        # Services [ localhost:4040/api/appointments/booking >> localhost:4041/booking ]
+        - id: appointments-service-route
+          uri: http://localhost:4041
+          predicates:
+            - Path=/api/appointments/**
+          filters:
+            - StripPrefix=2
+
+        # Api docs [ localhost:4040/api-docs/appointments >> localhost:4041/v3/api-docs ]
+        - id: appointments-service-docs
+          uri: http://localhost:4041
+          predicates:
+            - Path=/api-docs/appointments
+          filters:
+            - RewritePath=/api-docs/appointments,/v3/api-docs
+
+
+        # tenant service [ localhost:4040/api/tenants/staff >> localhost:4043/staff ]
+        - id: tenants-service-route
+          uri: http://localhost:4043
+          predicates:
+            - Path=/api/tenants/**
+          filters:
+            - StripPrefix=2
+            - AppointmentService
+
+        # Api docs [ localhost:4040/api-docs/tenants >> localhost:4043/v3/api-docs ]
+        - id: tenants-service-docs
+          uri: http://localhost:4043
+          predicates:
+            - Path=/api-docs/tenants
+          filters:
+            - RewritePath=/api-docs/tenants,/v3/api-docs

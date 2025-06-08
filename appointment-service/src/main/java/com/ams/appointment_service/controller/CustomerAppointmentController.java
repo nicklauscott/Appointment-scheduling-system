@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/booking")
-@Tag(name = "Appointment", description = "Api for customer appointments")
+@Tag(name = "Appointments", description = "Api for customer appointments")
 @AllArgsConstructor
 public class CustomerAppointmentController {
 
