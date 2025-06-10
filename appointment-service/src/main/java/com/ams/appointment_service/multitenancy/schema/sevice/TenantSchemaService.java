@@ -21,7 +21,7 @@ public class TenantSchemaService {
 
     public void dropTenantSchema(String tenantId) {
         try {
-            jdbcTemplate.execute("DROP SCHEMA IF EXISTS " + tenantId);
+            jdbcTemplate.execute("DROP SCHEMA IF EXISTS " + tenantId + " CASCADE");
             log.info("Dropping {} schema...", tenantId);
         } catch (Exception e) {
             log.error("Couldn't Drop {} schema. {}", tenantId, e.getMessage());

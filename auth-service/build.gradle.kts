@@ -78,10 +78,24 @@ protobuf {
 
 
 jib {
+	from {
+		image = "eclipse-temurin:21-jre"
+	}
 	to {
-		image = "tenant-service"
+		image = "auth-service:latest"
+	}
+	container {
+		ports = listOf("4044")
+		jvmFlags = listOf("-Dspring.profiles.active=default")
 	}
 }
+
+tasks.register("printPath") {
+	doLast {
+		println(System.getenv("PATH"))
+	}
+}
+
 
 tasks.withType<Test> {
 	useJUnitPlatform()

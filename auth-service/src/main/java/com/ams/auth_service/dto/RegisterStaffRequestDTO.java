@@ -7,9 +7,6 @@ import lombok.Data;
 
 @Data
 public class RegisterStaffRequestDTO {
-    @NotNull(message = "Tenant id is required")
-    @Size(min = 3, message = "Tenant id must be 3 characters or more")
-    private String tenantId;
 
     @NotNull(message = "Email is required")
     @Email

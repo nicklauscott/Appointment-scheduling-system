@@ -1,12 +1,10 @@
 package com.ams.auth_service.service;
 
 import com.ams.auth_service.dto.*;
-import com.ams.auth_service.exception.BadCredentialsException;
-import com.ams.auth_service.exception.InvalidOrExpiredTokenException;
-import com.ams.auth_service.exception.StaffAlreadyExistException;
-import com.ams.auth_service.exception.TenantAlreadyExistException;
+import com.ams.auth_service.exception.*;
 import com.ams.auth_service.grpc.GrpcService;
 import com.ams.auth_service.jwt.JwtService;
+import com.ams.auth_service.jwt.TenantContext;
 import com.ams.auth_service.model.RefreshToken;
 import com.ams.auth_service.model.Staff;
 import com.ams.auth_service.model.Tenant;
@@ -29,12 +27,12 @@ public class TenantService {
 
     private TenantRepository repository;
     private RefreshTokenRepository tokenRepository;
-
     private StaffRepository staffRepository;
-    private PasswordEncoder passwordEncoder;
-    private JwtService jwtService;
 
+    private JwtService jwtService;
     private final GrpcService grpcService;
+    private PasswordEncoder passwordEncoder;
+    private final TenantContext tenantContext;
 
     @Transactional
     public TokenPairResponseDTO login(LoginRequestDTO request) throws NoSuchAlgorithmException {
@@ -106,18 +104,20 @@ public class TenantService {
     }
 
     public RegisterStaffResponseDTO registerStaff(RegisterStaffRequestDTO request) {
-        if (staffRepository.findByEmailAndTenantId(request.getEmail(), request.getTenantId()).isPresent()) {
+        String tenantId = tenantContext.getTenantId();
+        if (tenantId == null) throw new TenantNotFoundException("Couldn't resolve the right tenant for this request");
+        if (staffRepository.findByEmailAndTenantId(request.getEmail(), tenantId).isPresent()) {
             throw new StaffAlreadyExistException("Staff with the email " + request.getEmail()
-                    + " already exist for tenant " + request.getTenantId());
+                    + " already exist for tenant " + tenantId);
         }
 
         Staff staff = new Staff();
         staff.setEmail(request.getEmail());
         staff.setHashedPassword(passwordEncoder.encode(request.getPassword()));
         if (request.getRole() != null) staff.setRole(request.getRole());
-        staff.setTenantId(request.getTenantId());
+        staff.setTenantId(tenantId);
 
-        grpcService.createTenantStaff(request.getTenantId(), request.getEmail());
+        grpcService.createTenantStaff(tenantId, request.getEmail());
         Staff dbStaff = staffRepository.save(staff);
         return new RegisterStaffResponseDTO(dbStaff.getTenantId(), dbStaff.getEmail());
     }

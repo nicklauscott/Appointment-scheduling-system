@@ -20,6 +20,11 @@ public class StaffFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
+
+        if (request.getRequestURI().equals("/v3/api-docs")) {
+            filterChain.doFilter(request, response);
+        }
+
         String tenant = request.getHeader("X-Tenant-ID");
         String staffId = request.getHeader("X-USER-ID");
         String staffRole =  (request.getHeader("X-USER-ROLE") == null)

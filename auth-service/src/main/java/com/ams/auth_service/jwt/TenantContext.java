@@ -1,20 +1,16 @@
 package com.ams.auth_service.jwt;
 
-import java.util.Map;
+import lombok.Data;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.RequestScope;
 
-public enum TenantContext {
-    INSTANCE;
+@Component
+@RequestScope
+@Data
+public class TenantContext {
 
-    private final ThreadLocal<Map<String, String>> requestDetail = new ThreadLocal<>();
+    private String tenantId;
 
-    public void setRequestDetail(Map<String, String> requestDetails) {
-        requestDetail.set(requestDetails);
-    }
-
-    public Map<String, String> getRequestDetail() {
-        return requestDetail.get();
-    }
-
-    public void clear() { requestDetail.remove(); }
 }
+
 

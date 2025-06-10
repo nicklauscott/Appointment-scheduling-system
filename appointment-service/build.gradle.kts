@@ -83,8 +83,15 @@ protobuf {
 
 
 jib {
+	from {
+		image = "eclipse-temurin:21-jre"
+	}
 	to {
-		image = "appointment-service"
+		image = "appointment-service:latest"
+	}
+	container {
+		ports = listOf("4041", "8041")
+		jvmFlags = listOf("-Dspring.profiles.active=default")
 	}
 }
 

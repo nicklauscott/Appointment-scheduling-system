@@ -10,6 +10,8 @@ import org.springframework.security.oauth2.jwt.JwtDecoder;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.security.KeyFactory;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
@@ -23,8 +25,9 @@ public class JwtConfig {
 
     @Bean
     public JwtDecoder jwtDecoder() throws Exception {
-        String publicKeyBase64 = System.getenv("JWT_PUBLIC_KEY");
-        RSAPublicKey publicKey = parseRSAPublicKey(publicKeyBase64);
+        String publicKeyPath = System.getenv("JWT_PUBLIC_KEY_PATH");
+        String publicKeyContent = Files.readString(Paths.get(publicKeyPath));
+        RSAPublicKey publicKey = parseRSAPublicKey(publicKeyContent);
         return NimbusJwtDecoder.withPublicKey(publicKey).build();
     }
 
@@ -36,11 +39,13 @@ public class JwtConfig {
     }
 
     private RSAKey buildRsaKey() throws Exception {
-        String privateKeyBase64 = System.getenv("JWT_PRIVATE_KEY");
-        String publicKeyBase64 = System.getenv("JWT_PUBLIC_KEY");
+        String privateKeyPath = System.getenv("JWT_PRIVATE_KEY_PATH");
+        String publicKeyPath = System.getenv("JWT_PUBLIC_KEY_PATH");
+        String privateKeyContent = Files.readString(Paths.get(privateKeyPath));
+        String publicKeyContent = Files.readString(Paths.get(publicKeyPath));
 
-        RSAPrivateKey privateKey = parseRSAPrivateKey(privateKeyBase64);
-        RSAPublicKey publicKey = parseRSAPublicKey(publicKeyBase64);
+        RSAPrivateKey privateKey = parseRSAPrivateKey(privateKeyContent);
+        RSAPublicKey publicKey = parseRSAPublicKey(publicKeyContent);
 
         return new RSAKey.Builder(publicKey)
                 .privateKey(privateKey)
@@ -48,20 +53,14 @@ public class JwtConfig {
                 .build();
     }
 
-    private RSAPrivateKey parseRSAPrivateKey(String doubleBased64Pem) throws Exception {
-        // First decode to get the actual PEM string
-        byte[] firstDecode = Base64.getDecoder().decode(doubleBased64Pem);
-        String actualPem = new String(firstDecode);
-
-        // Now clean the PEM string and decode again
-        String cleanedPem = actualPem
+    private RSAPrivateKey parseRSAPrivateKey(String pem) throws Exception {
+        String cleanedPem = pem
                 .replace("-----BEGIN PRIVATE KEY-----", "")
                 .replace("-----END PRIVATE KEY-----", "")
                 .replace("-----BEGIN RSA PRIVATE KEY-----", "")
                 .replace("-----END RSA PRIVATE KEY-----", "")
                 .replaceAll("\\s+", "");
 
-        // Second decode to get the actual key bytes
         byte[] keyBytes = Base64.getDecoder().decode(cleanedPem);
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes);
 
@@ -69,11 +68,8 @@ public class JwtConfig {
         return (RSAPrivateKey) factory.generatePrivate(keySpec);
     }
 
-    private RSAPublicKey parseRSAPublicKey(String doubleBased64Pem) throws Exception {
-        byte[] firstDecode = Base64.getDecoder().decode(doubleBased64Pem);
-        String actualPem = new String(firstDecode);
-
-        String cleanedPem = actualPem
+    private RSAPublicKey parseRSAPublicKey(String pem) throws Exception {
+        String cleanedPem = pem
                 .replace("-----BEGIN PUBLIC KEY-----", "")
                 .replace("-----END PUBLIC KEY-----", "")
                 .replace("-----BEGIN RSA PUBLIC KEY-----", "")

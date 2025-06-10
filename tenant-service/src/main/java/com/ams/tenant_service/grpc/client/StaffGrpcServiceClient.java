@@ -25,8 +25,8 @@ public class StaffGrpcServiceClient {
     private final StaffServiceGrpc.StaffServiceBlockingStub stub;
 
     public StaffGrpcServiceClient(
-            @Value("${tenant.service.address:localhost}") String serverAddress,
-            @Value("${tenant.service.grpc.port:8041}") String serverPort
+            @Value("${appointment.service.address:localhost}") String serverAddress,
+            @Value("${appointment.service.grpc.port:8041}") String serverPort
     ) {
         ManagedChannel channel = ManagedChannelBuilder
                 .forAddress(serverAddress, Integer.parseInt(serverPort))

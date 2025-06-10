@@ -69,8 +69,15 @@ protobuf {
 
 
 jib {
+	from {
+		image = "eclipse-temurin:21-jre"
+	}
 	to {
-		image = "notification-service"
+		image = "notification-service:latest"
+	}
+	container {
+		ports = listOf("4042", "8042")
+		jvmFlags = listOf("-Dspring.profiles.active=default")
 	}
 }
 

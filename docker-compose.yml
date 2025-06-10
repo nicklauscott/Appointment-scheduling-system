@@ -1,0 +1,167 @@
+services:
+  api-gateway:
+    image: api-gateway:latest
+    ports:
+      - "4040:4040"
+    depends_on:
+      - auth-service
+      - appointment-service
+    networks:
+      - app-network
+
+  # Auth Service
+  auth-service:
+    image: auth-service:latest
+    expose:
+      - "4044"
+    volumes:
+      - ./jwt:/app/keys  # Mount the `jwt/` folder to `/app/keys` inside container
+    environment:
+      JWT_PRIVATE_KEY_PATH: /app/keys/jwt-private.pem
+      JWT_PUBLIC_KEY_PATH: /app/keys/jwt-public.pem
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATASOURCE_URL: jdbc:postgresql://auth-service-db:5432/auth_db
+      SPRING_DATASOURCE_USERNAME: admin_user
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_SQL_INIT_MODE: always
+      # gRPCServers
+      TENANT_SERVICE_ADDRESS: tenant-service
+      TENANT_SERVICE_GRPC_PORT: 8043
+      APPOINTMENT_SERVICE_ADDRESS: appointment-service
+      APPOINTMENT_SERVICE_GRPC_PORT: 8041
+    depends_on:
+      - auth-service-db
+    networks:
+      - app-network
+
+  auth-service-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: admin_user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: auth_db
+    expose:
+      - "5432"
+    volumes:
+      - auth_postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  # Appointment Service
+  appointment-service:
+    image: appointment-service:latest
+    expose:
+      - "4041"
+      - "8041"
+    environment:
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATASOURCE_URL: jdbc:postgresql://appointment-service-db:5432/appointment_db
+      SPRING_DATASOURCE_USERNAME: admin_user
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_SQL_INIT_MODE: always
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9094
+    depends_on:
+      - appointment-service-db
+      - kafka
+    networks:
+      - app-network
+
+  appointment-service-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: admin_user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: appointment_db
+    expose:
+      - "5432"
+    volumes:
+      - appointments_postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  # Tenant Service
+  tenant-service:
+    image: tenant-service:latest
+    expose:
+      - "4043"
+      - "8043"
+    environment:
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_DATASOURCE_URL: jdbc:postgresql://tenant-service-db:5432/tenant_db
+      SPRING_DATASOURCE_USERNAME: admin_user
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: org.postgresql.Driver
+      SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.PostgreSQLDialect
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_SQL_INIT_MODE: always
+      # gRPC server
+      APPOINTMENT_SERVICE_ADDRESS: appointment-service
+      APPOINTMENT_SERVICE_GRPC_PORT: 8041
+    depends_on:
+      - tenant-service-db
+    networks:
+      - app-network
+
+  tenant-service-db:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: admin_user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: tenant_db
+    expose:
+      - "5432:5432"
+    volumes:
+      - tenants_postgres_data:/var/lib/postgresql/data
+    networks:
+      - app-network
+
+  # Notification Service
+  notification-service:
+    image: notification-service:latest
+    expose:
+      - "4042"
+    environment:
+      # Spring mail
+      SPRING_MAIL_HOST: smtp.gmail.com
+      SPRING_MAIL_PORT: 587
+      SPRING_MAIL_USERNAME: ${SMTP_MAIL_USERNAME}
+      SPRING_MAIL_PASSWORD: ${SMTP_MAIL_PASSWORD}
+      # Kafka
+      SPRING_KAFKA_BOOTSTRAP_SERVERS: kafka:9094
+      SPRING_KAFKA_CONSUMER_GROUP_ID: notification-service-group
+      # gRPC server
+      TENANT_SERVICE_ADDRESS: tenant-service
+      TENANT_SERVICE_GRPC_PORT: 8043
+    depends_on:
+      - kafka
+    networks:
+      - app-network
+
+  # Kafka
+  kafka:
+    image: bitnami/kafka:latest
+    expose:
+      - "9094"
+    environment:
+      KAFKA_CFG_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092,EXTERNAL://localhost:9094
+      KAFKA_CFG_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CFG_CONTROLLER_QUORUM_VOTERS: 0@kafka:9093
+      KAFKA_CFG_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_CFG_LISTENERS: PLAINTEXT://:9092,CONTROLLER://:9093,EXTERNAL://:9094
+      KAFKA_CFG_NODE_ID: 0
+      KAFKA_CFG_PROCESS_ROLES: controller,broker
+    networks:
+      - app-network
+
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  auth_postgres_data:
+  appointments_postgres_data:
+  tenants_postgres_data:

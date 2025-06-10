@@ -16,14 +16,13 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
 
 @Component
 @AllArgsConstructor
 public class JwtFilter extends OncePerRequestFilter {
 
     private JwtService jwtService;
+    private final TenantContext tenantContext;
 
     @Override
     protected void doFilterInternal(
@@ -52,11 +51,7 @@ public class JwtFilter extends OncePerRequestFilter {
                     response.getWriter().write("{\"message\": \"You are not allowed to use this feature\"}");
                     return;
                 }
-
-                Map<String, String> requestDetail = new HashMap<>();
-                requestDetail.put("X-TENANT-ID", claims.getRight());
-                TenantContext.INSTANCE.setRequestDetail(requestDetail);
-
+                tenantContext.setTenantId(claims.getRight());
                 var auth = new UsernamePasswordAuthenticationToken(claims.getLeft(),
                         new SimpleGrantedAuthority(role), Collections.emptyList());
                 var context = SecurityContextHolder.getContext();
@@ -67,8 +62,6 @@ public class JwtFilter extends OncePerRequestFilter {
                 response.setContentType("application/json");
                 response.getWriter().write("{\"message\": \"You need to be authenticated to use this feature\"}");
                 return;
-            } finally {
-                TenantContext.INSTANCE.clear();
             }
         }
 

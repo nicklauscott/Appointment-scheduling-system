@@ -9,46 +9,55 @@ spring:
     gateway:
       routes:
 
-        # auth service [ localhost:4040/auth/tenant/register >> localhost:4044/tenant/register ]
+        # auth service [ localhost:4040/auth/tenant/register >> auth-service:4044/tenant/register ]
         - id: auth-service-route
-          uri: http://localhost:4044
+          uri: http://auth-service:4044
           predicates:
             - Path=/auth/**
           filters:
             - StripPrefix=1
 
+        # Api docs
+        - id: auth-service-docs
+          uri: http://auth-service:4044
+          predicates:
+            - Path=/api-docs/auth
+          filters:
+            - RewritePath=/api-docs/auth,/v3/api-docs
+
 
         # Appointment Service
-        # Services [ localhost:4040/api/appointments/booking >> localhost:4041/booking ]
-        - id: appointments-service-route
-          uri: http://localhost:4041
+        # Services [ localhost:4040/api/appointment/booking >> appointment-service:4041/booking ]
+        - id: appointment-service-route
+          uri: http://appointment-service:4041
           predicates:
-            - Path=/api/appointments/**
+            - Path=/api/appointment/**
           filters:
             - StripPrefix=2
 
-        # Api docs [ localhost:4040/api-docs/appointments >> localhost:4041/v3/api-docs ]
-        - id: appointments-service-docs
-          uri: http://localhost:4041
+        # Api docs [ localhost:4040/api-docs/appointment >> appointment-service:4041/v3/api-docs ]
+        - id: appointment-service-docs
+          uri: http://appointment-service:4041
           predicates:
-            - Path=/api-docs/appointments
+            - Path=/api-docs/appointment
           filters:
-            - RewritePath=/api-docs/appointments,/v3/api-docs
+            - RewritePath=/api-docs/appointment,/v3/api-docs
 
 
-        # tenant service [ localhost:4040/api/tenants/staff >> localhost:4043/staff ]
-        - id: tenants-service-route
-          uri: http://localhost:4043
+        # tenant service [ localhost:4040/api/tenant/staff >> tenant-service:4043/staff ]
+        - id: tenant-service-route
+          uri: http://tenant-service:4043
           predicates:
-            - Path=/api/tenants/**
+            - Path=/api/tenant/**
           filters:
             - StripPrefix=2
-            - AppointmentService
+            - TenantService
 
-        # Api docs [ localhost:4040/api-docs/tenants >> localhost:4043/v3/api-docs ]
-        - id: tenants-service-docs
-          uri: http://localhost:4043
+        # Api docs [ localhost:4040/api-docs/tenant >> tenant-service:4043/v3/api-docs ]
+        - id: tenant-service-docs
+          uri: http://tenant-service:4043
           predicates:
-            - Path=/api-docs/tenants
+            - Path=/api-docs/tenant
           filters:
-            - RewritePath=/api-docs/tenants,/v3/api-docs
+            - RewritePath=/api-docs/tenant,/v3/api-docs
+

@@ -14,8 +14,8 @@ public class AppointmentGrpcServiceClient {
     private final AuthServiceGrpc.AuthServiceBlockingStub stub;
 
     public AppointmentGrpcServiceClient(
-            @Value("${tenant.service.address:localhost}") String serverAddress,
-            @Value("${tenant.service.grpc.port:8041}") String serverPort
+            @Value("${appointment.service.address:localhost}") String serverAddress,
+            @Value("${appointment.service.grpc.port:8041}") String serverPort
     ) {
         ManagedChannel channel = ManagedChannelBuilder
                 .forAddress(serverAddress, Integer.parseInt(serverPort))
