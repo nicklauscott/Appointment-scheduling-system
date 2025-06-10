@@ -5,6 +5,7 @@ services:
       - "4040:4040"
     depends_on:
       - auth-service
+      - tenant-service
       - appointment-service
     networks:
       - app-network
